@@ -1,0 +1,21 @@
+Column,Description
+File,Name of the fastq file without extension or plate-well identifiers
+Label,Sample identifier with week and reference number
+Reference,Lake numerical identifier assigned by the Iowa Department of Natural Resources
+Date,Calendar date sample was taken from lake
+Week,Numerical week from the beginning of monitoring
+Year,Calendar year that sample was taken
+Location,Name of the lake that sample was taken from
+Microcystin,Micrograms per liter (µg/L)
+DOC,parts per million (ppm)
+TKP,miligrams phosphorous per liter (mg/L)
+TKN,miligrams nitrogen per liter (mg/L)
+NH3,miligrams nitrogen per liter (mg/L)
+Nox,miligrams nitrogen per liter (mg/L)
+NO2,miligrams nitrogen per liter (mg/L)
+Cl,miligrams chloride per liter (mg/L)
+pH,Acidity levels of the water sample (proton concentration)
+rRNA_16S,Gene copies per mililiter
+Microcystis,Microcystis McyA gene copies per mililiter
+Aanabaena,Aanabaena McyA gene copies per mililiter
+Planktothrix,Planktothrix McyA gene copies per mililiter

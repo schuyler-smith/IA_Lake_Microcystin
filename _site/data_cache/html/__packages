@@ -1,0 +1,15 @@
+base
+ggplot2
+plotly
+ggpubr
+Rcpp
+permute
+lattice
+vegan
+data.table
+ggh4x
+phyloseq
+schuylR
+ssBLAST
+phylosmith
+DT

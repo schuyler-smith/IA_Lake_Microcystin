@@ -1,0 +1,144 @@
+---
+title: "Sequencing Results"
+author: <a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a>
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    toc_depth: 2
+    highlight: pygments
+editor_options: 
+  chunk_output_type: console
+---
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+<br>
+<br>
+
+# Sequencing Results
+
+## 2018 {.tabset .tabset-pills}
+```{r 2018, echo=FALSE}
+seq_qual_2018 <- readRDS('../data/seq_qual/2018_seq_quals.RDS')
+graph_data <- seq_qual_2018[[1]]
+stat_data <- seq_qual_2018[[2]]
+annotations <- seq_qual_2018[[3]]
+```
+
+```{r, 2018_qual, results='asis', echo=FALSE, fig.width=12, fig.height=5, cache=TRUE}
+for (week in seq(15)){
+  cat('### Week ', week, '<br>', '\n\n')
+  cat('#### MiSeq Quality scores {.tabset .tabset-pills}', '\n', '<br>', '\n\n')
+  n=1
+  for (i in grep(paste0("^",week,"-.*_R1_"), annotations$file)){
+    cat("#####", n, '<br>', '\n\n')
+    print(schuylR::plot_sequence_quality(list(
+      graph_data[file %in% annotations$file[c(i,i+1)]],
+      stat_data[file %in% annotations$file[c(i,i+1)]],
+      annotations[file %in% annotations$file[c(i,i+1)]])))
+    cat('\n', '<br><br><br>', '\n\n')
+    n=n+1
+  }
+  cat('\n', '<br><br><br>', '\n\n')
+}
+```
+
+## 2019 {.tabset .tabset-pills}
+```{r 2019, echo=FALSE}
+seq_qual_2019 <- readRDS('../data/seq_qual/2019_seq_quals.RDS')
+graph_data <- seq_qual_2019[[1]]
+stat_data <- seq_qual_2019[[2]]
+annotations <- seq_qual_2019[[3]]
+```
+
+```{r, 2019_qual, results='asis', echo=FALSE, fig.width=12, fig.height=5, cache=TRUE}
+for (week in seq(15)){
+  cat('### Week ', week, '<br>', '\n\n')
+  cat('#### MiSeq Quality scores {.tabset .tabset-pills}', '\n', '<br>', '\n\n')
+  n=1
+  for (i in grep(paste0("^IDNR19_[0]",week,"_.*_R1_|^IDNR19_", week, "_.*_R1_"), annotations$file)){
+    cat("#####", n, '<br>', '\n\n')
+    print(schuylR::plot_sequence_quality(list(
+      graph_data[file %in% annotations$file[c(i,i+1)]],
+      stat_data[file %in% annotations$file[c(i,i+1)]],
+      annotations[file %in% annotations$file[c(i,i+1)]])))
+    cat('\n', '<br><br><br>', '\n\n')
+    n=n+1
+  }
+  cat('\n', '<br><br><br>', '\n\n')
+}
+```
+
+# Read Processing Pipeline
+
+```{r set_dir, engine = 'bash', eval = FALSE}
+for file in $(ls ../data/raw_reads/2018/1-*_L001_R1_001.fastq)
+do \
+
+directory=$(dirname "$file") 
+sample="$(basename -- $file)"
+sample=$(echo "$sample" | cut -f 1 -d '.')
+sample=$(echo "$sample" | sed s/'_L001_R1_001'//g)
+sample=$(echo "$sample" | cut -f 1 -d '_')
+
+mikdir -p ${directory}/../assembled/../error_files/../clustered/../finalized_reads/../classified
+```
+
+## Merge Paired-End Reads
+```{r pear, engine = 'bash', eval = FALSE}
+pear \
+-j 8 \
+-p 0.05 \
+-v 10 \
+-n 225 \
+-m 290 \
+-f ${file} \
+-r ${directory}/${sample}*_R2_* \
+-o ${directory}/../assembled/${sample}
+```
+
+## Trimming
+```{r cutadapt, engine = 'bash', eval = FALSE}
+cutadapt \
+-l 225 \
+-m 225 \
+-o ${directory}/../assembled/${sample}.assembled.trimmed.fastq \
+${directory}/../assembled/${sample}.assembled.fastq
+```
+
+## ASV Calling
+```{r amplici, engine = 'bash', eval = FALSE}
+amplici \
+--fastq ${directory}/../assembled/${sample}.assembled.trimmed.fastq \
+--outfile ${directory}/../error_files/${sample}.error \
+-error
+
+amplici \
+--fastq ${directory}/../assembled/${sample}.assembled.trimmed.fastq \
+--profile ${directory}/../error_files/${sample}.error \
+--outfile ${directory}/../clustered/${sample}.fasta
+```
+
+## Chimera Removal
+```{r chimeras, engine = 'bash', eval = FALSE}
+vsearch-2.15.1/bin/vsearch \
+--sortbysize ${directory}/../clustered/${sample}.fasta \
+--output ${directory}/../clustered/${sample}.sorted.fasta
+
+vsearch-2.15.1/bin/vsearch \
+--uchime_denovo ${directory}/../clustered/${sample}.sorted.fasta \
+--nonchimeras ${directory}/../finalized_reads/${sample}.nonchimeras.fasta
+```
+
+## Classifier
+```{r classifier, engine = 'bash', eval = FALSE}
+java -Xmx24g -jar /mnt/home/smithsch/software/RDPTools/classifier.jar \
+classify \
+-c 0.5 \
+-f filterbyconf \
+-o ${directory}/../classified/${sample}_classifications.txt \
+${directory}/../finalized_reads/${sample}.nonchimeras.fasta
+done
+```

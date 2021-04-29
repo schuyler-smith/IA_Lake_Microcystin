@@ -1,0 +1,228 @@
+---
+title: "Data Files"
+author: <a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a>
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    toc_depth: 2
+editor_options: 
+  chunk_output_type: console
+---
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+<br>
+<br>
+
+## Sample Metadata {.tabset .tabset-pills}
+
+```{r metadata_legend}
+metadata_legend <- data.table::fread('../data/metadata/metadata_legend.csv')
+```
+
+<button class="btn btn-primary" data-toggle="collapse" data-target="#metalegend"> Metadata Column Legend </button>  
+<div id="metalegend" class="collapse"> 
+```{r metadata_legend_out, echo=FALSE}
+DT::datatable(metadata_legend)
+```
+</div>
+
+### 2018
+```{r 2018}
+metadata_2018 <- data.table::fread('../data/metadata/2018.csv')
+metadata_2018[, Risk := "No"]
+data.table::set(metadata_2018, which(metadata_2018$Microcystin > 1), "Risk", "Low")
+data.table::set(metadata_2018, which(metadata_2018$Microcystin >= 10), "Risk", "Moderate")
+data.table::set(metadata_2018, which(metadata_2018$Microcystin >= 50), "Risk", "High")
+```
+
+```{r 2018_out, echo=FALSE, cache=TRUE}
+DT::datatable(metadata_2018, options = list(
+              autoWidth = TRUE,
+              columnDefs = list(
+              list(
+                targets = c(7),
+                width = '160px',
+                render =  htmlwidgets::JS(
+                  "function(data, type, row, meta) {",
+                  "return type === 'display' && data.length > 16 ?",
+                  "'<span title=\"' + data + '\">' + data.substr(0, 16) + '...</span>' : data;",
+                  "}")
+              ),
+              list(targets = c(1), width = '120px'),
+              list(targets = c(2,3), width = '100px')
+            )
+          )
+)
+```
+<a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/metadata/2018.csv" download target="_blank">
+  Download
+</a>
+<br>
+<br>
+
+### 2019
+```{r 2019}
+metadata_2019 <- data.table::fread('../data/metadata/2019.csv')
+metadata_2019[, Risk := "No"]
+data.table::set(metadata_2019, which(metadata_2019$Microcystin > 1), "Risk", "Low")
+data.table::set(metadata_2019, which(metadata_2019$Microcystin >= 10), "Risk", "Moderate")
+data.table::set(metadata_2019, which(metadata_2019$Microcystin >= 50), "Risk", "High")
+```
+
+```{r 2019_out, echo=FALSE}
+DT::datatable(metadata_2019, options = list(
+              autoWidth = TRUE,
+              columnDefs = list(
+              list(
+                targets = c(7),
+                width = '150px',
+                render =  htmlwidgets::JS(
+                  "function(data, type, row, meta) {",
+                  "return type === 'display' && data.length > 15 ?",
+                  "'<span title=\"' + data + '\">' + data.substr(0, 15) + '...</span>' : data;",
+                  "}")
+              ),
+              list(targets = c(1), width = '120px'),
+              list(targets = c(2,3), width = '100px')
+            )
+          )
+)
+```
+<a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/metadata/2019.csv" download target="_blank">
+  Download
+</a>
+<br>
+<br>
+
+### 2020
+```{r 2020}
+metadata_2020 <- data.table::fread('../data/metadata/2020.csv')
+metadata_2020[, Risk := "No"]
+data.table::set(metadata_2020, which(metadata_2020$Microcystin > 1), "Risk", "Low")
+data.table::set(metadata_2020, which(metadata_2020$Microcystin >= 10), "Risk", "Moderate")
+data.table::set(metadata_2020, which(metadata_2020$Microcystin >= 50), "Risk", "High")
+```
+
+```{r 2020_out, echo=FALSE}
+DT::datatable(metadata_2020, options = list(
+              autoWidth = TRUE,
+              columnDefs = list(
+              list(
+                targets = c(7),
+                width = '150px',
+                render =  htmlwidgets::JS(
+                  "function(data, type, row, meta) {",
+                  "return type === 'display' && data.length > 15 ?",
+                  "'<span title=\"' + data + '\">' + data.substr(0, 15) + '...</span>' : data;",
+                  "}")
+              ),
+              list(targets = c(1), width = '120px'),
+              list(targets = c(2,3), width = '100px')
+            )
+          )
+)
+```
+<a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/metadata/2020.csv" download target="_blank">
+  Download
+</a>
+<br>
+<br>
+
+
+## Read Counts {.tabset .tabset-pills}
+### ASV Table
+```{r create_counts, eval=FALSE}
+read_counts <- construct_ASVtable('../data/16S_processing/finalized_reads')
+read_counts <- read_counts[, c(TRUE, colSums(read_counts[,-1]) > 5000), with = FALSE]
+data.table::setnames(read_counts, colnames(read_counts), gsub('_S.*', '', colnames(read_counts)))
+```
+
+```{r create_counts_table, echo=FALSE}
+read_counts <- readRDS('../data/analysis_objects/read_counts.RDS')
+DT::datatable(read_counts[1:10, 1:4], options = list(
+              autoWidth = TRUE,
+              columnDefs = list(
+              list(
+                targets = c(1),
+                width = '150px',
+                render =  htmlwidgets::JS(
+                  "function(data, type, row, meta) {",
+                  "return type === 'display' && data.length > 15 ?",
+                  "'<span title=\"' + data + '\">' + data.substr(0, 15) + '...</span>' : data;",
+                  "}")
+              ),
+              list(targets = c(1), width = '100px')
+            )
+          )
+)
+```
+<a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/analysis_objects/read_counts.RDS" download target="_blank">
+  Download
+</a>
+<br>
+<br>
+
+### Classifications
+```{r create_classifications, eval=FALSE}
+classifications <- read_counts[[1]]
+classifications <- dada2::assignTaxonomy(classifications, '../data/16S_processing/databases/rdp_train_set_18.fa.gz')
+classifications <- dada2::assignTaxonomy(classifications, '../data/16S_processing/databases/silva_nr99_v138.1_train_set.fa.gz')
+```
+
+```{r classifications, echo=FALSE}
+classifications <- data.table::as.data.table(readRDS('../data/16S_processing/rdp_class.RDS'), keep.rownames = TRUE)
+DT::datatable(classifications, options = list(
+              autoWidth = TRUE,
+              columnDefs = list(
+              list(
+                targets = c(1),
+                width = '150px',
+                render = htmlwidgets::JS(
+                  "function(data, type, row, meta) {",
+                  "return type === 'display' && data.length > 15 ?",
+                  "'<span title=\"' + data + '\">' + data.substr(0, 15) + '...</span>' : data;",
+                  "}")
+              ),
+              list(targets = c(1), width = '100px')
+            )
+          )
+)
+```
+<a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/16S_processing/rdp_class.RDS" download target="_blank">
+  Download
+</a>
+<br>
+<br>
+
+### Cyanobacteria
+```{r cyano, eval=FALSE}
+cyanobacteria <- classifications[Class == "Cyanobacteria"]
+cyanobacteria <- dada2::assignSpecies(cyanobacteria[[1]], '../data/16S_processing/databases/rdp_species_assignment_18.fa.gz')
+```
+
+## Phyloseq Object
+```{r phyloseq_object, eval=FALSE}
+lake_po <- phyloseq::phyloseq(phyloseq::otu_table(as.matrix(read_counts[,-1]), TRUE),
+                              phyloseq::tax_table(as.matrix(classifications)),
+                              phyloseq::sample_data(data.frame(rbind(
+                                metadata_2018,
+                                metadata_2019),
+                                row.names = 1)))
+```
+
+```{r phyloseq_object_load, echo=FALSE}
+lake_po <- readRDS('../data/analysis_objects/lake_phyloseq_object.RDS')
+```
+<a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/analysis_objects/lake_phyloseq_object.RDS" download target="_blank">
+  Download
+</a>
+<br>
+<br>
+
+
+
+
+

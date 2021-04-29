@@ -1,0 +1,54 @@
+name: "Iowa Lake Microcystin Microbiome Analysis"
+output_dir: ../docs
+output:
+  html_document:
+    lib_dir: site_libs
+    theme: lumen
+    highlight: textmate
+    include:
+      after_body: footer.html
+    css: style.css
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+      
+navbar:
+  title: "Home"
+  type: inverse
+  left:
+    - icon: fa-home
+      href: index.html
+
+    - text: Data
+      icon: fa-database
+      href: data.html
+
+    - text: Sequencing
+      icon: fa-dna
+      href: sequencing.html  
+     
+    - text: Samples
+      icon: fa-database
+      href: sample_analysis.html
+
+    - text: Packages
+      icon: fa-box-open
+      href: packages_and_functions.html
+
+    - text: Source Code
+      icon: fa-code
+      href: https://github.com/schuyler-smith/DARTE-QM/
+
+  right:
+    - icon: fab fa-github
+      href: http://github.com/schuyler-smith
+
+    - icon: fa-flask
+      href: http://germslab.org/
+
+    - icon: fa-university
+      href: https://www.bcb.iastate.edu/people/schuyler-smith
+      
+    - icon: fa-envelope fa-lg
+      href: mailto:sdsmith@iastate.edu

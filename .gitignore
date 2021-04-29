@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+/data/16S_processing/assembled
+/data/16S_processing/classified
+/data/16S_processing/clustered
+/data/16S_processing/error_files
+/data/raw_reads

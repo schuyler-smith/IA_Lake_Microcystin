@@ -1,0 +1,93 @@
+---
+title: "Packages and Functions"
+author: <a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a>
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+<br>
+<br>
+
+```{r setup, message=FALSE, warning=FALSE, echo=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+## R-Packages {.tabset .tabset-pills}
+
+### CRAN
+```{r load_libraries}
+library(ggplot2)
+library(plotly)
+library(ggpubr)
+library(Rcpp)
+library(vegan)
+library(data.table)
+```
+<br>
+<br>
+
+### Github Packages
+```{r github_packages, eval=FALSE}
+devtools::install_github("teunbrand/ggh4x")
+library(ggh4x)
+devtools::install_github("joey711/phyloseq")
+library(phyloseq)
+devtools::install_github("schuyler-smith/schuylR")
+library(schuylR)
+devtools::install_github("schuyler-smith/ssBLAST")
+library(ssBLAST)
+devtools::install_github("schuyler-smith/phylosmith")
+library(phylosmith)
+```
+<br>
+<br>
+
+## R-Functions {.tabset .tabset-pills}
+
+### ASV Table
+```{r create_asv_function}
+construct_ASVtable <- function(files, p.threshold = 1){
+  if (length(files) == 1 && dir.exists(files)) {
+    files <- gsub("/$", "", files)
+    files <- dir(files, full.names = TRUE)
+  } else {
+    files <- files
+  }
+  files <- sort(normalizePath(files))
+  
+  read_counts <- ssBLAST:::fasta_seq_names(files)
+  read_counts <- rbindlist(lapply(read_counts, data.table), idcol = 'Sample')
+  setnames(read_counts, 'V1', 'Counts')
+  read_counts[, p.value := read_counts[['Counts']]]
+  set(read_counts, j = 'Counts', 
+      value = round(as.numeric(gsub('size=','', 
+                                    sapply(strsplit(read_counts[['Counts']], ";"), '[[', 2)))))
+  set(read_counts, j = 'p.value', 
+      value = as.numeric(gsub('DiagP=','', sapply(strsplit(read_counts[['p.value']], ";"), '[[', 3))))
+  
+  read_seqs <- ssBLAST:::fasta_seq_reads(files)
+  read_seqs <- rbindlist(lapply(read_seqs, data.table), idcol = 'Sample')
+  setnames(read_seqs, 'V1', 'ASV')
+  
+  ASV_table <- cbind(read_counts,read_seqs[,'ASV'])
+  set(ASV_table, j = 'Sample', 
+      value = sapply(strsplit(ASV_table[['Sample']], "\\."), '[[', 1))
+  ASV_table <- dcast(ASV_table[p.value < p.threshold], 
+                     formula = ASV ~ Sample, 
+                     value.var = 'Counts',
+                     fill = 0)
+  return(ASV_table)
+}
+```
+<br>
+<br>
+
+```{r replace_DT_NA, echo=FALSE}
+replace_DT_NA=function(DT) {
+  for (j in seq_len(ncol(DT)))
+    set(DT,which(is.na(DT[[j]])),j,0)
+}
+```
+<br>
+<br>
