@@ -32,6 +32,10 @@ navbar:
       icon: fa-cloud
       href: weather.html
 
+    - text: Molecular
+      icon: fa-atom
+      href: molecular.html
+
     - text: Data
       icon: fa-database
       href: data.html
