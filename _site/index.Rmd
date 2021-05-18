@@ -41,8 +41,8 @@ ggmap::ggmap(iowa) +
 <br>
 <br>
 
-# Envrionment Analysis
-### [Nirogen](environment.html)
+# Molecular Analysis
+### [Nirogen](molecular.html)
 
 <br>
 <br>

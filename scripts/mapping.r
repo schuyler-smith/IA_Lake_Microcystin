@@ -85,7 +85,7 @@ get_googlemap2 <- function(
   )
 }
 
-iowa_bw <- get_googlemap2(api_key = "***REMOVED***",
+iowa_bw <- get_googlemap2(api_key = "AIzaSyBwn5-e5fYjxG9OpvyVxj3BASobiT5sxio",
                       center = c(-93.6, 42.05),
                       zoom = 7,
                       size = c(640, 420),
