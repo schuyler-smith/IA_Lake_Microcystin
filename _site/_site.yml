@@ -20,10 +20,6 @@ navbar:
     - icon: fa-home
       href: index.html
 
-    - text: Data
-      icon: fa-database
-      href: data.html
-
     - text: Sequencing
       icon: fa-dna
       href: sequencing.html  
@@ -31,6 +27,14 @@ navbar:
     - text: Samples
       icon: fa-database
       href: sample_analysis.html
+      
+    - text: Weather
+      icon: fa-cloud
+      href: weather.html
+
+    - text: Data
+      icon: fa-database
+      href: data.html
 
     - text: Packages
       icon: fa-box-open

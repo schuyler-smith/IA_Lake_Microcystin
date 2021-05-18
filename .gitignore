@@ -6,4 +6,6 @@
 /data/16S_processing/classified
 /data/16S_processing/clustered
 /data/16S_processing/error_files
+/data/16S_processing/databases/SILVA*
 /data/raw_reads
+/paper

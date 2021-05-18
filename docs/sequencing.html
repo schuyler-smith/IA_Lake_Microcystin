@@ -11,7 +11,7 @@
 
 <meta name="author" content="Schuyler D. Smith" />
 
-<meta name="date" content="2021-04-29" />
+<meta name="date" content="2021-05-18" />
 
 <title>Sequencing Results</title>
 
@@ -35,6 +35,7 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -59,9 +60,9 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -71,14 +72,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -87,9 +90,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -430,13 +433,6 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="data.html">
-    <span class="fas fa-database"></span>
-     
-    Data
-  </a>
-</li>
-<li>
   <a href="sequencing.html">
     <span class="fas fa-dna"></span>
      
@@ -448,6 +444,20 @@ div.tocify {
     <span class="fas fa-database"></span>
      
     Samples
+  </a>
+</li>
+<li>
+  <a href="weather.html">
+    <span class="fas fa-cloud"></span>
+     
+    Weather
+  </a>
+</li>
+<li>
+  <a href="data.html">
+    <span class="fas fa-database"></span>
+     
+    Data
   </a>
 </li>
 <li>
@@ -509,7 +519,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Sequencing Results</h1>
 <h4 class="author"><a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a></h4>
-<h4 class="date">2021-04-29</h4>
+<h4 class="date">2021-05-18</h4>
 
 </div>
 
@@ -5134,67 +5144,67 @@ div.tocify {
 </div>
 <div id="read-processing-pipeline" class="section level1">
 <h1>Read Processing Pipeline</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">for</span> <span class="fu">file</span> in <span class="va">$(</span><span class="fu">ls</span> ../data/raw_reads/2018/1-*_L001_R1_001.fastq<span class="va">)</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw">do</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb1-3" title="3"></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="va">directory=$(</span><span class="fu">dirname</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span><span class="va">)</span> </a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="va">sample=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">basename</span> -- <span class="va">$file)</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -f 1 -d <span class="st">&#39;.&#39;</span><span class="va">)</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> s/<span class="st">&#39;_L001_R1_001&#39;</span>//g<span class="va">)</span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -f 1 -d <span class="st">&#39;_&#39;</span><span class="va">)</span></a>
-<a class="sourceLine" id="cb1-9" title="9"></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="ex">mikdir</span> -p <span class="va">${directory}</span>/../assembled/../error_files/../clustered/../finalized_reads/../classified</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">for</span> <span class="fu">file</span> in <span class="va">$(</span><span class="fu">ls</span> ../data/raw_reads/2018/1-*_L001_R1_001.fastq<span class="va">)</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">do</span> <span class="kw">\</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="va">directory=$(</span><span class="fu">dirname</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span><span class="va">)</span> </span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="va">sample=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">basename</span> -- <span class="va">$file)</span><span class="st">&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -f 1 -d <span class="st">&#39;.&#39;</span><span class="va">)</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> s/<span class="st">&#39;_L001_R1_001&#39;</span>//g<span class="va">)</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -f 1 -d <span class="st">&#39;_&#39;</span><span class="va">)</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="ex">mikdir</span> -p <span class="va">${directory}</span>/../assembled/../error_files/../clustered/../finalized_reads/../classified</span></code></pre></div>
 <div id="merge-paired-end-reads" class="section level2">
 <h2>Merge Paired-End Reads</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">pear</span> \</a>
-<a class="sourceLine" id="cb2-2" title="2">-j 8 \</a>
-<a class="sourceLine" id="cb2-3" title="3">-p 0.05 \</a>
-<a class="sourceLine" id="cb2-4" title="4">-v 10 \</a>
-<a class="sourceLine" id="cb2-5" title="5">-n 225 \</a>
-<a class="sourceLine" id="cb2-6" title="6">-m 290 \</a>
-<a class="sourceLine" id="cb2-7" title="7">-f <span class="va">${file}</span> \</a>
-<a class="sourceLine" id="cb2-8" title="8">-r <span class="va">${directory}</span>/<span class="va">${sample}</span>*_R2_* \</a>
-<a class="sourceLine" id="cb2-9" title="9">-o <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">pear</span> \</span>
+<span id="cb2-2"><a href="#cb2-2"></a>-j 8 \</span>
+<span id="cb2-3"><a href="#cb2-3"></a>-p 0.05 \</span>
+<span id="cb2-4"><a href="#cb2-4"></a>-v 10 \</span>
+<span id="cb2-5"><a href="#cb2-5"></a>-n 225 \</span>
+<span id="cb2-6"><a href="#cb2-6"></a>-m 290 \</span>
+<span id="cb2-7"><a href="#cb2-7"></a>-f <span class="va">${file}</span> \</span>
+<span id="cb2-8"><a href="#cb2-8"></a>-r <span class="va">${directory}</span>/<span class="va">${sample}</span>*_R2_* \</span>
+<span id="cb2-9"><a href="#cb2-9"></a>-o <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span></span></code></pre></div>
 </div>
 <div id="trimming" class="section level2">
 <h2>Trimming</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">cutadapt</span> \</a>
-<a class="sourceLine" id="cb3-2" title="2">-l 225 \</a>
-<a class="sourceLine" id="cb3-3" title="3">-m 225 \</a>
-<a class="sourceLine" id="cb3-4" title="4">-o <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.fastq</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">cutadapt</span> \</span>
+<span id="cb3-2"><a href="#cb3-2"></a>-l 225 \</span>
+<span id="cb3-3"><a href="#cb3-3"></a>-m 225 \</span>
+<span id="cb3-4"><a href="#cb3-4"></a>-o <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.fastq</span></code></pre></div>
 </div>
 <div id="asv-calling" class="section level2">
 <h2>ASV Calling</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">amplici</span> \</a>
-<a class="sourceLine" id="cb4-2" title="2">--fastq <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</a>
-<a class="sourceLine" id="cb4-3" title="3">--outfile <span class="va">${directory}</span>/../error_files/<span class="va">${sample}</span>.error \</a>
-<a class="sourceLine" id="cb4-4" title="4">-error</a>
-<a class="sourceLine" id="cb4-5" title="5"></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="ex">amplici</span> \</a>
-<a class="sourceLine" id="cb4-7" title="7">--fastq <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</a>
-<a class="sourceLine" id="cb4-8" title="8">--profile <span class="va">${directory}</span>/../error_files/<span class="va">${sample}</span>.error \</a>
-<a class="sourceLine" id="cb4-9" title="9">--outfile <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.fasta</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">amplici</span> \</span>
+<span id="cb4-2"><a href="#cb4-2"></a>--fastq <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</span>
+<span id="cb4-3"><a href="#cb4-3"></a>--outfile <span class="va">${directory}</span>/../error_files/<span class="va">${sample}</span>.error \</span>
+<span id="cb4-4"><a href="#cb4-4"></a>-error</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="ex">amplici</span> \</span>
+<span id="cb4-7"><a href="#cb4-7"></a>--fastq <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</span>
+<span id="cb4-8"><a href="#cb4-8"></a>--profile <span class="va">${directory}</span>/../error_files/<span class="va">${sample}</span>.error \</span>
+<span id="cb4-9"><a href="#cb4-9"></a>--outfile <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.fasta</span></code></pre></div>
 </div>
 <div id="chimera-removal" class="section level2">
 <h2>Chimera Removal</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">vsearch-2.15.1/bin/vsearch</span> \</a>
-<a class="sourceLine" id="cb5-2" title="2">--sortbysize <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.fasta \</a>
-<a class="sourceLine" id="cb5-3" title="3">--output <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.sorted.fasta</a>
-<a class="sourceLine" id="cb5-4" title="4"></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="ex">vsearch-2.15.1/bin/vsearch</span> \</a>
-<a class="sourceLine" id="cb5-6" title="6">--uchime_denovo <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.sorted.fasta \</a>
-<a class="sourceLine" id="cb5-7" title="7">--nonchimeras <span class="va">${directory}</span>/../finalized_reads/<span class="va">${sample}</span>.nonchimeras.fasta</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">vsearch-2.15.1/bin/vsearch</span> \</span>
+<span id="cb5-2"><a href="#cb5-2"></a>--sortbysize <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.fasta \</span>
+<span id="cb5-3"><a href="#cb5-3"></a>--output <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.sorted.fasta</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="ex">vsearch-2.15.1/bin/vsearch</span> \</span>
+<span id="cb5-6"><a href="#cb5-6"></a>--uchime_denovo <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.sorted.fasta \</span>
+<span id="cb5-7"><a href="#cb5-7"></a>--nonchimeras <span class="va">${directory}</span>/../finalized_reads/<span class="va">${sample}</span>.nonchimeras.fasta</span></code></pre></div>
 </div>
 <div id="classifier" class="section level2">
 <h2>Classifier</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">java</span> -Xmx24g -jar /mnt/home/smithsch/software/RDPTools/classifier.jar \</a>
-<a class="sourceLine" id="cb6-2" title="2">classify \</a>
-<a class="sourceLine" id="cb6-3" title="3">-c 0.5 \</a>
-<a class="sourceLine" id="cb6-4" title="4">-f filterbyconf \</a>
-<a class="sourceLine" id="cb6-5" title="5">-o <span class="va">${directory}</span>/../classified/<span class="va">${sample}</span>_classifications.txt \</a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="va">${directory}</span>/../finalized_reads/<span class="va">${sample}</span>.nonchimeras.fasta</a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="kw">done</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">java</span> -Xmx24g -jar /mnt/home/smithsch/software/RDPTools/classifier.jar \</span>
+<span id="cb6-2"><a href="#cb6-2"></a>classify \</span>
+<span id="cb6-3"><a href="#cb6-3"></a>-c 0.5 \</span>
+<span id="cb6-4"><a href="#cb6-4"></a>-f filterbyconf \</span>
+<span id="cb6-5"><a href="#cb6-5"></a>-o <span class="va">${directory}</span>/../classified/<span class="va">${sample}</span>_classifications.txt \</span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="va">${directory}</span>/../finalized_reads/<span class="va">${sample}</span>.nonchimeras.fasta</span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="kw">done</span></span></code></pre></div>
 </div>
 </div>
 

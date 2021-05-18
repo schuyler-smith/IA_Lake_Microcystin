@@ -1,0 +1,25 @@
+Time	Temperature	Dew Point	Humidity	Wind	Speed	Gust	Pressure	Precip. Rate.	Precip. Accum.				
+12:56:00 AM	69	66	90	N	7	0	28.67	0	Fair			72.08	Temperature
+01:56:00 AM	67	65	93	NNW	7	0	28.67	0	Fair			81.00	Temperature
+02:56:00 AM	65	64	97	NW	3	0	28.68	0	Fair			63.00	Temperature
+03:56:00 AM	65	63	93	NNW	5	0	28.68	0	Fair			78.83	Humidity
+04:56:00 AM	63	62	97	WNW	3	0	28.68	0	Fair			97.00	Humidity
+05:56:00 AM	63	62	97	NW	5	0	28.69	0	Fair			54.00	Humidity
+06:56:00 AM	63	62	97	NW	5	0	28.69	0	Fair			64.46	Dew Point
+07:56:00 AM	66	63	90	NW	5	0	28.7	0	Fair			69.00	Dew Point
+08:56:00 AM	70	65	84	NNW	7	0	28.71	0	Fair			62.00	Dew Point
+09:56:00 AM	74	66	76	NNW	6	0	28.71	0	Fair			3.42	Wind
+10:56:00 AM	76	67	74	VAR	5	0	28.71	0	Fair			7.00	Wind
+11:56:00 AM	78	67	68	NW	7	0	28.72	0	Partly Cloudy			0.00	Wind
+12:56:00 PM	79	65	62	NW	6	0	28.72	0	Mostly Cloudy			0.00	Gust
+01:56:00 PM	81	64	56	CALM	0	0	28.71	0	Mostly Cloudy			0.00	Gust
+02:56:00 PM	81	64	56	VAR	3	0	28.71	0	Partly Cloudy			0.00	Precip. Accum.
+03:56:00 PM	81	63	54	WNW	5	0	28.69	0	Partly Cloudy			28.72	Pressure
+04:56:00 PM	81	63	54	CALM	0	0	28.68	0	Fair			28.65	Pressure
+05:56:00 PM	81	63	54	VAR	3	0	28.68	0	Fair				
+06:56:00 PM	80	64	58	CALM	0	0	28.66	0	Fair				
+07:56:00 PM	75	69	82	CALM	0	0	28.66	0	Fair				
+08:56:00 PM	71	66	84	CALM	0	0	28.65	0	Fair				
+09:56:00 PM	68	65	90	CALM	0	0	28.67	0	Fair				
+10:56:00 PM	67	65	93	CALM	0	0	28.68	0	Fair				
+11:56:00 PM	66	64	93	CALM	0	0	28.68	0	Fair				

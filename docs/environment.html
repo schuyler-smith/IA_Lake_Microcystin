@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Schuyler D. Smith" />
+
+<meta name="date" content="2021-05-18" />
+
+<title>Environment Analysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fas fa-home"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="sequencing.html">
+    <span class="fas fa-dna"></span>
+     
+    Sequencing
+  </a>
+</li>
+<li>
+  <a href="sample_analysis.html">
+    <span class="fas fa-database"></span>
+     
+    Samples
+  </a>
+</li>
+<li>
+  <a href="weather.html">
+    <span class="fas fa-cloud"></span>
+     
+    Weather
+  </a>
+</li>
+<li>
+  <a href="data.html">
+    <span class="fas fa-database"></span>
+     
+    Data
+  </a>
+</li>
+<li>
+  <a href="packages_and_functions.html">
+    <span class="fas fa-box-open"></span>
+     
+    Packages
+  </a>
+</li>
+<li>
+  <a href="https://github.com/schuyler-smith/DARTE-QM/">
+    <span class="fas fa-code"></span>
+     
+    Source Code
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="http://github.com/schuyler-smith">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://germslab.org/">
+    <span class="fas fa-flask"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.bcb.iastate.edu/people/schuyler-smith">
+    <span class="fas fa-university"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:sdsmith@iastate.edu">
+    <span class="fas fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Environment Analysis</h1>
+<h4 class="author"><a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a></h4>
+<h4 class="date">2021-05-18</h4>
+
+</div>
+
+
+<p><br> <br></p>
+<div id="abiotic-factors" class="section level1">
+<h1>Abiotic Factors</h1>
+<div id="no2" class="section level2 tabset tabset-pills">
+<h2>NO2</h2>
+<div id="year-average" class="section level3 tabset tabset-pills">
+<h3>Year Average</h3>
+<pre class="r"><code>nitrogen &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;NO2&quot;)][order(Location)]
+set(nitrogen, j = &quot;NO2&quot;, value = round(nitrogen$NO2, 3))</code></pre>
+<div id="graph" class="section level4">
+<h4>Graph</h4>
+<p><img src="environment_files/figure-html/nitro_graph-1.png" width="672" /></p>
+</div>
+<div id="table" class="section level4">
+<h4>Table</h4>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["NO2"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"0.054"},{"1":"Backbone Beach","2":"2019","3":"0.050"},{"1":"Beed’s Lake Beach","2":"2018","3":"0.066"},{"1":"Beed’s Lake Beach","2":"2019","3":"0.061"},{"1":"Big Creek Beach","2":"2018","3":"0.067"},{"1":"Big Creek Beach","2":"2019","3":"0.069"},{"1":"Black Hawk Beach","2":"2018","3":"0.033"},{"1":"Black Hawk Beach","2":"2019","3":"0.069"},{"1":"Brushy Creek Beach","2":"2018","3":"0.068"},{"1":"Brushy Creek Beach","2":"2019","3":"0.078"},{"1":"Clear Lake Beach","2":"2018","3":"0.005"},{"1":"Clear Lake Beach","2":"2019","3":"0.016"},{"1":"Crandall’s Beach","2":"2018","3":"0.011"},{"1":"Crandall’s Beach","2":"2019","3":"0.009"},{"1":"Denison Beach","2":"2018","3":"0.035"},{"1":"Denison Beach","2":"2019","3":"0.045"},{"1":"Emerson Bay Beach","2":"2018","3":"0.067"},{"1":"Emerson Bay Beach","2":"2019","3":"0.007"},{"1":"George Wyth Beach","2":"2018","3":"-0.003"},{"1":"George Wyth Beach","2":"2019","3":"0.014"},{"1":"Green Valley Beach","2":"2018","3":"0.003"},{"1":"Green Valley Beach","2":"2019","3":"0.031"},{"1":"Gull Point Beach","2":"2018","3":"0.003"},{"1":"Gull Point Beach","2":"2019","3":"0.002"},{"1":"Honey Creek Resort Beach","2":"2018","3":"0.063"},{"1":"Honey Creek Resort Beach","2":"2019","3":"0.049"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"0.005"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"0.016"},{"1":"Lake Ahquabi Beach","2":"2018","3":"0.004"},{"1":"Lake Ahquabi Beach","2":"2019","3":"0.016"},{"1":"Lake Anita Beach","2":"2018","3":"-0.001"},{"1":"Lake Anita Beach","2":"2019","3":"0.009"},{"1":"Lake Darling Beach","2":"2018","3":"0.035"},{"1":"Lake Darling Beach","2":"2019","3":"0.056"},{"1":"Lake Keomah Beach","2":"2018","3":"0.011"},{"1":"Lake Keomah Beach","2":"2019","3":"0.069"},{"1":"Lake Macbride Beach","2":"2018","3":"0.002"},{"1":"Lake Macbride Beach","2":"2019","3":"0.039"},{"1":"Lake Manawa Beach","2":"2018","3":"0.005"},{"1":"Lake Manawa Beach","2":"2019","3":"0.010"},{"1":"Lake Wapello Beach","2":"2018","3":"0.005"},{"1":"Lake Wapello Beach","2":"2019","3":"0.014"},{"1":"Lake of Three Fires Beach","2":"2018","3":"0.020"},{"1":"Lake of Three Fires Beach","2":"2019","3":"0.030"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"0.002"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"0.012"},{"1":"Lower Pine Lake Beach","2":"2018","3":"0.089"},{"1":"Lower Pine Lake Beach","2":"2019","3":"0.117"},{"1":"McIntosh Woods Beach","2":"2018","3":"0.006"},{"1":"McIntosh Woods Beach","2":"2019","3":"0.015"},{"1":"Nine Eagles Beach","2":"2018","3":"0.002"},{"1":"Nine Eagles Beach","2":"2019","3":"0.007"},{"1":"North Twin Lake East Beach","2":"2018","3":"0.010"},{"1":"North Twin Lake East Beach","2":"2019","3":"0.013"},{"1":"North Twin Lake West Beach","2":"2018","3":"0.012"},{"1":"North Twin Lake West Beach","2":"2019","3":"0.015"},{"1":"Pike’s Point Beach","2":"2018","3":"0.004"},{"1":"Pike’s Point Beach","2":"2019","3":"0.004"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"0.003"},{"1":"Prairie Rose Beach","2":"2018","3":"0.006"},{"1":"Prairie Rose Beach","2":"2019","3":"0.011"},{"1":"Red Haw Beach","2":"2018","3":"0.019"},{"1":"Red Haw Beach","2":"2019","3":"0.008"},{"1":"Rock Creek Beach","2":"2018","3":"0.126"},{"1":"Rock Creek Beach","2":"2019","3":"0.087"},{"1":"Springbrook Beach","2":"2018","3":"0.075"},{"1":"Springbrook Beach","2":"2019","3":"0.067"},{"1":"Triboji Beach","2":"2018","3":"0.007"},{"1":"Triboji Beach","2":"2019","3":"0.009"},{"1":"Union Grove Beach","2":"2018","3":"0.055"},{"1":"Union Grove Beach","2":"2019","3":"0.076"},{"1":"Viking Lake Beach","2":"2018","3":"-0.002"},{"1":"Viking Lake Beach","2":"2019","3":"0.008"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="microcystin-correlation" class="section level3">
+<h3>Microcystin Correlation</h3>
+<p><img src="environment_files/figure-html/nitro_correlation-1.png" width="672" /></p>
+</div>
+</div>
+<div id="nh3" class="section level2 tabset tabset-pills">
+<h2>NH3</h2>
+<div id="year-average-1" class="section level3 tabset tabset-pills">
+<h3>Year Average</h3>
+<pre class="r"><code>NH3 &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;NH3&quot;)][order(Location)]
+set(NH3, j = &quot;NH3&quot;, value = round(NH3$NH3, 3))</code></pre>
+<div id="graph-1" class="section level4">
+<h4>Graph</h4>
+<p><img src="environment_files/figure-html/NH3_graNH3-1.png" width="672" /></p>
+</div>
+<div id="table-1" class="section level4">
+<h4>Table</h4>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["NH3"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"0.064"},{"1":"Backbone Beach","2":"2019","3":"0.368"},{"1":"Beed’s Lake Beach","2":"2018","3":"0.260"},{"1":"Beed’s Lake Beach","2":"2019","3":"0.352"},{"1":"Big Creek Beach","2":"2018","3":"0.015"},{"1":"Big Creek Beach","2":"2019","3":"0.368"},{"1":"Black Hawk Beach","2":"2018","3":"0.018"},{"1":"Black Hawk Beach","2":"2019","3":"0.344"},{"1":"Brushy Creek Beach","2":"2018","3":"0.105"},{"1":"Brushy Creek Beach","2":"2019","3":"0.337"},{"1":"Clear Lake Beach","2":"2018","3":"0.306"},{"1":"Clear Lake Beach","2":"2019","3":"0.345"},{"1":"Crandall’s Beach","2":"2018","3":"0.185"},{"1":"Crandall’s Beach","2":"2019","3":"0.389"},{"1":"Denison Beach","2":"2018","3":"0.012"},{"1":"Denison Beach","2":"2019","3":"0.347"},{"1":"Emerson Bay Beach","2":"2018","3":"0.084"},{"1":"Emerson Bay Beach","2":"2019","3":"0.203"},{"1":"George Wyth Beach","2":"2018","3":"0.021"},{"1":"George Wyth Beach","2":"2019","3":"0.135"},{"1":"Green Valley Beach","2":"2018","3":"0.126"},{"1":"Green Valley Beach","2":"2019","3":"0.346"},{"1":"Gull Point Beach","2":"2018","3":"0.248"},{"1":"Gull Point Beach","2":"2019","3":"0.251"},{"1":"Honey Creek Resort Beach","2":"2018","3":"0.568"},{"1":"Honey Creek Resort Beach","2":"2019","3":"0.647"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"0.226"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"0.245"},{"1":"Lake Ahquabi Beach","2":"2018","3":"0.267"},{"1":"Lake Ahquabi Beach","2":"2019","3":"0.279"},{"1":"Lake Anita Beach","2":"2018","3":"0.019"},{"1":"Lake Anita Beach","2":"2019","3":"0.289"},{"1":"Lake Darling Beach","2":"2018","3":"0.263"},{"1":"Lake Darling Beach","2":"2019","3":"0.454"},{"1":"Lake Keomah Beach","2":"2018","3":"0.239"},{"1":"Lake Keomah Beach","2":"2019","3":"0.240"},{"1":"Lake Macbride Beach","2":"2018","3":"0.073"},{"1":"Lake Macbride Beach","2":"2019","3":"0.211"},{"1":"Lake Manawa Beach","2":"2018","3":"0.050"},{"1":"Lake Manawa Beach","2":"2019","3":"0.317"},{"1":"Lake Wapello Beach","2":"2018","3":"0.148"},{"1":"Lake Wapello Beach","2":"2019","3":"0.238"},{"1":"Lake of Three Fires Beach","2":"2018","3":"0.024"},{"1":"Lake of Three Fires Beach","2":"2019","3":"0.299"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"0.057"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"0.383"},{"1":"Lower Pine Lake Beach","2":"2018","3":"0.190"},{"1":"Lower Pine Lake Beach","2":"2019","3":"0.364"},{"1":"McIntosh Woods Beach","2":"2018","3":"0.083"},{"1":"McIntosh Woods Beach","2":"2019","3":"0.327"},{"1":"Nine Eagles Beach","2":"2018","3":"0.254"},{"1":"Nine Eagles Beach","2":"2019","3":"0.275"},{"1":"North Twin Lake East Beach","2":"2018","3":"0.103"},{"1":"North Twin Lake East Beach","2":"2019","3":"0.533"},{"1":"North Twin Lake West Beach","2":"2018","3":"0.092"},{"1":"North Twin Lake West Beach","2":"2019","3":"0.535"},{"1":"Pike’s Point Beach","2":"2018","3":"0.108"},{"1":"Pike’s Point Beach","2":"2019","3":"0.371"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"0.341"},{"1":"Prairie Rose Beach","2":"2018","3":"0.052"},{"1":"Prairie Rose Beach","2":"2019","3":"0.317"},{"1":"Red Haw Beach","2":"2018","3":"0.298"},{"1":"Red Haw Beach","2":"2019","3":"0.367"},{"1":"Rock Creek Beach","2":"2018","3":"0.353"},{"1":"Rock Creek Beach","2":"2019","3":"0.419"},{"1":"Springbrook Beach","2":"2018","3":"0.142"},{"1":"Springbrook Beach","2":"2019","3":"0.368"},{"1":"Triboji Beach","2":"2018","3":"0.223"},{"1":"Triboji Beach","2":"2019","3":"0.407"},{"1":"Union Grove Beach","2":"2018","3":"0.102"},{"1":"Union Grove Beach","2":"2019","3":"0.333"},{"1":"Viking Lake Beach","2":"2018","3":"0.017"},{"1":"Viking Lake Beach","2":"2019","3":"0.484"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="microcystin-correlation-1" class="section level3">
+<h3>Microcystin Correlation</h3>
+<p><img src="environment_files/figure-html/NH3_correlation-1.png" width="672" /></p>
+</div>
+</div>
+<div id="ph" class="section level2 tabset tabset-pills">
+<h2>pH</h2>
+<div id="year-average-2" class="section level3 tabset tabset-pills">
+<h3>Year Average</h3>
+<pre class="r"><code>pH &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;pH&quot;)][order(Location)]
+set(pH, j = &quot;pH&quot;, value = round(pH$pH, 2))</code></pre>
+<div id="graph-2" class="section level4">
+<h4>Graph</h4>
+<p><img src="environment_files/figure-html/pH_graph-1.png" width="672" /></p>
+</div>
+<div id="table-2" class="section level4">
+<h4>Table</h4>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["pH"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"8.12"},{"1":"Backbone Beach","2":"2019","3":"8.00"},{"1":"Beed’s Lake Beach","2":"2018","3":"8.10"},{"1":"Beed’s Lake Beach","2":"2019","3":"8.20"},{"1":"Big Creek Beach","2":"2018","3":"8.38"},{"1":"Big Creek Beach","2":"2019","3":"8.22"},{"1":"Black Hawk Beach","2":"2018","3":"8.54"},{"1":"Black Hawk Beach","2":"2019","3":"8.47"},{"1":"Brushy Creek Beach","2":"2018","3":"8.20"},{"1":"Brushy Creek Beach","2":"2019","3":"8.04"},{"1":"Clear Lake Beach","2":"2018","3":"8.29"},{"1":"Clear Lake Beach","2":"2019","3":"8.34"},{"1":"Crandall’s Beach","2":"2018","3":"8.39"},{"1":"Crandall’s Beach","2":"2019","3":"8.44"},{"1":"Denison Beach","2":"2018","3":"8.56"},{"1":"Denison Beach","2":"2019","3":"8.48"},{"1":"Emerson Bay Beach","2":"2018","3":"8.22"},{"1":"Emerson Bay Beach","2":"2019","3":"8.32"},{"1":"George Wyth Beach","2":"2018","3":"8.74"},{"1":"George Wyth Beach","2":"2019","3":"8.32"},{"1":"Green Valley Beach","2":"2018","3":"8.39"},{"1":"Green Valley Beach","2":"2019","3":"9.49"},{"1":"Gull Point Beach","2":"2018","3":"8.20"},{"1":"Gull Point Beach","2":"2019","3":"8.28"},{"1":"Honey Creek Resort Beach","2":"2018","3":"8.41"},{"1":"Honey Creek Resort Beach","2":"2019","3":"8.21"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"8.31"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"7.99"},{"1":"Lake Ahquabi Beach","2":"2018","3":"8.50"},{"1":"Lake Ahquabi Beach","2":"2019","3":"8.67"},{"1":"Lake Anita Beach","2":"2018","3":"8.33"},{"1":"Lake Anita Beach","2":"2019","3":"8.54"},{"1":"Lake Darling Beach","2":"2018","3":"8.80"},{"1":"Lake Darling Beach","2":"2019","3":"8.81"},{"1":"Lake Keomah Beach","2":"2018","3":"9.11"},{"1":"Lake Keomah Beach","2":"2019","3":"9.02"},{"1":"Lake Macbride Beach","2":"2018","3":"8.61"},{"1":"Lake Macbride Beach","2":"2019","3":"8.78"},{"1":"Lake Manawa Beach","2":"2018","3":"8.23"},{"1":"Lake Manawa Beach","2":"2019","3":"8.47"},{"1":"Lake Wapello Beach","2":"2018","3":"8.44"},{"1":"Lake Wapello Beach","2":"2019","3":"8.23"},{"1":"Lake of Three Fires Beach","2":"2018","3":"8.62"},{"1":"Lake of Three Fires Beach","2":"2019","3":"9.20"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"8.36"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"8.34"},{"1":"Lower Pine Lake Beach","2":"2018","3":"8.41"},{"1":"Lower Pine Lake Beach","2":"2019","3":"8.42"},{"1":"McIntosh Woods Beach","2":"2018","3":"8.38"},{"1":"McIntosh Woods Beach","2":"2019","3":"8.50"},{"1":"Nine Eagles Beach","2":"2018","3":"8.61"},{"1":"Nine Eagles Beach","2":"2019","3":"8.31"},{"1":"North Twin Lake East Beach","2":"2018","3":"8.40"},{"1":"North Twin Lake East Beach","2":"2019","3":"8.16"},{"1":"North Twin Lake West Beach","2":"2018","3":"8.31"},{"1":"North Twin Lake West Beach","2":"2019","3":"8.18"},{"1":"Pike’s Point Beach","2":"2018","3":"8.31"},{"1":"Pike’s Point Beach","2":"2019","3":"8.28"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"8.32"},{"1":"Prairie Rose Beach","2":"2018","3":"8.66"},{"1":"Prairie Rose Beach","2":"2019","3":"8.85"},{"1":"Red Haw Beach","2":"2018","3":"8.03"},{"1":"Red Haw Beach","2":"2019","3":"8.16"},{"1":"Rock Creek Beach","2":"2018","3":"8.30"},{"1":"Rock Creek Beach","2":"2019","3":"8.29"},{"1":"Springbrook Beach","2":"2018","3":"8.47"},{"1":"Springbrook Beach","2":"2019","3":"8.53"},{"1":"Triboji Beach","2":"2018","3":"8.25"},{"1":"Triboji Beach","2":"2019","3":"8.27"},{"1":"Union Grove Beach","2":"2018","3":"8.64"},{"1":"Union Grove Beach","2":"2019","3":"8.31"},{"1":"Viking Lake Beach","2":"2018","3":"8.45"},{"1":"Viking Lake Beach","2":"2019","3":"8.95"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="microcystin-correlation-2" class="section level3">
+<h3>Microcystin Correlation</h3>
+<p><img src="environment_files/figure-html/pH_correlation-1.png" width="672" /></p>
+</div>
+</div>
+<div id="cl" class="section level2 tabset tabset-pills">
+<h2>Cl</h2>
+<div id="year-average-3" class="section level3 tabset tabset-pills">
+<h3>Year Average</h3>
+<pre class="r"><code>Cl &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;Cl&quot;)][order(Location)]
+set(Cl, j = &quot;Cl&quot;, value = round(Cl$Cl, 2))</code></pre>
+<div id="graph-3" class="section level4">
+<h4>Graph</h4>
+<p><img src="environment_files/figure-html/Cl_graCl-1.png" width="672" /></p>
+</div>
+<div id="table-3" class="section level4">
+<h4>Table</h4>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["Cl"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"16.24"},{"1":"Backbone Beach","2":"2019","3":"15.41"},{"1":"Beed’s Lake Beach","2":"2018","3":"12.98"},{"1":"Beed’s Lake Beach","2":"2019","3":"12.66"},{"1":"Big Creek Beach","2":"2018","3":"17.05"},{"1":"Big Creek Beach","2":"2019","3":"17.41"},{"1":"Black Hawk Beach","2":"2018","3":"20.14"},{"1":"Black Hawk Beach","2":"2019","3":"17.81"},{"1":"Brushy Creek Beach","2":"2018","3":"16.82"},{"1":"Brushy Creek Beach","2":"2019","3":"16.00"},{"1":"Clear Lake Beach","2":"2018","3":"13.30"},{"1":"Clear Lake Beach","2":"2019","3":"12.53"},{"1":"Crandall’s Beach","2":"2018","3":"15.95"},{"1":"Crandall’s Beach","2":"2019","3":"12.95"},{"1":"Denison Beach","2":"2018","3":"19.76"},{"1":"Denison Beach","2":"2019","3":"17.82"},{"1":"Emerson Bay Beach","2":"2018","3":"21.59"},{"1":"Emerson Bay Beach","2":"2019","3":"23.04"},{"1":"George Wyth Beach","2":"2018","3":"50.05"},{"1":"George Wyth Beach","2":"2019","3":"34.61"},{"1":"Green Valley Beach","2":"2018","3":"9.54"},{"1":"Green Valley Beach","2":"2019","3":"6.78"},{"1":"Gull Point Beach","2":"2018","3":"21.67"},{"1":"Gull Point Beach","2":"2019","3":"22.90"},{"1":"Honey Creek Resort Beach","2":"2018","3":"8.82"},{"1":"Honey Creek Resort Beach","2":"2019","3":"7.22"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"3.89"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"2.10"},{"1":"Lake Ahquabi Beach","2":"2018","3":"9.11"},{"1":"Lake Ahquabi Beach","2":"2019","3":"10.16"},{"1":"Lake Anita Beach","2":"2018","3":"10.68"},{"1":"Lake Anita Beach","2":"2019","3":"7.89"},{"1":"Lake Darling Beach","2":"2018","3":"18.66"},{"1":"Lake Darling Beach","2":"2019","3":"10.58"},{"1":"Lake Keomah Beach","2":"2018","3":"17.66"},{"1":"Lake Keomah Beach","2":"2019","3":"10.20"},{"1":"Lake Macbride Beach","2":"2018","3":"28.46"},{"1":"Lake Macbride Beach","2":"2019","3":"22.12"},{"1":"Lake Manawa Beach","2":"2018","3":"27.53"},{"1":"Lake Manawa Beach","2":"2019","3":"28.11"},{"1":"Lake Wapello Beach","2":"2018","3":"3.25"},{"1":"Lake Wapello Beach","2":"2019","3":"3.36"},{"1":"Lake of Three Fires Beach","2":"2018","3":"7.67"},{"1":"Lake of Three Fires Beach","2":"2019","3":"3.83"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"9.05"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"12.45"},{"1":"Lower Pine Lake Beach","2":"2018","3":"12.41"},{"1":"Lower Pine Lake Beach","2":"2019","3":"14.31"},{"1":"McIntosh Woods Beach","2":"2018","3":"12.15"},{"1":"McIntosh Woods Beach","2":"2019","3":"12.32"},{"1":"Nine Eagles Beach","2":"2018","3":"0.02"},{"1":"Nine Eagles Beach","2":"2019","3":"1.46"},{"1":"North Twin Lake East Beach","2":"2018","3":"23.69"},{"1":"North Twin Lake East Beach","2":"2019","3":"18.31"},{"1":"North Twin Lake West Beach","2":"2018","3":"24.96"},{"1":"North Twin Lake West Beach","2":"2019","3":"18.47"},{"1":"Pike’s Point Beach","2":"2018","3":"22.23"},{"1":"Pike’s Point Beach","2":"2019","3":"22.70"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"6.63"},{"1":"Prairie Rose Beach","2":"2018","3":"12.06"},{"1":"Prairie Rose Beach","2":"2019","3":"10.43"},{"1":"Red Haw Beach","2":"2018","3":"5.75"},{"1":"Red Haw Beach","2":"2019","3":"5.36"},{"1":"Rock Creek Beach","2":"2018","3":"12.65"},{"1":"Rock Creek Beach","2":"2019","3":"11.01"},{"1":"Springbrook Beach","2":"2018","3":"9.80"},{"1":"Springbrook Beach","2":"2019","3":"7.77"},{"1":"Triboji Beach","2":"2018","3":"21.92"},{"1":"Triboji Beach","2":"2019","3":"23.11"},{"1":"Union Grove Beach","2":"2018","3":"12.54"},{"1":"Union Grove Beach","2":"2019","3":"11.65"},{"1":"Viking Lake Beach","2":"2018","3":"8.36"},{"1":"Viking Lake Beach","2":"2019","3":"7.20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="microcystin-correlation-3" class="section level3">
+<h3>Microcystin Correlation</h3>
+<p><img src="environment_files/figure-html/cl_correlation-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="lakes-by-weeks" class="section level1">
+<h1>Lakes by Weeks</h1>
+</div>
+
+<p><br>
+<br>
+<strong><a href="https://schuyler-smith.github.io/" target="_blank">Schuyler Smith</a></strong>
+<br>
+Ph.D. Student - Bioinformatics and Computational Biology<br>
+Iowa State University.  Ames, IA.</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

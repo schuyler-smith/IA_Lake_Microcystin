@@ -16,13 +16,30 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 <br>
 <br>
 
+## Locations {.tabset .tabset-pills}
+### Lakes
+```{r lake_table}
+lakes <- fread('../data/metadata/lakes.csv')
+```
+```{r lake_table_out, echo=FALSE}
+DT::datatable(lakes)
+```
+
+### Weather Stations
+```{r station_table}
+stations <- fread('../data/weather/wu_stations.csv')
+```
+```{r station_table_out, echo=FALSE}
+DT::datatable(stations)
+```
+
 ## Sample Metadata {.tabset .tabset-pills}
 
 ```{r metadata_legend}
 metadata_legend <- data.table::fread('../data/metadata/metadata_legend.csv')
 ```
 
-<button class="btn btn-primary" data-toggle="collapse" data-target="#metalegend"> Metadata Column Legend </button>  
+<button class="btn btn-primary" data-toggle="collapse" data-target="#metalegend"> Metadata Column Info </button>  
 <div id="metalegend" class="collapse"> 
 ```{r metadata_legend_out, echo=FALSE}
 DT::datatable(metadata_legend)
@@ -32,10 +49,6 @@ DT::datatable(metadata_legend)
 ### 2018
 ```{r 2018}
 metadata_2018 <- data.table::fread('../data/metadata/2018.csv')
-metadata_2018[, Risk := "No"]
-data.table::set(metadata_2018, which(metadata_2018$Microcystin > 1), "Risk", "Low")
-data.table::set(metadata_2018, which(metadata_2018$Microcystin >= 10), "Risk", "Moderate")
-data.table::set(metadata_2018, which(metadata_2018$Microcystin >= 50), "Risk", "High")
 ```
 
 ```{r 2018_out, echo=FALSE, cache=TRUE}
@@ -66,10 +79,6 @@ DT::datatable(metadata_2018, options = list(
 ### 2019
 ```{r 2019}
 metadata_2019 <- data.table::fread('../data/metadata/2019.csv')
-metadata_2019[, Risk := "No"]
-data.table::set(metadata_2019, which(metadata_2019$Microcystin > 1), "Risk", "Low")
-data.table::set(metadata_2019, which(metadata_2019$Microcystin >= 10), "Risk", "Moderate")
-data.table::set(metadata_2019, which(metadata_2019$Microcystin >= 50), "Risk", "High")
 ```
 
 ```{r 2019_out, echo=FALSE}
@@ -100,10 +109,6 @@ DT::datatable(metadata_2019, options = list(
 ### 2020
 ```{r 2020}
 metadata_2020 <- data.table::fread('../data/metadata/2020.csv')
-metadata_2020[, Risk := "No"]
-data.table::set(metadata_2020, which(metadata_2020$Microcystin > 1), "Risk", "Low")
-data.table::set(metadata_2020, which(metadata_2020$Microcystin >= 10), "Risk", "Moderate")
-data.table::set(metadata_2020, which(metadata_2020$Microcystin >= 50), "Risk", "High")
 ```
 
 ```{r 2020_out, echo=FALSE}
@@ -130,6 +135,31 @@ DT::datatable(metadata_2020, options = list(
 </a>
 <br>
 <br>
+
+### All
+```{r metadata}
+metadata <- rbind(metadata_2018, metadata_2019)
+set(metadata, j = "Date", value = as.Date(metadata$Date, "%m/%d/%Y"))
+set(metadata, j = "Year", value = factor(metadata$Year, levels = sort(unique(metadata$Year))))
+set(metadata, j = "Week", value = factor(metadata$Week, levels = sort(unique(metadata$Week))))
+setorder(metadata, Location, Year, Week)
+```
+
+
+## Risk Levels {.tabset .tabset-pills}
+```{r risk}
+metadata[, Risk := "No"]
+data.table::set(metadata, which(metadata$Microcystin >= 0.1), "Risk", "Low")
+data.table::set(metadata, which(metadata$Microcystin >= 10), "Risk", "Moderate")
+data.table::set(metadata, which(metadata$Microcystin >= 20), "Risk", "High")
+```
+
+```{r risk_samples}
+lake_risk <- rep("#33A02C", length(unique(metadata$Location)))
+lake_risk[metadata[, any(Risk %in% "Low"), by = Location]$V1] <- "#FFD92F"
+lake_risk[metadata[, any(Risk %in% "Moderate"), by = Location]$V1] <- "#FC8D62"
+lake_risk[metadata[, any(Risk %in% "High"), by = Location]$V1] <- "red"
+```
 
 
 ## Read Counts {.tabset .tabset-pills}
@@ -167,13 +197,12 @@ DT::datatable(read_counts[1:10, 1:4], options = list(
 
 ### Classifications
 ```{r create_classifications, eval=FALSE}
-classifications <- read_counts[[1]]
-classifications <- dada2::assignTaxonomy(classifications, '../data/16S_processing/databases/rdp_train_set_18.fa.gz')
-classifications <- dada2::assignTaxonomy(classifications, '../data/16S_processing/databases/silva_nr99_v138.1_train_set.fa.gz')
+classifications <- dada2::assignTaxonomy(read_counts[[1]], '../data/16S_processing/databases/rdp_train_set_18.fa.gz')
+classifications <- dada2::assignTaxonomy(read_counts[[1]], '../data/16S_processing/databases/silva_nr99_v138.1_train_set.fa.gz')
 ```
 
 ```{r classifications, echo=FALSE}
-classifications <- data.table::as.data.table(readRDS('../data/16S_processing/rdp_class.RDS'), keep.rownames = TRUE)
+classifications <- data.table::as.data.table(readRDS('../data/analysis_objects/rdp_class.RDS'), keep.rownames = TRUE)
 DT::datatable(classifications, options = list(
               autoWidth = TRUE,
               columnDefs = list(
@@ -197,24 +226,133 @@ DT::datatable(classifications, options = list(
 <br>
 <br>
 
+### Weather
+```{r weather}
+weather <- readRDS('../data/weather/weather.RDS')
+
+set(weather, weather[, .I[Station == "KIAMANSO3" &Date == "2019-08-06"]], 
+    names(weather)[-c(1:3)], 
+    weather[weather[, .I[Station == "KIAODEBO3" & Date == "2019-08-06"]],- c(1:3)])
+
+station = "KIAMYSTI2"
+date = lubridate::as_date("2018-08-08")
+paste0('https://www.wunderground.com/dashboard/pws/', station, '/table/', date, '/', date, '/daily')
+
+set(weather, 193L, names(weather), value = list("Crandall’s Beach", "KIASPIRI1", as.Date("2018-07-03"), 
+                                                80, 86.7, 68.5, 
+                                                77, 87, 67, 
+                                                72, 76, 64,
+                                                6.2, 13, 0,
+                                                12.9, 21,
+                                                0, 29.96, 29.86))
+set(weather, 330L, names(weather), value = list("Green Valley Beach", "KIACREST15", as.Date("2019-07-17"),
+                                                81.55, 92.7, 71.50,
+                                                82.51, 92, 72,
+                                                75.53, 82.40, 64,
+                                                5.54, 12.70, 0,
+                                                6.86, 15.60,
+                                                0, 30.05, 29.92))
+set(weather, 572L, names(weather), value = list("Lake Manawa Beach", "KNEBELLE19", as.Date("2018-07-24"), 
+                                                75.06, 85.80, 47, 
+                                                62.92, 92, 38,
+                                                60.34, 65.30, 34.90, 
+                                                1.25, 21.60, 0, 
+                                                5.02, 83.20,
+                                                0, 30.17, 30.10))
+set(weather, 602L, names(weather), value = list("Lake Wapello Beach", "KIAMYSTI2", as.Date("2018-07-25"), 
+                                                73.2, 86.5, 57.7,
+                                                69, 45, 96,
+                                                61.5, 67.1, 55.8,
+                                                1.5, 9, 0,
+                                                10, 2.7,
+                                                0, 30.09, 29.92))
+set(weather, 604L, names(weather), value = list("Lake Wapello Beach", "KIAMYSTI2", as.Date("2018-08-08"), 
+                                                75.11, 89.90, 60.10,
+                                                71.40, 98, 42,
+                                                63.56, 68.30, 59.20,
+                                                1.31, 6.60, 0,
+                                                2.55, 9.80,
+                                                0.01, 30, 29.90))
+set(weather, 606L, names(weather), value = list("Lake Wapello Beach", "KIAMYSTI2", as.Date("2018-08-20"), 
+                                                71.90, 76.10, 68.40,
+                                                88.14, 96, 73,
+                                                68.09, 70.20, 66.70,
+                                                1.4, 5, 0,
+                                                6.2, 12,
+                                                0.28, 29.81, 29.61))
+set(weather, 608L, names(weather), value = list("Lake Wapello Beach", "KIAMORAV3", as.Date("2018-05-30"), 
+                                                72.56, 83.10, 62.40,
+                                                72.62, 91, 56,
+                                                65.37, 68.90, 59,
+                                                4.23, 18, 0,
+                                                11.20, 29.75,
+                                                0.02, 29.76, 0))
+set(weather, 664L, names(weather), value = list("Lewis and Clark (Blue Lake) Beach", "KIAWHITI3", as.Date("2018-08-07"), 
+                                                70.94, 82.60, 33.70,
+                                                73.53, 91, 42,
+                                                63.92, 69.50, 59.20,
+                                                2.43, 11, 0,
+                                                0.1, 18,
+                                                0.1, 29.99, 29.90))
+set(weather, 669L, names(weather), value = list("Lewis and Clark (Blue Lake) Beach", "KIAWHITI3", as.Date("2018-06-05"), 
+                                                88.03, 95.60, 74.80,
+                                                43.59, 66, 30,
+                                                62.38, 65.20, 59.20,
+                                                4.65, 7, 2,
+                                                12.88, 18,
+                                                0, 29.80, 29.70))
+set(weather, 853L, names(weather), value = list("Pike’s Point Beach", "KIAMILFO3", as.Date("2018-07-03"), 
+                                                80, 86.7, 68.5, 
+                                                77, 87, 67, 
+                                                72, 76, 64,
+                                                6.2, 13, 0,
+                                                12.9, 21,
+                                                0, 29.96, 29.86))
+set(weather, 1018L, names(weather), value = list("Triboji Beach", "KIAMILFO3", as.Date("2018-07-03"), 
+                                                80, 86.7, 68.5, 
+                                                77, 87, 67, 
+                                                72, 76, 64,
+                                                6.2, 13, 0,
+                                                12.9, 21,
+                                                0, 29.96, 29.86))
+
+temp_F_to_C <- function(x, sig.fig=1){round((x-32)*(5/9),sig.fig)}
+
+set(weather, j = "avg_temp", value = temp_F_to_C(weather$avg_temp))
+set(weather, j = "high_temp", value = temp_F_to_C(weather$high_temp))
+set(weather, j = "low_temp", value = temp_F_to_C(weather$low_temp))
+set(weather, j = "avg_dew", value = temp_F_to_C(weather$avg_dew))
+set(weather, j = "high_dew", value = temp_F_to_C(weather$high_dew))
+set(weather, j = "low_dew", value = temp_F_to_C(weather$low_dew))
+set(weather, j = "avg_wind", value = round(weather$avg_wind/2.237,2))
+set(weather, j = "high_wind", value = round(weather$high_wind/2.237,2))
+set(weather, j = "low_wind", value = round(weather$low_wind/2.237,2))
+set(weather, j = "avg_gust", value = round(weather$avg_gust/2.237,2))
+set(weather, j = "high_gust", value = round(weather$high_gust/2.237,2))
+set(weather, j = "precip", value = round(weather$precip*2.54,3))
+```
+
 ### Cyanobacteria
 ```{r cyano, eval=FALSE}
-cyanobacteria <- classifications[Class == "Cyanobacteria"]
-cyanobacteria <- dada2::assignSpecies(cyanobacteria[[1]], '../data/16S_processing/databases/rdp_species_assignment_18.fa.gz')
+cyanobacteria <- dada2::assignSpecies(classifications[Class == "Cyanobacteria"][[1]], refFasta = '../data/16S_processing/databases/rdp_species_assignment_18.fa.gz', verbose = T)
 ```
 
 ## Phyloseq Object
-```{r phyloseq_object, eval=FALSE}
+```{r phyloseq_object}
 lake_po <- phyloseq::phyloseq(phyloseq::otu_table(as.matrix(read_counts[,-1]), TRUE),
                               phyloseq::tax_table(as.matrix(classifications)),
-                              phyloseq::sample_data(data.frame(rbind(
-                                metadata_2018,
-                                metadata_2019),
-                                row.names = 1)))
+                              phyloseq::sample_data(data.frame(unique(merge(metadata, weather,
+                                                                     by = c("Date", "Location"),
+                                                                     all.x = TRUE))
+                                                                     , row.names = 3)))
 ```
 
-```{r phyloseq_object_load, echo=FALSE}
-lake_po <- readRDS('../data/analysis_objects/lake_phyloseq_object.RDS')
+```{r phyloseq_object_out}
+lake_po
+```
+
+```{r phyloseq_object_save, echo=FALSE}
+saveRDS(lake_po, '../data/analysis_objects/lake_phyloseq_object.RDS')
 ```
 <a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/analysis_objects/lake_phyloseq_object.RDS" download target="_blank">
   Download
@@ -223,6 +361,75 @@ lake_po <- readRDS('../data/analysis_objects/lake_phyloseq_object.RDS')
 <br>
 
 
+## Maps
+```{r load_maps}
+iowa <- readRDS('../data/maps/iowa_terrain_map.RDS')
+iowa_bw <- readRDS('../data/maps/iowa_terrain_map_bw.RDS')
+```
 
+
+
+
+
+<!-- ## Weather {.tabset .tabset-pills} -->
+
+<!-- ```{r weather} -->
+<!-- stations <- fread('../data/metadata/weather/stations_nearest_lakes.csv') -->
+<!-- key <- fread('../data/metadata/weather/Weather_Key.csv') -->
+<!-- ``` -->
+
+<!-- ### 2018 -->
+<!-- ```{r weather_2018} -->
+<!-- raw <- fread('../data/metadata/weather/raw_data/2018_weather.csv') -->
+<!-- raw[, colnames(raw)[!(colnames(raw) %in% key$Flag)] := NULL] -->
+<!-- raw <- raw[STATION %in% stations$Station] -->
+<!-- raw[, Location := stations$Site[match(raw$STATION, stations$Station)]] -->
+<!-- raw <- merge(metadata[,c("Date", "Location")], raw, by.x = c("Date", "Location"), by.y = c("DATE", "Location")) -->
+<!-- write.csv(raw, "../data/metadata/weather/2018_weather.csv", quote = TRUE, row.names = FALSE) -->
+<!-- weather_2018 <- fread('../data/metadata/weather/2018_weather.csv') -->
+<!-- ``` -->
+
+<!-- ```{r weather_2018_out, echo=FALSE} -->
+<!-- datatable(weather_2018) -->
+<!-- ``` -->
+
+<!-- ### 2019 -->
+<!-- ```{r weather_2019} -->
+<!-- raw <- fread('../data/metadata/weather/raw_data/2019_weather.csv') -->
+<!-- raw[, colnames(raw)[!(colnames(raw) %in% key$Flag)] := NULL] -->
+<!-- raw <- raw[STATION %in% stations$Station] -->
+<!-- raw[, Location := stations$Site[match(raw$STATION, stations$Station)]] -->
+<!-- raw <- merge(metadata[,c("Date", "Location")], raw, by.x = c("Date", "Location"), by.y = c("DATE", "Location")) -->
+<!-- write.csv(raw, "../data/metadata/weather/2019_weather.csv", quote = TRUE, row.names = FALSE) -->
+<!-- weather_2019 <- fread('../data/metadata/weather/2019_weather.csv') -->
+<!-- ``` -->
+
+<!-- ```{r weather_2019_out, echo=FALSE} -->
+<!-- datatable(weather_2019) -->
+<!-- ``` -->
+
+<!-- ### 2020 -->
+<!-- ```{r weather_2020} -->
+<!-- raw <- fread('../data/metadata/weather/raw_data/2020_weather.csv') -->
+<!-- raw[, colnames(raw)[!(colnames(raw) %in% key$Flag)] := NULL] -->
+<!-- raw <- raw[STATION %in% stations$Station] -->
+<!-- raw[, Location := stations$Site[match(raw$STATION, stations$Station)]] -->
+<!-- raw <- merge(metadata[,c("Date", "Location")], raw,  -->
+<!--              by.x = c("Date", "Location"),  -->
+<!--              by.y = c("DATE", "Location")) -->
+<!-- write.csv(raw, "../data/metadata/weather/2020_weather.csv", quote = TRUE, row.names = FALSE) -->
+<!-- weather_2020 <- fread('../data/metadata/weather/2020_weather.csv') -->
+<!-- ``` -->
+
+<!-- ```{r weather_2020_out, echo=FALSE} -->
+<!-- datatable(weather_2020) -->
+<!-- ``` -->
+
+<!-- ### All -->
+
+<!-- ```{r all_weather} -->
+<!-- weather <- rbind(weather_2018, weather_2019) -->
+<!-- # weather[,c(colnames(weather)[apply(weather, 2, FUN = function(x)sum(is.na(x))) > 600], "STATION", "NAME") := NULL] -->
+<!-- ``` -->
 
 

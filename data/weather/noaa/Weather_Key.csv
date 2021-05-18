@@ -1,0 +1,19 @@
+Flag,Details
+STATION,NOAA weather station ID
+NAME,Name of station location
+LATITUDE,Geographical latitude
+LONGITUDE,Geographical longitude
+ELEVATION,Geographical elevation
+DATE,calendar date
+TAVG,Average Temperature
+TMAX,Maximum temperature
+TMIN,Minimum temperature
+TOBS,Temperature at the time of observation
+PRCP,Precipitation
+MDPR,Number of days included in the multiday precipitation total
+EVAP,Evaporation of water from evaporation pan
+SNOW,Snowfall
+AWND,Average wind speed
+WSFG,Peak gust wind speed
+WSF5,Fastest 5-second wind speed
+WSF2,Fastest 2-minute wind speed

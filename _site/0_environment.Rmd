@@ -19,6 +19,7 @@ library(schuylR)
 library(ssBLAST)
 library(phylosmith)
 library(DT)
+library(DECIPHER)
 ```
 
 ## R-Functions {.tabset .tabset-pills}
