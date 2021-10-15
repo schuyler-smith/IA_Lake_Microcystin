@@ -69,6 +69,11 @@ DT::datatable(metadata_2018, options = list(
             )
           )
 )
+metadata_2018 <- metadata_2018[!(File %in% c("18-1-21940001", "18-1-21940001-3", 
+                                             "18-1-21940001-A-1", "18-1-21940001-A-2", 
+                                             "18-1-21940001-B-2", "18-2-21170001",
+                                             "18-2-21170001-A-1", "18-2-21170001-B-1", "18-2-21170002-3"
+))]
 ```
 <a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/metadata/2018.csv" download target="_blank">
   Download
@@ -150,8 +155,8 @@ setorder(metadata, Location, Year, Week)
 ```{r risk}
 metadata[, Risk := "No"]
 data.table::set(metadata, which(metadata$Microcystin >= 0.1), "Risk", "Low")
-data.table::set(metadata, which(metadata$Microcystin >= 10), "Risk", "Moderate")
-data.table::set(metadata, which(metadata$Microcystin >= 20), "Risk", "High")
+data.table::set(metadata, which(metadata$Microcystin >= 1), "Risk", "Moderate")
+data.table::set(metadata, which(metadata$Microcystin >= 8), "Risk", "High")
 ```
 
 ```{r risk_samples}
@@ -229,107 +234,73 @@ DT::datatable(classifications, options = list(
 ### Weather
 ```{r weather}
 weather <- readRDS('../data/weather/weather.RDS')
+```
 
-set(weather, weather[, .I[Station == "KIAMANSO3" &Date == "2019-08-06"]], 
-    names(weather)[-c(1:3)], 
-    weather[weather[, .I[Station == "KIAODEBO3" & Date == "2019-08-06"]],- c(1:3)])
+#### Stations
+```{r weather_stations}
+station_coords <- fread('../data/weather/station_locations.csv')
+station_dist <- dist(data.frame(station_coords[,c("Latitude", "Longitude")],
+                                row.names = station_coords$Station))
+station_dist <- as.data.table(as.matrix(station_dist))
+neighbors <- station_dist[, lapply(.SD, order)]
+for(col in colnames(neighbors)){set(neighbors, j = col, value = colnames(neighbors)[neighbors[[col]]])}
+```
 
-station = "KIAMYSTI2"
-date = lubridate::as_date("2018-08-08")
-paste0('https://www.wunderground.com/dashboard/pws/', station, '/table/', date, '/', date, '/daily')
+#### Impute Missing Days
+```{r imputation}
+k=2
+set(weather, weather[,.I[low_temp > (mean(low_temp, na.rm=T)*1.25)], by=Date]$V1,
+    c("low_temp", "avg_temp"), NA)
+set(weather, weather[,.I[low_temp < (mean(low_temp, na.rm=T)*0.75)], by=Date]$V1,
+    c("low_temp", "avg_temp"), NA)
+set(weather, weather[,.I[high_temp > (mean(high_temp, na.rm=T)*1.25)], by=Date]$V1,
+    c("high_temp", "avg_temp"), NA)
+set(weather, weather[,.I[high_temp < (mean(high_temp, na.rm=T)*0.75)], by=Date]$V1,
+    c("high_temp", "avg_temp"), NA)
+numeric_cols <- colnames(weather)[sapply(weather, is.numeric)]
+for(i in weather[,.I[!complete.cases(.SD)], .SDcols=numeric_cols]){
+  na_cols <- numeric_cols[!(weather[i,lapply(.SD, complete.cases), .SDcols=numeric_cols])]
+  station <- weather[i]$Station
+  i_neighbors <- neighbors[,station, with=FALSE]
+  i_neighbors <- i_neighbors[get(station) %in% weather[Date == weather[i]$Date]$Station]
+  set(weather, as.integer(i), na_cols, 
+      unique(weather[Date == weather[i]$Date][Station %in% unlist(i_neighbors[2:(k+1)])][,na_cols,with=F])[,lapply(.SD, mean, na.rm=TRUE), .SDcols = na_cols])
+}
+setorder(weather, Location, -Date)
+```
 
-set(weather, 193L, names(weather), value = list("Crandall’s Beach", "KIASPIRI1", as.Date("2018-07-03"), 
-                                                80, 86.7, 68.5, 
-                                                77, 87, 67, 
-                                                72, 76, 64,
-                                                6.2, 13, 0,
-                                                12.9, 21,
-                                                0, 29.96, 29.86))
-set(weather, 330L, names(weather), value = list("Green Valley Beach", "KIACREST15", as.Date("2019-07-17"),
-                                                81.55, 92.7, 71.50,
-                                                82.51, 92, 72,
-                                                75.53, 82.40, 64,
-                                                5.54, 12.70, 0,
-                                                6.86, 15.60,
-                                                0, 30.05, 29.92))
-set(weather, 572L, names(weather), value = list("Lake Manawa Beach", "KNEBELLE19", as.Date("2018-07-24"), 
-                                                75.06, 85.80, 47, 
-                                                62.92, 92, 38,
-                                                60.34, 65.30, 34.90, 
-                                                1.25, 21.60, 0, 
-                                                5.02, 83.20,
-                                                0, 30.17, 30.10))
-set(weather, 602L, names(weather), value = list("Lake Wapello Beach", "KIAMYSTI2", as.Date("2018-07-25"), 
-                                                73.2, 86.5, 57.7,
-                                                69, 45, 96,
-                                                61.5, 67.1, 55.8,
-                                                1.5, 9, 0,
-                                                10, 2.7,
-                                                0, 30.09, 29.92))
-set(weather, 604L, names(weather), value = list("Lake Wapello Beach", "KIAMYSTI2", as.Date("2018-08-08"), 
-                                                75.11, 89.90, 60.10,
-                                                71.40, 98, 42,
-                                                63.56, 68.30, 59.20,
-                                                1.31, 6.60, 0,
-                                                2.55, 9.80,
-                                                0.01, 30, 29.90))
-set(weather, 606L, names(weather), value = list("Lake Wapello Beach", "KIAMYSTI2", as.Date("2018-08-20"), 
-                                                71.90, 76.10, 68.40,
-                                                88.14, 96, 73,
-                                                68.09, 70.20, 66.70,
-                                                1.4, 5, 0,
-                                                6.2, 12,
-                                                0.28, 29.81, 29.61))
-set(weather, 608L, names(weather), value = list("Lake Wapello Beach", "KIAMORAV3", as.Date("2018-05-30"), 
-                                                72.56, 83.10, 62.40,
-                                                72.62, 91, 56,
-                                                65.37, 68.90, 59,
-                                                4.23, 18, 0,
-                                                11.20, 29.75,
-                                                0.02, 29.76, 0))
-set(weather, 664L, names(weather), value = list("Lewis and Clark (Blue Lake) Beach", "KIAWHITI3", as.Date("2018-08-07"), 
-                                                70.94, 82.60, 33.70,
-                                                73.53, 91, 42,
-                                                63.92, 69.50, 59.20,
-                                                2.43, 11, 0,
-                                                0.1, 18,
-                                                0.1, 29.99, 29.90))
-set(weather, 669L, names(weather), value = list("Lewis and Clark (Blue Lake) Beach", "KIAWHITI3", as.Date("2018-06-05"), 
-                                                88.03, 95.60, 74.80,
-                                                43.59, 66, 30,
-                                                62.38, 65.20, 59.20,
-                                                4.65, 7, 2,
-                                                12.88, 18,
-                                                0, 29.80, 29.70))
-set(weather, 853L, names(weather), value = list("Pike’s Point Beach", "KIAMILFO3", as.Date("2018-07-03"), 
-                                                80, 86.7, 68.5, 
-                                                77, 87, 67, 
-                                                72, 76, 64,
-                                                6.2, 13, 0,
-                                                12.9, 21,
-                                                0, 29.96, 29.86))
-set(weather, 1018L, names(weather), value = list("Triboji Beach", "KIAMILFO3", as.Date("2018-07-03"), 
-                                                80, 86.7, 68.5, 
-                                                77, 87, 67, 
-                                                72, 76, 64,
-                                                6.2, 13, 0,
-                                                12.9, 21,
-                                                0, 29.96, 29.86))
+#### Weekly Averages
+```{r weekly_weather}
+weather <- cbind(Year = factor(levels = unique(metadata$Year)), weather)
+weather <- cbind(Week = factor(levels = unique(metadata$Week)), weather)
+for(date in rev(sort(unique(metadata$Date)))){
+  set(weather, weather[,.I[Date <= date]], 'Week', value = unique(metadata[Date == date]$Week))
+  set(weather, weather[,.I[Date <= date]], 'Year', value = unique(metadata[Date == date]$Year))
+}
+colsToMean <- colnames(weather)[-c(1:5,20)]
+colsToSum <- colnames(weather)[c(20)]  
+scols <- list(colsToMean, colsToSum)
+funs <- rep(c('mean', 'sum'), lengths(scols))
+jexp <- paste0('list(', paste0(unlist(scols), "=", funs, '(', unlist(scols), ')', collapse = ', '), ')')
+weather <- weather[, eval(parse(text = jexp)), by = c('Week', 'Year', 'Location')]
+```
 
-temp_F_to_C <- function(x, sig.fig=1){round((x-32)*(5/9),sig.fig)}
-
-set(weather, j = "avg_temp", value = temp_F_to_C(weather$avg_temp))
-set(weather, j = "high_temp", value = temp_F_to_C(weather$high_temp))
-set(weather, j = "low_temp", value = temp_F_to_C(weather$low_temp))
-set(weather, j = "avg_dew", value = temp_F_to_C(weather$avg_dew))
-set(weather, j = "high_dew", value = temp_F_to_C(weather$high_dew))
-set(weather, j = "low_dew", value = temp_F_to_C(weather$low_dew))
-set(weather, j = "avg_wind", value = round(weather$avg_wind/2.237,2))
-set(weather, j = "high_wind", value = round(weather$high_wind/2.237,2))
-set(weather, j = "low_wind", value = round(weather$low_wind/2.237,2))
-set(weather, j = "avg_gust", value = round(weather$avg_gust/2.237,2))
-set(weather, j = "high_gust", value = round(weather$high_gust/2.237,2))
-set(weather, j = "precip", value = round(weather$precip*2.54,3))
+#### Conversion to C
+```{r weather_conversion}
+# temp_F_to_C <- function(x, sig.fig=1){round((x-32)*(5/9),sig.fig)}
+# 
+# set(weather, j = "avg_temp", value = temp_F_to_C(weather$avg_temp))
+# set(weather, j = "high_temp", value = temp_F_to_C(weather$high_temp))
+# set(weather, j = "low_temp", value = temp_F_to_C(weather$low_temp))
+# set(weather, j = "avg_dew", value = temp_F_to_C(weather$avg_dew))
+# set(weather, j = "high_dew", value = temp_F_to_C(weather$high_dew))
+# set(weather, j = "low_dew", value = temp_F_to_C(weather$low_dew))
+# set(weather, j = "avg_wind", value = round(weather$avg_wind/2.237,2))
+# set(weather, j = "high_wind", value = round(weather$high_wind/2.237,2))
+# set(weather, j = "low_wind", value = round(weather$low_wind/2.237,2))
+# set(weather, j = "avg_gust", value = round(weather$avg_gust/2.237,2))
+# set(weather, j = "high_gust", value = round(weather$high_gust/2.237,2))
+# set(weather, j = "precip", value = round(weather$precip*2.54,3))
 ```
 
 ### Cyanobacteria
@@ -339,20 +310,46 @@ cyanobacteria <- dada2::assignSpecies(classifications[Class == "Cyanobacteria"][
 
 ## Phyloseq Object
 ```{r phyloseq_object}
-lake_po <- phyloseq::phyloseq(phyloseq::otu_table(as.matrix(read_counts[,-1]), TRUE),
-                              phyloseq::tax_table(as.matrix(classifications)),
-                              phyloseq::sample_data(data.frame(unique(merge(metadata, weather,
-                                                                     by = c("Date", "Location"),
-                                                                     all.x = TRUE))
-                                                                     , row.names = 3)))
+seqs_2018 <- readRDS('../data/16S_processing/dada2/seqtab_2018.RDS')
+taxa_silva_2018 <- readRDS('../data/16S_processing/dada2/taxa_silva_species_2018.RDS')
+taxa_rdp_2018 <- readRDS('../data/16S_processing/dada2/taxa_rdp_species_2018.RDS')
+
+seqs_2019 <- readRDS('../data/16S_processing/dada2/seqtab_2019.RDS')
+taxa_silva_2019 <- readRDS('../data/16S_processing/dada2/taxa_silva_species_2019.RDS')
+taxa_rdp_2019 <- readRDS('../data/16S_processing/dada2/taxa_rdp_species_2019.RDS')
+
+sample_data <- data.frame(unique(merge(metadata, weather,
+                          by = c("Location", "Week", "Year"),
+                          all.x = TRUE)), row.naΓmes = 4)
+
+ps_2018 <- phyloseq::phyloseq(phyloseq::otu_table(seqs_2018, taxa_are_rows=FALSE), 
+                         phyloseq::tax_table(taxa_silva_2018),
+                         phyloseq::sample_data(data.frame(sample_data, row.names = "File")))
+ps_2019 <- phyloseq::phyloseq(phyloseq::otu_table(seqs_2019, taxa_are_rows=FALSE), 
+                         phyloseq::tax_table(taxa_silva_2019),
+                         phyloseq::sample_data(data.frame(sample_data, row.names = "File")))
+
+lake_po <- phyloseq::merge_phyloseq(ps_2018, ps_2019)
+lake_po <- phyloseq::subset_samples(lake_po, sample_sums(lake_po) >= 10000)
+low_taxa <- taxa_sums(conglomerate_taxa(lake_po, "Phylum", FALSE))
+low_taxa <- names(low_taxa[low_taxa < 1000])
+lake_po <- taxa_prune(lake_po, low_taxa, "Phylum", na.rm = TRUE)
+lake_po <- taxa_prune(lake_po, c("Chloroplast", "Mitochondria"))
+lake_po <- taxa_filter(lake_po)
 ```
 
 ```{r phyloseq_object_out}
 lake_po
 ```
 
+```{r phyla, echo=FALSE}
+Phyla <- as.data.table(as(lake_po@tax_table, 'matrix'), keep.rownames = "ASV")
+Phyla <- unique(Phyla$Phylum)
+Phyla <- Phyla[c(3,1,2,5,4,6,10,8,9,11,12,14,7,13,15:length(Phyla))][1:16]
+```
+
 ```{r phyloseq_object_save, echo=FALSE}
-saveRDS(lake_po, '../data/analysis_objects/lake_phyloseq_object.RDS')
+# saveRDS(lake_po, '../data/analysis_objects/lake_phyloseq_object.RDS')
 ```
 <a href="https://github.com/schuyler-smith/IA_Lake_Microcystin/raw/master/data/analysis_objects/lake_phyloseq_object.RDS" download target="_blank">
   Download

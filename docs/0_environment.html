@@ -11,11 +11,12 @@
 
 <meta name="author" content="Schuyler D. Smith" />
 
-<meta name="date" content="2021-05-18" />
+<meta name="date" content="2021-10-14" />
 
 <title>_Environment</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -305,12 +306,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -329,55 +330,62 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="sequencing.html">
-    <span class="fas fa-dna"></span>
+    <span class="fa fa-dna"></span>
      
     Sequencing
   </a>
 </li>
 <li>
   <a href="sample_analysis.html">
-    <span class="fas fa-database"></span>
+    <span class="fa fa-database"></span>
      
     Samples
   </a>
 </li>
 <li>
   <a href="weather.html">
-    <span class="fas fa-cloud"></span>
+    <span class="fa fa-cloud"></span>
      
     Weather
   </a>
 </li>
 <li>
   <a href="molecular.html">
-    <span class="fas fa-atom"></span>
+    <span class="fa fa-atom"></span>
      
     Molecular
   </a>
 </li>
 <li>
+  <a href="microbiome.html">
+    <span class="fa fa-bacteria"></span>
+     
+    Microbiome
+  </a>
+</li>
+<li>
   <a href="data.html">
-    <span class="fas fa-database"></span>
+    <span class="fa fa-database"></span>
      
     Data
   </a>
 </li>
 <li>
   <a href="packages_and_functions.html">
-    <span class="fas fa-box-open"></span>
+    <span class="fa fa-box-open"></span>
      
     Packages
   </a>
 </li>
 <li>
   <a href="https://github.com/schuyler-smith/DARTE-QM/">
-    <span class="fas fa-code"></span>
+    <span class="fa fa-code"></span>
      
     Source Code
   </a>
@@ -392,19 +400,19 @@ div.tocify {
 </li>
 <li>
   <a href="http://germslab.org/">
-    <span class="fas fa-flask"></span>
+    <span class="fa fa-flask"></span>
      
   </a>
 </li>
 <li>
   <a href="https://www.bcb.iastate.edu/people/schuyler-smith">
-    <span class="fas fa-university"></span>
+    <span class="fa fa-university"></span>
      
   </a>
 </li>
 <li>
   <a href="mailto:sdsmith@iastate.edu">
-    <span class="fas fa-envelope fa-lg"></span>
+    <span class="fa fa-envelope fa-lg"></span>
      
   </a>
 </li>
@@ -419,26 +427,13 @@ div.tocify {
 
 <h1 class="title toc-ignore">_Environment</h1>
 <h4 class="author"><a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a></h4>
-<h4 class="date">2021-05-18</h4>
+<h4 class="date">2021-10-14</h4>
 
 </div>
 
 
-<pre class="r"><code>library(ggplot2)
-library(plotly)
-library(ggpubr)
-library(Rcpp)
-library(vegan)
-library(data.table)
-library(ggh4x)
-library(phyloseq)
-library(schuylR)
-library(ssBLAST)
-library(phylosmith)
-library(DT)
-library(DECIPHER)</code></pre>
 <div id="r-functions" class="section level2 tabset tabset-pills">
-<h2>R-Functions</h2>
+<h2 class="tabset tabset-pills">R-Functions</h2>
 <pre class="r"><code>construct_ASVtable &lt;- function(files, p.threshold = 1){
   if (length(files) == 1 &amp;&amp; dir.exists(files)) {
     files &lt;- gsub(&quot;/$&quot;, &quot;&quot;, files)
@@ -471,48 +466,19 @@ library(DECIPHER)</code></pre>
                      fill = 0)
   return(ASV_table)
 }
-
-rarefy &lt;- function(data, n){
-  col_names &lt;- colnames(data)
-  rarefied_table &lt;- data.table(categories=data[[1]])
-  for(sample in seq(ncol(data)-1)+1){
-    rarvec &lt;- vector()
-    for(i in seq(length(data[[sample]]))){
-      rarvec &lt;- c(rarvec, rep(i, data[[sample]][i]))
+gm_mean = function(x, na.rm=TRUE, zero.propagate = FALSE){
+  if(any(x &lt; 0, na.rm = TRUE)){
+    return(NaN)
+  }
+  if(zero.propagate){
+    if(any(x == 0, na.rm = TRUE)){
+      return(0)
     }
-    subsample &lt;- sample(rarvec, n, replace=FALSE)
-    subsample &lt;- table(subsample)
-    subsample &lt;- merge(data.frame(index = seq(length(data[[sample]]))), 
-                       data.table(subsample), by = 1, all = TRUE)[,2]
-    subsample[is.na(subsample)] &lt;- 0
-    rarefied_table &lt;- cbind(rarefied_table, subsample)
+    exp(mean(log(x), na.rm = na.rm))
+  } else {
+    exp(sum(log(x[x &gt; 0]), na.rm=na.rm) / length(x))
   }
-  colnames(rarefied_table) &lt;- c(col_names)
-  return(rarefied_table)
 }
-
-rarefaction &lt;- function(data, max_n=NA, intervals=10){
-  if(is.na(max_n)){max_n &lt;- min(colSums(data[,-1]))}
-  n_categories &lt;- vector()
-  n &lt;- vector()
-  for(i in seq(intervals, max_n, intervals)){
-    n &lt;- c(n, i)
-    n_categories &lt;- c(n_categories, sum(rowSums(rarefy(data, i)[,-1]) &gt; 0))
-  }
-  return(data.frame(n=n, counts=n_categories))
-}
-
-rarefaction_curve &lt;- function(data, max_n=NA, intervals=10, iter = 100){
-  rarefied_counts &lt;- data.frame()
-  for(i in seq(iter)){
-    rarefied_counts &lt;- rbind(rarefied_counts, 
-                             rarefaction(data, max_n, intervals))}
-  g &lt;- ggplot(rarefied_counts, aes_string(x=&quot;n&quot;, y=&quot;counts&quot;)) + 
-    geom_smooth(formula=y ~ x, method=&quot;loess&quot;, se=TRUE, fullrange=TRUE, level=0.95, color=&#39;black&#39;) + 
-    theme_bw()
-  return(g)
-}
-
 replace_DT_NA=function(DT) {
   for (j in seq_len(ncol(DT)))
     set(DT,which(is.na(DT[[j]])),j,0)
@@ -563,6 +529,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

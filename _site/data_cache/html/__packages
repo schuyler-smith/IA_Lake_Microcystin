@@ -13,3 +13,13 @@ schuylR
 ssBLAST
 phylosmith
 DT
+BiocGenerics
+S4Vectors
+IRanges
+XVector
+GenomeInfoDb
+Biostrings
+RSQLite
+DECIPHER
+igraph
+ggraph

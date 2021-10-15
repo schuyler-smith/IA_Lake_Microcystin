@@ -11,11 +11,12 @@
 
 <meta name="author" content="Schuyler D. Smith" />
 
-<meta name="date" content="2021-05-18" />
+<meta name="date" content="2021-10-14" />
 
 <title>Molecular Analysis</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -311,12 +312,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -335,55 +336,62 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="sequencing.html">
-    <span class="fas fa-dna"></span>
+    <span class="fa fa-dna"></span>
      
     Sequencing
   </a>
 </li>
 <li>
   <a href="sample_analysis.html">
-    <span class="fas fa-database"></span>
+    <span class="fa fa-database"></span>
      
     Samples
   </a>
 </li>
 <li>
   <a href="weather.html">
-    <span class="fas fa-cloud"></span>
+    <span class="fa fa-cloud"></span>
      
     Weather
   </a>
 </li>
 <li>
   <a href="molecular.html">
-    <span class="fas fa-atom"></span>
+    <span class="fa fa-atom"></span>
      
     Molecular
   </a>
 </li>
 <li>
+  <a href="microbiome.html">
+    <span class="fa fa-bacteria"></span>
+     
+    Microbiome
+  </a>
+</li>
+<li>
   <a href="data.html">
-    <span class="fas fa-database"></span>
+    <span class="fa fa-database"></span>
      
     Data
   </a>
 </li>
 <li>
   <a href="packages_and_functions.html">
-    <span class="fas fa-box-open"></span>
+    <span class="fa fa-box-open"></span>
      
     Packages
   </a>
 </li>
 <li>
   <a href="https://github.com/schuyler-smith/DARTE-QM/">
-    <span class="fas fa-code"></span>
+    <span class="fa fa-code"></span>
      
     Source Code
   </a>
@@ -398,19 +406,19 @@ div.tocify {
 </li>
 <li>
   <a href="http://germslab.org/">
-    <span class="fas fa-flask"></span>
+    <span class="fa fa-flask"></span>
      
   </a>
 </li>
 <li>
   <a href="https://www.bcb.iastate.edu/people/schuyler-smith">
-    <span class="fas fa-university"></span>
+    <span class="fa fa-university"></span>
      
   </a>
 </li>
 <li>
   <a href="mailto:sdsmith@iastate.edu">
-    <span class="fas fa-envelope fa-lg"></span>
+    <span class="fa fa-envelope fa-lg"></span>
      
   </a>
 </li>
@@ -433,7 +441,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Molecular Analysis</h1>
 <h4 class="author"><a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a></h4>
-<h4 class="date">2021-05-18</h4>
+<h4 class="date">2021-10-14</h4>
 
 </div>
 
@@ -442,9 +450,9 @@ div.tocify {
 <div id="abiotic-factors" class="section level1">
 <h1>Abiotic Factors</h1>
 <div id="no2" class="section level2 tabset tabset-pills">
-<h2>NO2</h2>
+<h2 class="tabset tabset-pills">NO2</h2>
 <div id="year-average" class="section level3 tabset tabset-pills">
-<h3>Year Average</h3>
+<h3 class="tabset tabset-pills">Year Average</h3>
 <pre class="r"><code>nitrogen &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;NO2&quot;)][order(Location)]
 set(nitrogen, j = &quot;NO2&quot;, value = round(nitrogen$NO2, 3))</code></pre>
 <div id="graph" class="section level4">
@@ -455,7 +463,7 @@ set(nitrogen, j = &quot;NO2&quot;, value = round(nitrogen$NO2, 3))</code></pre>
 <h4>Table</h4>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["NO2"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"0.054"},{"1":"Backbone Beach","2":"2019","3":"0.050"},{"1":"Beed’s Lake Beach","2":"2018","3":"0.066"},{"1":"Beed’s Lake Beach","2":"2019","3":"0.061"},{"1":"Big Creek Beach","2":"2018","3":"0.067"},{"1":"Big Creek Beach","2":"2019","3":"0.069"},{"1":"Black Hawk Beach","2":"2018","3":"0.033"},{"1":"Black Hawk Beach","2":"2019","3":"0.069"},{"1":"Brushy Creek Beach","2":"2018","3":"0.068"},{"1":"Brushy Creek Beach","2":"2019","3":"0.078"},{"1":"Clear Lake Beach","2":"2018","3":"0.005"},{"1":"Clear Lake Beach","2":"2019","3":"0.016"},{"1":"Crandall’s Beach","2":"2018","3":"0.011"},{"1":"Crandall’s Beach","2":"2019","3":"0.009"},{"1":"Denison Beach","2":"2018","3":"0.035"},{"1":"Denison Beach","2":"2019","3":"0.045"},{"1":"Emerson Bay Beach","2":"2018","3":"0.067"},{"1":"Emerson Bay Beach","2":"2019","3":"0.007"},{"1":"George Wyth Beach","2":"2018","3":"-0.003"},{"1":"George Wyth Beach","2":"2019","3":"0.014"},{"1":"Green Valley Beach","2":"2018","3":"0.003"},{"1":"Green Valley Beach","2":"2019","3":"0.031"},{"1":"Gull Point Beach","2":"2018","3":"0.003"},{"1":"Gull Point Beach","2":"2019","3":"0.002"},{"1":"Honey Creek Resort Beach","2":"2018","3":"0.063"},{"1":"Honey Creek Resort Beach","2":"2019","3":"0.049"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"0.005"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"0.016"},{"1":"Lake Ahquabi Beach","2":"2018","3":"0.004"},{"1":"Lake Ahquabi Beach","2":"2019","3":"0.016"},{"1":"Lake Anita Beach","2":"2018","3":"-0.001"},{"1":"Lake Anita Beach","2":"2019","3":"0.009"},{"1":"Lake Darling Beach","2":"2018","3":"0.035"},{"1":"Lake Darling Beach","2":"2019","3":"0.056"},{"1":"Lake Keomah Beach","2":"2018","3":"0.011"},{"1":"Lake Keomah Beach","2":"2019","3":"0.069"},{"1":"Lake Macbride Beach","2":"2018","3":"0.002"},{"1":"Lake Macbride Beach","2":"2019","3":"0.039"},{"1":"Lake Manawa Beach","2":"2018","3":"0.005"},{"1":"Lake Manawa Beach","2":"2019","3":"0.010"},{"1":"Lake Wapello Beach","2":"2018","3":"0.005"},{"1":"Lake Wapello Beach","2":"2019","3":"0.014"},{"1":"Lake of Three Fires Beach","2":"2018","3":"0.020"},{"1":"Lake of Three Fires Beach","2":"2019","3":"0.030"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"0.002"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"0.012"},{"1":"Lower Pine Lake Beach","2":"2018","3":"0.089"},{"1":"Lower Pine Lake Beach","2":"2019","3":"0.117"},{"1":"McIntosh Woods Beach","2":"2018","3":"0.006"},{"1":"McIntosh Woods Beach","2":"2019","3":"0.015"},{"1":"Nine Eagles Beach","2":"2018","3":"0.002"},{"1":"Nine Eagles Beach","2":"2019","3":"0.007"},{"1":"North Twin Lake East Beach","2":"2018","3":"0.010"},{"1":"North Twin Lake East Beach","2":"2019","3":"0.013"},{"1":"North Twin Lake West Beach","2":"2018","3":"0.012"},{"1":"North Twin Lake West Beach","2":"2019","3":"0.015"},{"1":"Pike’s Point Beach","2":"2018","3":"0.004"},{"1":"Pike’s Point Beach","2":"2019","3":"0.004"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"0.003"},{"1":"Prairie Rose Beach","2":"2018","3":"0.006"},{"1":"Prairie Rose Beach","2":"2019","3":"0.011"},{"1":"Red Haw Beach","2":"2018","3":"0.019"},{"1":"Red Haw Beach","2":"2019","3":"0.008"},{"1":"Rock Creek Beach","2":"2018","3":"0.126"},{"1":"Rock Creek Beach","2":"2019","3":"0.087"},{"1":"Springbrook Beach","2":"2018","3":"0.075"},{"1":"Springbrook Beach","2":"2019","3":"0.067"},{"1":"Triboji Beach","2":"2018","3":"0.007"},{"1":"Triboji Beach","2":"2019","3":"0.009"},{"1":"Union Grove Beach","2":"2018","3":"0.055"},{"1":"Union Grove Beach","2":"2019","3":"0.076"},{"1":"Viking Lake Beach","2":"2018","3":"-0.002"},{"1":"Viking Lake Beach","2":"2019","3":"0.008"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["NO2"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"0.054"},{"1":"Backbone Beach","2":"2019","3":"0.050"},{"1":"Beed's Lake Beach","2":"2018","3":"0.066"},{"1":"Beed's Lake Beach","2":"2019","3":"0.061"},{"1":"Big Creek Beach","2":"2018","3":"0.067"},{"1":"Big Creek Beach","2":"2019","3":"0.069"},{"1":"Black Hawk Beach","2":"2018","3":"0.033"},{"1":"Black Hawk Beach","2":"2019","3":"0.069"},{"1":"Brushy Creek Beach","2":"2018","3":"0.105"},{"1":"Brushy Creek Beach","2":"2019","3":"0.078"},{"1":"Clear Lake Beach","2":"2018","3":"0.006"},{"1":"Clear Lake Beach","2":"2019","3":"0.016"},{"1":"Crandall's Beach","2":"2018","3":"0.011"},{"1":"Crandall's Beach","2":"2019","3":"0.009"},{"1":"Denison Beach","2":"2018","3":"0.035"},{"1":"Denison Beach","2":"2019","3":"0.045"},{"1":"Emerson Bay Beach","2":"2018","3":"0.067"},{"1":"Emerson Bay Beach","2":"2019","3":"0.007"},{"1":"George Wyth Beach","2":"2018","3":"-0.003"},{"1":"George Wyth Beach","2":"2019","3":"0.014"},{"1":"Green Valley Beach","2":"2018","3":"0.003"},{"1":"Green Valley Beach","2":"2019","3":"0.031"},{"1":"Gull Point Beach","2":"2018","3":"0.003"},{"1":"Gull Point Beach","2":"2019","3":"0.002"},{"1":"Honey Creek Resort Beach","2":"2018","3":"0.063"},{"1":"Honey Creek Resort Beach","2":"2019","3":"0.049"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"0.005"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"0.016"},{"1":"Lake Ahquabi Beach","2":"2018","3":"0.004"},{"1":"Lake Ahquabi Beach","2":"2019","3":"0.016"},{"1":"Lake Anita Beach","2":"2018","3":"-0.001"},{"1":"Lake Anita Beach","2":"2019","3":"0.009"},{"1":"Lake Darling Beach","2":"2018","3":"0.035"},{"1":"Lake Darling Beach","2":"2019","3":"0.056"},{"1":"Lake Keomah Beach","2":"2018","3":"0.011"},{"1":"Lake Keomah Beach","2":"2019","3":"0.069"},{"1":"Lake Macbride Beach","2":"2018","3":"0.002"},{"1":"Lake Macbride Beach","2":"2019","3":"0.039"},{"1":"Lake Manawa Beach","2":"2018","3":"0.005"},{"1":"Lake Manawa Beach","2":"2019","3":"0.010"},{"1":"Lake Wapello Beach","2":"2018","3":"0.005"},{"1":"Lake Wapello Beach","2":"2019","3":"0.014"},{"1":"Lake of Three Fires Beach","2":"2018","3":"0.020"},{"1":"Lake of Three Fires Beach","2":"2019","3":"0.030"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"0.002"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"0.012"},{"1":"Lower Pine Lake Beach","2":"2018","3":"0.089"},{"1":"Lower Pine Lake Beach","2":"2019","3":"0.117"},{"1":"McIntosh Woods Beach","2":"2018","3":"0.006"},{"1":"McIntosh Woods Beach","2":"2019","3":"0.015"},{"1":"Nine Eagles Beach","2":"2018","3":"0.002"},{"1":"Nine Eagles Beach","2":"2019","3":"0.007"},{"1":"North Twin Lake East Beach","2":"2018","3":"0.010"},{"1":"North Twin Lake East Beach","2":"2019","3":"0.013"},{"1":"North Twin Lake West Beach","2":"2018","3":"0.012"},{"1":"North Twin Lake West Beach","2":"2019","3":"0.015"},{"1":"Pike's Point Beach","2":"2018","3":"0.004"},{"1":"Pike's Point Beach","2":"2019","3":"0.004"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"0.003"},{"1":"Prairie Rose Beach","2":"2018","3":"0.006"},{"1":"Prairie Rose Beach","2":"2019","3":"0.011"},{"1":"Red Haw Beach","2":"2018","3":"0.019"},{"1":"Red Haw Beach","2":"2019","3":"0.008"},{"1":"Rock Creek Beach","2":"2018","3":"0.126"},{"1":"Rock Creek Beach","2":"2019","3":"0.087"},{"1":"Springbrook Beach","2":"2018","3":"0.075"},{"1":"Springbrook Beach","2":"2019","3":"0.067"},{"1":"Triboji Beach","2":"2018","3":"0.007"},{"1":"Triboji Beach","2":"2019","3":"0.009"},{"1":"Union Grove Beach","2":"2018","3":"0.055"},{"1":"Union Grove Beach","2":"2019","3":"0.076"},{"1":"Viking Lake Beach","2":"2018","3":"-0.002"},{"1":"Viking Lake Beach","2":"2019","3":"0.008"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -466,9 +474,9 @@ set(nitrogen, j = &quot;NO2&quot;, value = round(nitrogen$NO2, 3))</code></pre>
 </div>
 </div>
 <div id="nh3" class="section level2 tabset tabset-pills">
-<h2>NH3</h2>
+<h2 class="tabset tabset-pills">NH3</h2>
 <div id="year-average-1" class="section level3 tabset tabset-pills">
-<h3>Year Average</h3>
+<h3 class="tabset tabset-pills">Year Average</h3>
 <pre class="r"><code>NH3 &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;NH3&quot;)][order(Location)]
 set(NH3, j = &quot;NH3&quot;, value = round(NH3$NH3, 3))</code></pre>
 <div id="graph-1" class="section level4">
@@ -479,7 +487,7 @@ set(NH3, j = &quot;NH3&quot;, value = round(NH3$NH3, 3))</code></pre>
 <h4>Table</h4>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["NH3"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"0.064"},{"1":"Backbone Beach","2":"2019","3":"0.368"},{"1":"Beed’s Lake Beach","2":"2018","3":"0.260"},{"1":"Beed’s Lake Beach","2":"2019","3":"0.352"},{"1":"Big Creek Beach","2":"2018","3":"0.015"},{"1":"Big Creek Beach","2":"2019","3":"0.368"},{"1":"Black Hawk Beach","2":"2018","3":"0.018"},{"1":"Black Hawk Beach","2":"2019","3":"0.344"},{"1":"Brushy Creek Beach","2":"2018","3":"0.105"},{"1":"Brushy Creek Beach","2":"2019","3":"0.337"},{"1":"Clear Lake Beach","2":"2018","3":"0.306"},{"1":"Clear Lake Beach","2":"2019","3":"0.345"},{"1":"Crandall’s Beach","2":"2018","3":"0.185"},{"1":"Crandall’s Beach","2":"2019","3":"0.389"},{"1":"Denison Beach","2":"2018","3":"0.012"},{"1":"Denison Beach","2":"2019","3":"0.347"},{"1":"Emerson Bay Beach","2":"2018","3":"0.084"},{"1":"Emerson Bay Beach","2":"2019","3":"0.203"},{"1":"George Wyth Beach","2":"2018","3":"0.021"},{"1":"George Wyth Beach","2":"2019","3":"0.135"},{"1":"Green Valley Beach","2":"2018","3":"0.126"},{"1":"Green Valley Beach","2":"2019","3":"0.346"},{"1":"Gull Point Beach","2":"2018","3":"0.248"},{"1":"Gull Point Beach","2":"2019","3":"0.251"},{"1":"Honey Creek Resort Beach","2":"2018","3":"0.568"},{"1":"Honey Creek Resort Beach","2":"2019","3":"0.647"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"0.226"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"0.245"},{"1":"Lake Ahquabi Beach","2":"2018","3":"0.267"},{"1":"Lake Ahquabi Beach","2":"2019","3":"0.279"},{"1":"Lake Anita Beach","2":"2018","3":"0.019"},{"1":"Lake Anita Beach","2":"2019","3":"0.289"},{"1":"Lake Darling Beach","2":"2018","3":"0.263"},{"1":"Lake Darling Beach","2":"2019","3":"0.454"},{"1":"Lake Keomah Beach","2":"2018","3":"0.239"},{"1":"Lake Keomah Beach","2":"2019","3":"0.240"},{"1":"Lake Macbride Beach","2":"2018","3":"0.073"},{"1":"Lake Macbride Beach","2":"2019","3":"0.211"},{"1":"Lake Manawa Beach","2":"2018","3":"0.050"},{"1":"Lake Manawa Beach","2":"2019","3":"0.317"},{"1":"Lake Wapello Beach","2":"2018","3":"0.148"},{"1":"Lake Wapello Beach","2":"2019","3":"0.238"},{"1":"Lake of Three Fires Beach","2":"2018","3":"0.024"},{"1":"Lake of Three Fires Beach","2":"2019","3":"0.299"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"0.057"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"0.383"},{"1":"Lower Pine Lake Beach","2":"2018","3":"0.190"},{"1":"Lower Pine Lake Beach","2":"2019","3":"0.364"},{"1":"McIntosh Woods Beach","2":"2018","3":"0.083"},{"1":"McIntosh Woods Beach","2":"2019","3":"0.327"},{"1":"Nine Eagles Beach","2":"2018","3":"0.254"},{"1":"Nine Eagles Beach","2":"2019","3":"0.275"},{"1":"North Twin Lake East Beach","2":"2018","3":"0.103"},{"1":"North Twin Lake East Beach","2":"2019","3":"0.533"},{"1":"North Twin Lake West Beach","2":"2018","3":"0.092"},{"1":"North Twin Lake West Beach","2":"2019","3":"0.535"},{"1":"Pike’s Point Beach","2":"2018","3":"0.108"},{"1":"Pike’s Point Beach","2":"2019","3":"0.371"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"0.341"},{"1":"Prairie Rose Beach","2":"2018","3":"0.052"},{"1":"Prairie Rose Beach","2":"2019","3":"0.317"},{"1":"Red Haw Beach","2":"2018","3":"0.298"},{"1":"Red Haw Beach","2":"2019","3":"0.367"},{"1":"Rock Creek Beach","2":"2018","3":"0.353"},{"1":"Rock Creek Beach","2":"2019","3":"0.419"},{"1":"Springbrook Beach","2":"2018","3":"0.142"},{"1":"Springbrook Beach","2":"2019","3":"0.368"},{"1":"Triboji Beach","2":"2018","3":"0.223"},{"1":"Triboji Beach","2":"2019","3":"0.407"},{"1":"Union Grove Beach","2":"2018","3":"0.102"},{"1":"Union Grove Beach","2":"2019","3":"0.333"},{"1":"Viking Lake Beach","2":"2018","3":"0.017"},{"1":"Viking Lake Beach","2":"2019","3":"0.484"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["NH3"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"0.064"},{"1":"Backbone Beach","2":"2019","3":"0.368"},{"1":"Beed's Lake Beach","2":"2018","3":"0.260"},{"1":"Beed's Lake Beach","2":"2019","3":"0.352"},{"1":"Big Creek Beach","2":"2018","3":"0.015"},{"1":"Big Creek Beach","2":"2019","3":"0.368"},{"1":"Black Hawk Beach","2":"2018","3":"0.018"},{"1":"Black Hawk Beach","2":"2019","3":"0.344"},{"1":"Brushy Creek Beach","2":"2018","3":"0.120"},{"1":"Brushy Creek Beach","2":"2019","3":"0.337"},{"1":"Clear Lake Beach","2":"2018","3":"0.397"},{"1":"Clear Lake Beach","2":"2019","3":"0.345"},{"1":"Crandall's Beach","2":"2018","3":"0.185"},{"1":"Crandall's Beach","2":"2019","3":"0.389"},{"1":"Denison Beach","2":"2018","3":"0.012"},{"1":"Denison Beach","2":"2019","3":"0.347"},{"1":"Emerson Bay Beach","2":"2018","3":"0.084"},{"1":"Emerson Bay Beach","2":"2019","3":"0.203"},{"1":"George Wyth Beach","2":"2018","3":"0.021"},{"1":"George Wyth Beach","2":"2019","3":"0.135"},{"1":"Green Valley Beach","2":"2018","3":"0.126"},{"1":"Green Valley Beach","2":"2019","3":"0.346"},{"1":"Gull Point Beach","2":"2018","3":"0.248"},{"1":"Gull Point Beach","2":"2019","3":"0.251"},{"1":"Honey Creek Resort Beach","2":"2018","3":"0.568"},{"1":"Honey Creek Resort Beach","2":"2019","3":"0.647"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"0.226"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"0.245"},{"1":"Lake Ahquabi Beach","2":"2018","3":"0.267"},{"1":"Lake Ahquabi Beach","2":"2019","3":"0.279"},{"1":"Lake Anita Beach","2":"2018","3":"0.019"},{"1":"Lake Anita Beach","2":"2019","3":"0.289"},{"1":"Lake Darling Beach","2":"2018","3":"0.263"},{"1":"Lake Darling Beach","2":"2019","3":"0.454"},{"1":"Lake Keomah Beach","2":"2018","3":"0.239"},{"1":"Lake Keomah Beach","2":"2019","3":"0.240"},{"1":"Lake Macbride Beach","2":"2018","3":"0.073"},{"1":"Lake Macbride Beach","2":"2019","3":"0.211"},{"1":"Lake Manawa Beach","2":"2018","3":"0.050"},{"1":"Lake Manawa Beach","2":"2019","3":"0.317"},{"1":"Lake Wapello Beach","2":"2018","3":"0.148"},{"1":"Lake Wapello Beach","2":"2019","3":"0.238"},{"1":"Lake of Three Fires Beach","2":"2018","3":"0.024"},{"1":"Lake of Three Fires Beach","2":"2019","3":"0.299"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"0.057"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"0.383"},{"1":"Lower Pine Lake Beach","2":"2018","3":"0.190"},{"1":"Lower Pine Lake Beach","2":"2019","3":"0.364"},{"1":"McIntosh Woods Beach","2":"2018","3":"0.083"},{"1":"McIntosh Woods Beach","2":"2019","3":"0.327"},{"1":"Nine Eagles Beach","2":"2018","3":"0.254"},{"1":"Nine Eagles Beach","2":"2019","3":"0.275"},{"1":"North Twin Lake East Beach","2":"2018","3":"0.103"},{"1":"North Twin Lake East Beach","2":"2019","3":"0.533"},{"1":"North Twin Lake West Beach","2":"2018","3":"0.092"},{"1":"North Twin Lake West Beach","2":"2019","3":"0.535"},{"1":"Pike's Point Beach","2":"2018","3":"0.108"},{"1":"Pike's Point Beach","2":"2019","3":"0.371"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"0.341"},{"1":"Prairie Rose Beach","2":"2018","3":"0.052"},{"1":"Prairie Rose Beach","2":"2019","3":"0.317"},{"1":"Red Haw Beach","2":"2018","3":"0.298"},{"1":"Red Haw Beach","2":"2019","3":"0.367"},{"1":"Rock Creek Beach","2":"2018","3":"0.353"},{"1":"Rock Creek Beach","2":"2019","3":"0.419"},{"1":"Springbrook Beach","2":"2018","3":"0.142"},{"1":"Springbrook Beach","2":"2019","3":"0.368"},{"1":"Triboji Beach","2":"2018","3":"0.223"},{"1":"Triboji Beach","2":"2019","3":"0.407"},{"1":"Union Grove Beach","2":"2018","3":"0.102"},{"1":"Union Grove Beach","2":"2019","3":"0.333"},{"1":"Viking Lake Beach","2":"2018","3":"0.017"},{"1":"Viking Lake Beach","2":"2019","3":"0.484"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -490,9 +498,9 @@ set(NH3, j = &quot;NH3&quot;, value = round(NH3$NH3, 3))</code></pre>
 </div>
 </div>
 <div id="ph" class="section level2 tabset tabset-pills">
-<h2>pH</h2>
+<h2 class="tabset tabset-pills">pH</h2>
 <div id="year-average-2" class="section level3 tabset tabset-pills">
-<h3>Year Average</h3>
+<h3 class="tabset tabset-pills">Year Average</h3>
 <pre class="r"><code>pH &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;pH&quot;)][order(Location)]
 set(pH, j = &quot;pH&quot;, value = round(pH$pH, 2))</code></pre>
 <div id="graph-2" class="section level4">
@@ -503,7 +511,7 @@ set(pH, j = &quot;pH&quot;, value = round(pH$pH, 2))</code></pre>
 <h4>Table</h4>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["pH"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"8.12"},{"1":"Backbone Beach","2":"2019","3":"8.00"},{"1":"Beed’s Lake Beach","2":"2018","3":"8.10"},{"1":"Beed’s Lake Beach","2":"2019","3":"8.20"},{"1":"Big Creek Beach","2":"2018","3":"8.38"},{"1":"Big Creek Beach","2":"2019","3":"8.22"},{"1":"Black Hawk Beach","2":"2018","3":"8.54"},{"1":"Black Hawk Beach","2":"2019","3":"8.47"},{"1":"Brushy Creek Beach","2":"2018","3":"8.20"},{"1":"Brushy Creek Beach","2":"2019","3":"8.04"},{"1":"Clear Lake Beach","2":"2018","3":"8.29"},{"1":"Clear Lake Beach","2":"2019","3":"8.34"},{"1":"Crandall’s Beach","2":"2018","3":"8.39"},{"1":"Crandall’s Beach","2":"2019","3":"8.44"},{"1":"Denison Beach","2":"2018","3":"8.56"},{"1":"Denison Beach","2":"2019","3":"8.48"},{"1":"Emerson Bay Beach","2":"2018","3":"8.22"},{"1":"Emerson Bay Beach","2":"2019","3":"8.32"},{"1":"George Wyth Beach","2":"2018","3":"8.74"},{"1":"George Wyth Beach","2":"2019","3":"8.32"},{"1":"Green Valley Beach","2":"2018","3":"8.39"},{"1":"Green Valley Beach","2":"2019","3":"9.49"},{"1":"Gull Point Beach","2":"2018","3":"8.20"},{"1":"Gull Point Beach","2":"2019","3":"8.28"},{"1":"Honey Creek Resort Beach","2":"2018","3":"8.41"},{"1":"Honey Creek Resort Beach","2":"2019","3":"8.21"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"8.31"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"7.99"},{"1":"Lake Ahquabi Beach","2":"2018","3":"8.50"},{"1":"Lake Ahquabi Beach","2":"2019","3":"8.67"},{"1":"Lake Anita Beach","2":"2018","3":"8.33"},{"1":"Lake Anita Beach","2":"2019","3":"8.54"},{"1":"Lake Darling Beach","2":"2018","3":"8.80"},{"1":"Lake Darling Beach","2":"2019","3":"8.81"},{"1":"Lake Keomah Beach","2":"2018","3":"9.11"},{"1":"Lake Keomah Beach","2":"2019","3":"9.02"},{"1":"Lake Macbride Beach","2":"2018","3":"8.61"},{"1":"Lake Macbride Beach","2":"2019","3":"8.78"},{"1":"Lake Manawa Beach","2":"2018","3":"8.23"},{"1":"Lake Manawa Beach","2":"2019","3":"8.47"},{"1":"Lake Wapello Beach","2":"2018","3":"8.44"},{"1":"Lake Wapello Beach","2":"2019","3":"8.23"},{"1":"Lake of Three Fires Beach","2":"2018","3":"8.62"},{"1":"Lake of Three Fires Beach","2":"2019","3":"9.20"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"8.36"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"8.34"},{"1":"Lower Pine Lake Beach","2":"2018","3":"8.41"},{"1":"Lower Pine Lake Beach","2":"2019","3":"8.42"},{"1":"McIntosh Woods Beach","2":"2018","3":"8.38"},{"1":"McIntosh Woods Beach","2":"2019","3":"8.50"},{"1":"Nine Eagles Beach","2":"2018","3":"8.61"},{"1":"Nine Eagles Beach","2":"2019","3":"8.31"},{"1":"North Twin Lake East Beach","2":"2018","3":"8.40"},{"1":"North Twin Lake East Beach","2":"2019","3":"8.16"},{"1":"North Twin Lake West Beach","2":"2018","3":"8.31"},{"1":"North Twin Lake West Beach","2":"2019","3":"8.18"},{"1":"Pike’s Point Beach","2":"2018","3":"8.31"},{"1":"Pike’s Point Beach","2":"2019","3":"8.28"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"8.32"},{"1":"Prairie Rose Beach","2":"2018","3":"8.66"},{"1":"Prairie Rose Beach","2":"2019","3":"8.85"},{"1":"Red Haw Beach","2":"2018","3":"8.03"},{"1":"Red Haw Beach","2":"2019","3":"8.16"},{"1":"Rock Creek Beach","2":"2018","3":"8.30"},{"1":"Rock Creek Beach","2":"2019","3":"8.29"},{"1":"Springbrook Beach","2":"2018","3":"8.47"},{"1":"Springbrook Beach","2":"2019","3":"8.53"},{"1":"Triboji Beach","2":"2018","3":"8.25"},{"1":"Triboji Beach","2":"2019","3":"8.27"},{"1":"Union Grove Beach","2":"2018","3":"8.64"},{"1":"Union Grove Beach","2":"2019","3":"8.31"},{"1":"Viking Lake Beach","2":"2018","3":"8.45"},{"1":"Viking Lake Beach","2":"2019","3":"8.95"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["pH"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"8.12"},{"1":"Backbone Beach","2":"2019","3":"8.00"},{"1":"Beed's Lake Beach","2":"2018","3":"8.10"},{"1":"Beed's Lake Beach","2":"2019","3":"8.20"},{"1":"Big Creek Beach","2":"2018","3":"8.38"},{"1":"Big Creek Beach","2":"2019","3":"8.22"},{"1":"Black Hawk Beach","2":"2018","3":"8.54"},{"1":"Black Hawk Beach","2":"2019","3":"8.47"},{"1":"Brushy Creek Beach","2":"2018","3":"8.24"},{"1":"Brushy Creek Beach","2":"2019","3":"8.04"},{"1":"Clear Lake Beach","2":"2018","3":"8.35"},{"1":"Clear Lake Beach","2":"2019","3":"8.34"},{"1":"Crandall's Beach","2":"2018","3":"8.39"},{"1":"Crandall's Beach","2":"2019","3":"8.44"},{"1":"Denison Beach","2":"2018","3":"8.56"},{"1":"Denison Beach","2":"2019","3":"8.48"},{"1":"Emerson Bay Beach","2":"2018","3":"8.22"},{"1":"Emerson Bay Beach","2":"2019","3":"8.32"},{"1":"George Wyth Beach","2":"2018","3":"8.74"},{"1":"George Wyth Beach","2":"2019","3":"8.32"},{"1":"Green Valley Beach","2":"2018","3":"8.39"},{"1":"Green Valley Beach","2":"2019","3":"9.49"},{"1":"Gull Point Beach","2":"2018","3":"8.20"},{"1":"Gull Point Beach","2":"2019","3":"8.28"},{"1":"Honey Creek Resort Beach","2":"2018","3":"8.41"},{"1":"Honey Creek Resort Beach","2":"2019","3":"8.21"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"8.31"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"7.99"},{"1":"Lake Ahquabi Beach","2":"2018","3":"8.50"},{"1":"Lake Ahquabi Beach","2":"2019","3":"8.67"},{"1":"Lake Anita Beach","2":"2018","3":"8.33"},{"1":"Lake Anita Beach","2":"2019","3":"8.54"},{"1":"Lake Darling Beach","2":"2018","3":"8.80"},{"1":"Lake Darling Beach","2":"2019","3":"8.81"},{"1":"Lake Keomah Beach","2":"2018","3":"9.11"},{"1":"Lake Keomah Beach","2":"2019","3":"9.02"},{"1":"Lake Macbride Beach","2":"2018","3":"8.61"},{"1":"Lake Macbride Beach","2":"2019","3":"8.78"},{"1":"Lake Manawa Beach","2":"2018","3":"8.23"},{"1":"Lake Manawa Beach","2":"2019","3":"8.47"},{"1":"Lake Wapello Beach","2":"2018","3":"8.44"},{"1":"Lake Wapello Beach","2":"2019","3":"8.23"},{"1":"Lake of Three Fires Beach","2":"2018","3":"8.62"},{"1":"Lake of Three Fires Beach","2":"2019","3":"9.20"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"8.36"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"8.34"},{"1":"Lower Pine Lake Beach","2":"2018","3":"8.41"},{"1":"Lower Pine Lake Beach","2":"2019","3":"8.42"},{"1":"McIntosh Woods Beach","2":"2018","3":"8.38"},{"1":"McIntosh Woods Beach","2":"2019","3":"8.50"},{"1":"Nine Eagles Beach","2":"2018","3":"8.61"},{"1":"Nine Eagles Beach","2":"2019","3":"8.31"},{"1":"North Twin Lake East Beach","2":"2018","3":"8.40"},{"1":"North Twin Lake East Beach","2":"2019","3":"8.16"},{"1":"North Twin Lake West Beach","2":"2018","3":"8.31"},{"1":"North Twin Lake West Beach","2":"2019","3":"8.18"},{"1":"Pike's Point Beach","2":"2018","3":"8.31"},{"1":"Pike's Point Beach","2":"2019","3":"8.28"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"8.32"},{"1":"Prairie Rose Beach","2":"2018","3":"8.66"},{"1":"Prairie Rose Beach","2":"2019","3":"8.85"},{"1":"Red Haw Beach","2":"2018","3":"8.03"},{"1":"Red Haw Beach","2":"2019","3":"8.16"},{"1":"Rock Creek Beach","2":"2018","3":"8.30"},{"1":"Rock Creek Beach","2":"2019","3":"8.29"},{"1":"Springbrook Beach","2":"2018","3":"8.47"},{"1":"Springbrook Beach","2":"2019","3":"8.53"},{"1":"Triboji Beach","2":"2018","3":"8.25"},{"1":"Triboji Beach","2":"2019","3":"8.27"},{"1":"Union Grove Beach","2":"2018","3":"8.64"},{"1":"Union Grove Beach","2":"2019","3":"8.31"},{"1":"Viking Lake Beach","2":"2018","3":"8.45"},{"1":"Viking Lake Beach","2":"2019","3":"8.95"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -514,9 +522,9 @@ set(pH, j = &quot;pH&quot;, value = round(pH$pH, 2))</code></pre>
 </div>
 </div>
 <div id="cl" class="section level2 tabset tabset-pills">
-<h2>Cl</h2>
+<h2 class="tabset tabset-pills">Cl</h2>
 <div id="year-average-3" class="section level3 tabset tabset-pills">
-<h3>Year Average</h3>
+<h3 class="tabset tabset-pills">Year Average</h3>
 <pre class="r"><code>Cl &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;Cl&quot;)][order(Location)]
 set(Cl, j = &quot;Cl&quot;, value = round(Cl$Cl, 2))</code></pre>
 <div id="graph-3" class="section level4">
@@ -527,7 +535,7 @@ set(Cl, j = &quot;Cl&quot;, value = round(Cl$Cl, 2))</code></pre>
 <h4>Table</h4>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["Cl"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"16.24"},{"1":"Backbone Beach","2":"2019","3":"15.41"},{"1":"Beed’s Lake Beach","2":"2018","3":"12.98"},{"1":"Beed’s Lake Beach","2":"2019","3":"12.66"},{"1":"Big Creek Beach","2":"2018","3":"17.05"},{"1":"Big Creek Beach","2":"2019","3":"17.41"},{"1":"Black Hawk Beach","2":"2018","3":"20.14"},{"1":"Black Hawk Beach","2":"2019","3":"17.81"},{"1":"Brushy Creek Beach","2":"2018","3":"16.82"},{"1":"Brushy Creek Beach","2":"2019","3":"16.00"},{"1":"Clear Lake Beach","2":"2018","3":"13.30"},{"1":"Clear Lake Beach","2":"2019","3":"12.53"},{"1":"Crandall’s Beach","2":"2018","3":"15.95"},{"1":"Crandall’s Beach","2":"2019","3":"12.95"},{"1":"Denison Beach","2":"2018","3":"19.76"},{"1":"Denison Beach","2":"2019","3":"17.82"},{"1":"Emerson Bay Beach","2":"2018","3":"21.59"},{"1":"Emerson Bay Beach","2":"2019","3":"23.04"},{"1":"George Wyth Beach","2":"2018","3":"50.05"},{"1":"George Wyth Beach","2":"2019","3":"34.61"},{"1":"Green Valley Beach","2":"2018","3":"9.54"},{"1":"Green Valley Beach","2":"2019","3":"6.78"},{"1":"Gull Point Beach","2":"2018","3":"21.67"},{"1":"Gull Point Beach","2":"2019","3":"22.90"},{"1":"Honey Creek Resort Beach","2":"2018","3":"8.82"},{"1":"Honey Creek Resort Beach","2":"2019","3":"7.22"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"3.89"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"2.10"},{"1":"Lake Ahquabi Beach","2":"2018","3":"9.11"},{"1":"Lake Ahquabi Beach","2":"2019","3":"10.16"},{"1":"Lake Anita Beach","2":"2018","3":"10.68"},{"1":"Lake Anita Beach","2":"2019","3":"7.89"},{"1":"Lake Darling Beach","2":"2018","3":"18.66"},{"1":"Lake Darling Beach","2":"2019","3":"10.58"},{"1":"Lake Keomah Beach","2":"2018","3":"17.66"},{"1":"Lake Keomah Beach","2":"2019","3":"10.20"},{"1":"Lake Macbride Beach","2":"2018","3":"28.46"},{"1":"Lake Macbride Beach","2":"2019","3":"22.12"},{"1":"Lake Manawa Beach","2":"2018","3":"27.53"},{"1":"Lake Manawa Beach","2":"2019","3":"28.11"},{"1":"Lake Wapello Beach","2":"2018","3":"3.25"},{"1":"Lake Wapello Beach","2":"2019","3":"3.36"},{"1":"Lake of Three Fires Beach","2":"2018","3":"7.67"},{"1":"Lake of Three Fires Beach","2":"2019","3":"3.83"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"9.05"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"12.45"},{"1":"Lower Pine Lake Beach","2":"2018","3":"12.41"},{"1":"Lower Pine Lake Beach","2":"2019","3":"14.31"},{"1":"McIntosh Woods Beach","2":"2018","3":"12.15"},{"1":"McIntosh Woods Beach","2":"2019","3":"12.32"},{"1":"Nine Eagles Beach","2":"2018","3":"0.02"},{"1":"Nine Eagles Beach","2":"2019","3":"1.46"},{"1":"North Twin Lake East Beach","2":"2018","3":"23.69"},{"1":"North Twin Lake East Beach","2":"2019","3":"18.31"},{"1":"North Twin Lake West Beach","2":"2018","3":"24.96"},{"1":"North Twin Lake West Beach","2":"2019","3":"18.47"},{"1":"Pike’s Point Beach","2":"2018","3":"22.23"},{"1":"Pike’s Point Beach","2":"2019","3":"22.70"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"6.63"},{"1":"Prairie Rose Beach","2":"2018","3":"12.06"},{"1":"Prairie Rose Beach","2":"2019","3":"10.43"},{"1":"Red Haw Beach","2":"2018","3":"5.75"},{"1":"Red Haw Beach","2":"2019","3":"5.36"},{"1":"Rock Creek Beach","2":"2018","3":"12.65"},{"1":"Rock Creek Beach","2":"2019","3":"11.01"},{"1":"Springbrook Beach","2":"2018","3":"9.80"},{"1":"Springbrook Beach","2":"2019","3":"7.77"},{"1":"Triboji Beach","2":"2018","3":"21.92"},{"1":"Triboji Beach","2":"2019","3":"23.11"},{"1":"Union Grove Beach","2":"2018","3":"12.54"},{"1":"Union Grove Beach","2":"2019","3":"11.65"},{"1":"Viking Lake Beach","2":"2018","3":"8.36"},{"1":"Viking Lake Beach","2":"2019","3":"7.20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["fct"],"align":["left"]},{"label":["Cl"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Backbone Beach","2":"2018","3":"16.24"},{"1":"Backbone Beach","2":"2019","3":"15.41"},{"1":"Beed's Lake Beach","2":"2018","3":"12.98"},{"1":"Beed's Lake Beach","2":"2019","3":"12.66"},{"1":"Big Creek Beach","2":"2018","3":"17.05"},{"1":"Big Creek Beach","2":"2019","3":"17.41"},{"1":"Black Hawk Beach","2":"2018","3":"20.14"},{"1":"Black Hawk Beach","2":"2019","3":"17.81"},{"1":"Brushy Creek Beach","2":"2018","3":"14.52"},{"1":"Brushy Creek Beach","2":"2019","3":"16.00"},{"1":"Clear Lake Beach","2":"2018","3":"13.08"},{"1":"Clear Lake Beach","2":"2019","3":"12.53"},{"1":"Crandall's Beach","2":"2018","3":"15.95"},{"1":"Crandall's Beach","2":"2019","3":"12.95"},{"1":"Denison Beach","2":"2018","3":"19.76"},{"1":"Denison Beach","2":"2019","3":"17.82"},{"1":"Emerson Bay Beach","2":"2018","3":"21.59"},{"1":"Emerson Bay Beach","2":"2019","3":"23.04"},{"1":"George Wyth Beach","2":"2018","3":"50.05"},{"1":"George Wyth Beach","2":"2019","3":"34.61"},{"1":"Green Valley Beach","2":"2018","3":"9.54"},{"1":"Green Valley Beach","2":"2019","3":"6.78"},{"1":"Gull Point Beach","2":"2018","3":"21.67"},{"1":"Gull Point Beach","2":"2019","3":"22.90"},{"1":"Honey Creek Resort Beach","2":"2018","3":"8.82"},{"1":"Honey Creek Resort Beach","2":"2019","3":"7.22"},{"1":"Lacey-Keosauqua Beach","2":"2018","3":"3.89"},{"1":"Lacey-Keosauqua Beach","2":"2019","3":"2.10"},{"1":"Lake Ahquabi Beach","2":"2018","3":"9.11"},{"1":"Lake Ahquabi Beach","2":"2019","3":"10.16"},{"1":"Lake Anita Beach","2":"2018","3":"10.68"},{"1":"Lake Anita Beach","2":"2019","3":"7.89"},{"1":"Lake Darling Beach","2":"2018","3":"18.66"},{"1":"Lake Darling Beach","2":"2019","3":"10.58"},{"1":"Lake Keomah Beach","2":"2018","3":"17.66"},{"1":"Lake Keomah Beach","2":"2019","3":"10.20"},{"1":"Lake Macbride Beach","2":"2018","3":"28.46"},{"1":"Lake Macbride Beach","2":"2019","3":"22.12"},{"1":"Lake Manawa Beach","2":"2018","3":"27.53"},{"1":"Lake Manawa Beach","2":"2019","3":"28.11"},{"1":"Lake Wapello Beach","2":"2018","3":"3.25"},{"1":"Lake Wapello Beach","2":"2019","3":"3.36"},{"1":"Lake of Three Fires Beach","2":"2018","3":"7.67"},{"1":"Lake of Three Fires Beach","2":"2019","3":"3.83"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2018","3":"9.05"},{"1":"Lewis and Clark (Blue Lake) Beach","2":"2019","3":"12.45"},{"1":"Lower Pine Lake Beach","2":"2018","3":"12.41"},{"1":"Lower Pine Lake Beach","2":"2019","3":"14.31"},{"1":"McIntosh Woods Beach","2":"2018","3":"12.15"},{"1":"McIntosh Woods Beach","2":"2019","3":"12.32"},{"1":"Nine Eagles Beach","2":"2018","3":"0.02"},{"1":"Nine Eagles Beach","2":"2019","3":"1.46"},{"1":"North Twin Lake East Beach","2":"2018","3":"23.69"},{"1":"North Twin Lake East Beach","2":"2019","3":"18.31"},{"1":"North Twin Lake West Beach","2":"2018","3":"24.96"},{"1":"North Twin Lake West Beach","2":"2019","3":"18.47"},{"1":"Pike's Point Beach","2":"2018","3":"22.23"},{"1":"Pike's Point Beach","2":"2019","3":"22.70"},{"1":"Pleasant Creek Lake Beach","2":"2019","3":"6.63"},{"1":"Prairie Rose Beach","2":"2018","3":"12.06"},{"1":"Prairie Rose Beach","2":"2019","3":"10.43"},{"1":"Red Haw Beach","2":"2018","3":"5.75"},{"1":"Red Haw Beach","2":"2019","3":"5.36"},{"1":"Rock Creek Beach","2":"2018","3":"12.65"},{"1":"Rock Creek Beach","2":"2019","3":"11.01"},{"1":"Springbrook Beach","2":"2018","3":"9.80"},{"1":"Springbrook Beach","2":"2019","3":"7.77"},{"1":"Triboji Beach","2":"2018","3":"21.92"},{"1":"Triboji Beach","2":"2019","3":"23.11"},{"1":"Union Grove Beach","2":"2018","3":"12.54"},{"1":"Union Grove Beach","2":"2019","3":"11.65"},{"1":"Viking Lake Beach","2":"2018","3":"8.36"},{"1":"Viking Lake Beach","2":"2019","3":"7.20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -594,6 +602,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

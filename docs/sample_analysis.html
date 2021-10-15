@@ -11,11 +11,12 @@
 
 <meta name="author" content="Schuyler D. Smith" />
 
-<meta name="date" content="2021-05-18" />
+<meta name="date" content="2021-10-14" />
 
 <title>Sample Analysis</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -311,12 +312,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -335,55 +336,62 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="sequencing.html">
-    <span class="fas fa-dna"></span>
+    <span class="fa fa-dna"></span>
      
     Sequencing
   </a>
 </li>
 <li>
   <a href="sample_analysis.html">
-    <span class="fas fa-database"></span>
+    <span class="fa fa-database"></span>
      
     Samples
   </a>
 </li>
 <li>
   <a href="weather.html">
-    <span class="fas fa-cloud"></span>
+    <span class="fa fa-cloud"></span>
      
     Weather
   </a>
 </li>
 <li>
   <a href="molecular.html">
-    <span class="fas fa-atom"></span>
+    <span class="fa fa-atom"></span>
      
     Molecular
   </a>
 </li>
 <li>
+  <a href="microbiome.html">
+    <span class="fa fa-bacteria"></span>
+     
+    Microbiome
+  </a>
+</li>
+<li>
   <a href="data.html">
-    <span class="fas fa-database"></span>
+    <span class="fa fa-database"></span>
      
     Data
   </a>
 </li>
 <li>
   <a href="packages_and_functions.html">
-    <span class="fas fa-box-open"></span>
+    <span class="fa fa-box-open"></span>
      
     Packages
   </a>
 </li>
 <li>
   <a href="https://github.com/schuyler-smith/DARTE-QM/">
-    <span class="fas fa-code"></span>
+    <span class="fa fa-code"></span>
      
     Source Code
   </a>
@@ -398,19 +406,19 @@ div.tocify {
 </li>
 <li>
   <a href="http://germslab.org/">
-    <span class="fas fa-flask"></span>
+    <span class="fa fa-flask"></span>
      
   </a>
 </li>
 <li>
   <a href="https://www.bcb.iastate.edu/people/schuyler-smith">
-    <span class="fas fa-university"></span>
+    <span class="fa fa-university"></span>
      
   </a>
 </li>
 <li>
   <a href="mailto:sdsmith@iastate.edu">
-    <span class="fas fa-envelope fa-lg"></span>
+    <span class="fa fa-envelope fa-lg"></span>
      
   </a>
 </li>
@@ -433,18 +441,18 @@ div.tocify {
 
 <h1 class="title toc-ignore">Sample Analysis</h1>
 <h4 class="author"><a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a></h4>
-<h4 class="date">2021-05-18</h4>
+<h4 class="date">2021-10-14</h4>
 
 </div>
 
 
 <p><br> <br></p>
 <div id="ordination" class="section level2 tabset tabset-pills">
-<h2>Ordination</h2>
+<h2 class="tabset tabset-pills">Ordination</h2>
 <div id="section" class="section level3 tabset tabset-pills">
-<h3>2018</h3>
+<h3 class="tabset tabset-pills">2018</h3>
 <div id="pcoa" class="section level4 tabset tabset-pills">
-<h4>PCoA</h4>
+<h4 class="tabset tabset-pills">PCoA</h4>
 <div id="lake" class="section level5">
 <h5>Lake</h5>
 <pre class="r"><code>phylosmith::pcoa_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2018&quot;), &quot;Location&quot;, circle = FALSE)</code></pre>
@@ -462,7 +470,7 @@ div.tocify {
 </div>
 </div>
 <div id="nmds" class="section level4 tabset tabset-pills">
-<h4>NMDS</h4>
+<h4 class="tabset tabset-pills">NMDS</h4>
 <div id="lake-1" class="section level5">
 <h5>Lake</h5>
 <button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName1">
@@ -470,125 +478,131 @@ Stress
 </button>
 <div id="BlockName1" class="collapse">
 <pre class="r"><code>nmds &lt;- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2018&quot;), &quot;Location&quot;, circle = FALSE)</code></pre>
-<pre><code>## Run 0 stress 0.151933 
-## Run 1 stress 0.1525131 
-## Run 2 stress 0.1541581 
-## Run 3 stress 0.1537439 
-## Run 4 stress 0.1543822 
-## Run 5 stress 0.1529752 
-## Run 6 stress 0.1539033 
-## Run 7 stress 0.1524803 
-## Run 8 stress 0.1524691 
-## Run 9 stress 0.156274 
-## Run 10 stress 0.1531107 
-## Run 11 stress 0.1523738 
-## ... Procrustes: rmse 0.02352376  max resid 0.1185805 
-## Run 12 stress 0.1525162 
-## Run 13 stress 0.1522811 
-## ... Procrustes: rmse 0.02364122  max resid 0.1185396 
-## Run 14 stress 0.1521263 
-## ... Procrustes: rmse 0.01099748  max resid 0.08932315 
-## Run 15 stress 0.1521229 
-## ... Procrustes: rmse 0.01106651  max resid 0.0894655 
-## Run 16 stress 0.1541448 
-## Run 17 stress 0.1523945 
-## ... Procrustes: rmse 0.02343261  max resid 0.1179249 
-## Run 18 stress 0.1525441 
-## Run 19 stress 0.1525876 
-## Run 20 stress 0.1571138 
-## Run 21 stress 0.1534623 
-## Run 22 stress 0.1531418 
-## Run 23 stress 0.1532976 
-## Run 24 stress 0.1524987 
-## Run 25 stress 0.1534451 
-## Run 26 stress 0.1528236 
-## Run 27 stress 0.1530502 
-## Run 28 stress 0.1530396 
-## Run 29 stress 0.1525232 
-## Run 30 stress 0.1522038 
-## ... Procrustes: rmse 0.009680814  max resid 0.07821445 
-## Run 31 stress 0.1523551 
-## ... Procrustes: rmse 0.02279478  max resid 0.1158828 
-## Run 32 stress 0.1538622 
-## Run 33 stress 0.1529138 
-## Run 34 stress 0.1541529 
-## Run 35 stress 0.1526127 
-## Run 36 stress 0.1536637 
-## Run 37 stress 0.1537292 
-## Run 38 stress 0.1534722 
-## Run 39 stress 0.1537211 
-## Run 40 stress 0.1540103 
-## Run 41 stress 0.1539096 
-## Run 42 stress 0.1542074 
-## Run 43 stress 0.1541728 
-## Run 44 stress 0.1544498 
-## Run 45 stress 0.1546804 
-## Run 46 stress 0.1528543 
-## Run 47 stress 0.1532268 
-## Run 48 stress 0.152742 
-## Run 49 stress 0.1531335 
-## Run 50 stress 0.1524454 
-## Run 51 stress 0.1533376 
-## Run 52 stress 0.1529329 
-## Run 53 stress 0.153197 
-## Run 54 stress 0.1528575 
-## Run 55 stress 0.1547209 
-## Run 56 stress 0.1538105 
-## Run 57 stress 0.1528112 
-## Run 58 stress 0.1531398 
-## Run 59 stress 0.1537939 
-## Run 60 stress 0.152538 
-## Run 61 stress 0.1525608 
-## Run 62 stress 0.1522999 
-## ... Procrustes: rmse 0.01437871  max resid 0.1080559 
-## Run 63 stress 0.1533521 
-## Run 64 stress 0.152749 
-## Run 65 stress 0.1538311 
-## Run 66 stress 0.1518504 
+<pre><code>## Run 0 stress 0.1393965 
+## Run 1 stress 0.1398331 
+## ... Procrustes: rmse 0.02555364  max resid 0.1112875 
+## Run 2 stress 0.1403284 
+## Run 3 stress 0.1392105 
 ## ... New best solution
-## ... Procrustes: rmse 0.004595769  max resid 0.04276453 
-## Run 67 stress 0.1528888 
-## Run 68 stress 0.1525851 
-## Run 69 stress 0.1551565 
-## Run 70 stress 0.1531595 
-## Run 71 stress 0.1536531 
-## Run 72 stress 0.1533147 
-## Run 73 stress 0.1528983 
-## Run 74 stress 0.1532212 
-## Run 75 stress 0.1546391 
-## Run 76 stress 0.1539481 
-## Run 77 stress 0.1534821 
-## Run 78 stress 0.1538148 
-## Run 79 stress 0.1535469 
-## Run 80 stress 0.1531098 
-## Run 81 stress 0.1530937 
-## Run 82 stress 0.1532387 
-## Run 83 stress 0.1530999 
-## Run 84 stress 0.1523223 
-## ... Procrustes: rmse 0.02229164  max resid 0.1174849 
-## Run 85 stress 0.1526297 
-## Run 86 stress 0.1531419 
-## Run 87 stress 0.1529413 
-## Run 88 stress 0.1543117 
-## Run 89 stress 0.1534029 
-## Run 90 stress 0.1537553 
-## Run 91 stress 0.1549523 
-## Run 92 stress 0.152505 
-## Run 93 stress 0.1526667 
-## Run 94 stress 0.1521532 
-## ... Procrustes: rmse 0.007474122  max resid 0.08467637 
-## Run 95 stress 0.1532478 
-## Run 96 stress 0.1536263 
-## Run 97 stress 0.1523099 
-## ... Procrustes: rmse 0.02222002  max resid 0.1177305 
-## Run 98 stress 0.1523474 
-## ... Procrustes: rmse 0.01352159  max resid 0.07651814 
-## Run 99 stress 0.1527804 
-## Run 100 stress 0.1554581 
+## ... Procrustes: rmse 0.02682761  max resid 0.1101018 
+## Run 4 stress 0.140865 
+## Run 5 stress 0.1416363 
+## Run 6 stress 0.1418019 
+## Run 7 stress 0.1405055 
+## Run 8 stress 0.1411806 
+## Run 9 stress 0.1411152 
+## Run 10 stress 0.1404088 
+## Run 11 stress 0.1400349 
+## Run 12 stress 0.1390551 
+## ... New best solution
+## ... Procrustes: rmse 0.003772077  max resid 0.04741309 
+## Run 13 stress 0.143058 
+## Run 14 stress 0.1411499 
+## Run 15 stress 0.1398941 
+## Run 16 stress 0.1407491 
+## Run 17 stress 0.1410781 
+## Run 18 stress 0.1399551 
+## Run 19 stress 0.1417259 
+## Run 20 stress 0.1407233 
+## Run 21 stress 0.1407663 
+## Run 22 stress 0.1392084 
+## ... Procrustes: rmse 0.003796097  max resid 0.04675711 
+## Run 23 stress 0.1398254 
+## Run 24 stress 0.139484 
+## ... Procrustes: rmse 0.005052784  max resid 0.08109976 
+## Run 25 stress 0.1417852 
+## Run 26 stress 0.1414197 
+## Run 27 stress 0.1389638 
+## ... New best solution
+## ... Procrustes: rmse 0.002358033  max resid 0.04621079 
+## Run 28 stress 0.1413823 
+## Run 29 stress 0.1424079 
+## Run 30 stress 0.1417739 
+## Run 31 stress 0.1404716 
+## Run 32 stress 0.1426406 
+## Run 33 stress 0.1407669 
+## Run 34 stress 0.1414854 
+## Run 35 stress 0.1422808 
+## Run 36 stress 0.1389933 
+## ... Procrustes: rmse 0.003399188  max resid 0.04719818 
+## Run 37 stress 0.1397432 
+## Run 38 stress 0.1412152 
+## Run 39 stress 0.1392059 
+## ... Procrustes: rmse 0.004232367  max resid 0.04654028 
+## Run 40 stress 0.1399177 
+## Run 41 stress 0.140658 
+## Run 42 stress 0.1407634 
+## Run 43 stress 0.1405988 
+## Run 44 stress 0.1396391 
+## Run 45 stress 0.1413392 
+## Run 46 stress 0.1429663 
+## Run 47 stress 0.1414466 
+## Run 48 stress 0.1410592 
+## Run 49 stress 0.1416487 
+## Run 50 stress 0.1395546 
+## Run 51 stress 0.140663 
+## Run 52 stress 0.1401136 
+## Run 53 stress 0.1390161 
+## ... Procrustes: rmse 0.003154651  max resid 0.04580177 
+## Run 54 stress 0.1417163 
+## Run 55 stress 0.1407358 
+## Run 56 stress 0.1412667 
+## Run 57 stress 0.1395779 
+## Run 58 stress 0.1416698 
+## Run 59 stress 0.1399921 
+## Run 60 stress 0.1404287 
+## Run 61 stress 0.141743 
+## Run 62 stress 0.1412369 
+## Run 63 stress 0.1391396 
+## ... Procrustes: rmse 0.002789885  max resid 0.03833028 
+## Run 64 stress 0.1426773 
+## Run 65 stress 0.1422948 
+## Run 66 stress 0.1401116 
+## Run 67 stress 0.1414727 
+## Run 68 stress 0.1391563 
+## ... Procrustes: rmse 0.002746822  max resid 0.03822767 
+## Run 69 stress 0.138984 
+## ... Procrustes: rmse 0.002825539  max resid 0.04690727 
+## Run 70 stress 0.1400767 
+## Run 71 stress 0.1423444 
+## Run 72 stress 0.1413379 
+## Run 73 stress 0.1418484 
+## Run 74 stress 0.1427368 
+## Run 75 stress 0.1404386 
+## Run 76 stress 0.1393142 
+## ... Procrustes: rmse 0.003939902  max resid 0.04555354 
+## Run 77 stress 0.1402262 
+## Run 78 stress 0.1399555 
+## Run 79 stress 0.1391517 
+## ... Procrustes: rmse 0.003841315  max resid 0.04706029 
+## Run 80 stress 0.1404561 
+## Run 81 stress 0.1404325 
+## Run 82 stress 0.1401342 
+## Run 83 stress 0.141134 
+## Run 84 stress 0.1411798 
+## Run 85 stress 0.1412702 
+## Run 86 stress 0.1390149 
+## ... Procrustes: rmse 0.003544971  max resid 0.04666878 
+## Run 87 stress 0.1415003 
+## Run 88 stress 0.1400512 
+## Run 89 stress 0.1389848 
+## ... Procrustes: rmse 0.003603875  max resid 0.04741237 
+## Run 90 stress 0.1399661 
+## Run 91 stress 0.1416963 
+## Run 92 stress 0.1412914 
+## Run 93 stress 0.1402101 
+## Run 94 stress 0.1416274 
+## Run 95 stress 0.1419915 
+## Run 96 stress 0.1414501 
+## Run 97 stress 0.1411355 
+## Run 98 stress 0.1401239 
+## Run 99 stress 0.1402618 
+## Run 100 stress 0.1389901 
+## ... Procrustes: rmse 0.003805658  max resid 0.04755983 
 ## *** No convergence -- monoMDS stopping criteria:
-##     62: no. of iterations &gt;= maxit
-##     31: stress ratio &gt; sratmax
-##      7: scale factor of the gradient &lt; sfgrmin</code></pre>
+##     44: no. of iterations &gt;= maxit
+##     45: stress ratio &gt; sratmax
+##     11: scale factor of the gradient &lt; sfgrmin</code></pre>
 </div>
 <pre class="r"><code>nmds</code></pre>
 <p><img src="sample_analysis_files/figure-html/2018_nmds_out-1.png" width="1056" /></p>
@@ -600,122 +614,123 @@ Stress
 </button>
 <div id="BlockName2" class="collapse">
 <pre class="r"><code>nmds &lt;- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2018&quot;), &quot;Week&quot;, circle = FALSE)</code></pre>
-<pre><code>## Run 0 stress 0.1519324 
-## Run 1 stress 0.1532659 
-## Run 2 stress 0.1531437 
-## Run 3 stress 0.1534682 
-## Run 4 stress 0.1531548 
-## Run 5 stress 0.1525777 
-## Run 6 stress 0.1524577 
-## Run 7 stress 0.153363 
-## Run 8 stress 0.152617 
-## Run 9 stress 0.1518055 
+<pre><code>## Run 0 stress 0.1393965 
+## Run 1 stress 0.1412539 
+## Run 2 stress 0.1428037 
+## Run 3 stress 0.1391939 
 ## ... New best solution
-## ... Procrustes: rmse 0.005127417  max resid 0.04312004 
-## Run 10 stress 0.1523346 
-## Run 11 stress 0.1525382 
-## Run 12 stress 0.1526007 
-## Run 13 stress 0.1523727 
-## Run 14 stress 0.1535739 
-## Run 15 stress 0.1537676 
-## Run 16 stress 0.1525342 
-## Run 17 stress 0.1531899 
-## Run 18 stress 0.152931 
-## Run 19 stress 0.1524367 
-## Run 20 stress 0.1536112 
-## Run 21 stress 0.1543449 
-## Run 22 stress 0.154254 
-## Run 23 stress 0.152562 
-## Run 24 stress 0.1521116 
-## ... Procrustes: rmse 0.005748105  max resid 0.04737049 
-## Run 25 stress 0.1526236 
-## Run 26 stress 0.1530835 
-## Run 27 stress 0.1546987 
-## Run 28 stress 0.1526414 
-## Run 29 stress 0.1556815 
-## Run 30 stress 0.1525397 
-## Run 31 stress 0.1539216 
-## Run 32 stress 0.152883 
-## Run 33 stress 0.1521639 
-## ... Procrustes: rmse 0.008714036  max resid 0.08646916 
-## Run 34 stress 0.1531546 
-## Run 35 stress 0.1528203 
-## Run 36 stress 0.1529486 
-## Run 37 stress 0.1525854 
-## Run 38 stress 0.1529006 
-## Run 39 stress 0.1534562 
-## Run 40 stress 0.1521061 
-## ... Procrustes: rmse 0.007647235  max resid 0.08542221 
-## Run 41 stress 0.1524617 
-## Run 42 stress 0.155265 
-## Run 43 stress 0.1531763 
-## Run 44 stress 0.1538736 
-## Run 45 stress 0.1533339 
-## Run 46 stress 0.1560982 
-## Run 47 stress 0.1541636 
-## Run 48 stress 0.15324 
-## Run 49 stress 0.1535517 
-## Run 50 stress 0.1531334 
-## Run 51 stress 0.1523646 
-## Run 52 stress 0.1532323 
-## Run 53 stress 0.1527625 
-## Run 54 stress 0.1521535 
-## ... Procrustes: rmse 0.00433772  max resid 0.06412639 
-## Run 55 stress 0.1524934 
-## Run 56 stress 0.15404 
-## Run 57 stress 0.1525781 
-## Run 58 stress 0.1542469 
-## Run 59 stress 0.1518917 
-## ... Procrustes: rmse 0.003435773  max resid 0.04112151 
-## Run 60 stress 0.1529493 
-## Run 61 stress 0.152944 
-## Run 62 stress 0.1533154 
-## Run 63 stress 0.1537043 
-## Run 64 stress 0.1544422 
-## Run 65 stress 0.1526905 
-## Run 66 stress 0.1519027 
-## ... Procrustes: rmse 0.004400416  max resid 0.05153083 
-## Run 67 stress 0.1526516 
-## Run 68 stress 0.153288 
-## Run 69 stress 0.152101 
-## ... Procrustes: rmse 0.009587005  max resid 0.08865067 
-## Run 70 stress 0.1535617 
-## Run 71 stress 0.1530972 
-## Run 72 stress 0.1537348 
-## Run 73 stress 0.1529614 
-## Run 74 stress 0.1528448 
-## Run 75 stress 0.1530093 
-## Run 76 stress 0.1541137 
-## Run 77 stress 0.1539545 
-## Run 78 stress 0.1534976 
-## Run 79 stress 0.1526928 
-## Run 80 stress 0.1534991 
-## Run 81 stress 0.1538296 
-## Run 82 stress 0.1525305 
-## Run 83 stress 0.1536119 
-## Run 84 stress 0.1534509 
-## Run 85 stress 0.1530752 
-## Run 86 stress 0.1523091 
-## Run 87 stress 0.1532563 
-## Run 88 stress 0.1529254 
-## Run 89 stress 0.1525651 
-## Run 90 stress 0.153353 
-## Run 91 stress 0.1526801 
-## Run 92 stress 0.1530711 
-## Run 93 stress 0.1518695 
-## ... Procrustes: rmse 0.003393783  max resid 0.05097047 
-## Run 94 stress 0.1531068 
-## Run 95 stress 0.1524237 
-## Run 96 stress 0.1531787 
-## Run 97 stress 0.1528344 
-## Run 98 stress 0.1522627 
-## ... Procrustes: rmse 0.006596344  max resid 0.07688484 
-## Run 99 stress 0.1526662 
-## Run 100 stress 0.152608 
+## ... Procrustes: rmse 0.02589017  max resid 0.1093293 
+## Run 4 stress 0.1402996 
+## Run 5 stress 0.1404912 
+## Run 6 stress 0.1403653 
+## Run 7 stress 0.140482 
+## Run 8 stress 0.1449001 
+## Run 9 stress 0.1412655 
+## Run 10 stress 0.1390284 
+## ... New best solution
+## ... Procrustes: rmse 0.00360399  max resid 0.04217317 
+## Run 11 stress 0.1410581 
+## Run 12 stress 0.1397898 
+## Run 13 stress 0.1411736 
+## Run 14 stress 0.1431087 
+## Run 15 stress 0.1415128 
+## Run 16 stress 0.1406669 
+## Run 17 stress 0.1413385 
+## Run 18 stress 0.1397246 
+## Run 19 stress 0.1416533 
+## Run 20 stress 0.1419466 
+## Run 21 stress 0.1409147 
+## Run 22 stress 0.1395622 
+## Run 23 stress 0.1405362 
+## Run 24 stress 0.1412612 
+## Run 25 stress 0.1418111 
+## Run 26 stress 0.1406755 
+## Run 27 stress 0.1403144 
+## Run 28 stress 0.1422398 
+## Run 29 stress 0.1390845 
+## ... Procrustes: rmse 0.002315223  max resid 0.0331329 
+## Run 30 stress 0.1401978 
+## Run 31 stress 0.141716 
+## Run 32 stress 0.1403169 
+## Run 33 stress 0.1404921 
+## Run 34 stress 0.1406158 
+## Run 35 stress 0.1406294 
+## Run 36 stress 0.1399387 
+## Run 37 stress 0.141167 
+## Run 38 stress 0.1400811 
+## Run 39 stress 0.140272 
+## Run 40 stress 0.1414621 
+## Run 41 stress 0.1403766 
+## Run 42 stress 0.1410541 
+## Run 43 stress 0.139439 
+## ... Procrustes: rmse 0.02715388  max resid 0.114405 
+## Run 44 stress 0.139182 
+## ... Procrustes: rmse 0.003524055  max resid 0.04662843 
+## Run 45 stress 0.1410598 
+## Run 46 stress 0.1403799 
+## Run 47 stress 0.142085 
+## Run 48 stress 0.1402659 
+## Run 49 stress 0.1402771 
+## Run 50 stress 0.1430482 
+## Run 51 stress 0.1409751 
+## Run 52 stress 0.1407488 
+## Run 53 stress 0.141035 
+## Run 54 stress 0.140003 
+## Run 55 stress 0.1403445 
+## Run 56 stress 0.1423483 
+## Run 57 stress 0.139652 
+## Run 58 stress 0.1409707 
+## Run 59 stress 0.14157 
+## Run 60 stress 0.1410489 
+## Run 61 stress 0.1401712 
+## Run 62 stress 0.1390178 
+## ... New best solution
+## ... Procrustes: rmse 0.003515899  max resid 0.04171313 
+## Run 63 stress 0.1392385 
+## ... Procrustes: rmse 0.003638198  max resid 0.04810964 
+## Run 64 stress 0.1423122 
+## Run 65 stress 0.141864 
+## Run 66 stress 0.1417376 
+## Run 67 stress 0.1409601 
+## Run 68 stress 0.1416686 
+## Run 69 stress 0.1395591 
+## Run 70 stress 0.140113 
+## Run 71 stress 0.1397087 
+## Run 72 stress 0.1409031 
+## Run 73 stress 0.1420326 
+## Run 74 stress 0.1412656 
+## Run 75 stress 0.1403459 
+## Run 76 stress 0.1413774 
+## Run 77 stress 0.14062 
+## Run 78 stress 0.1409174 
+## Run 79 stress 0.1396286 
+## Run 80 stress 0.1416564 
+## Run 81 stress 0.1425551 
+## Run 82 stress 0.1414633 
+## Run 83 stress 0.1422059 
+## Run 84 stress 0.1406375 
+## Run 85 stress 0.1449562 
+## Run 86 stress 0.1411502 
+## Run 87 stress 0.1424762 
+## Run 88 stress 0.1390722 
+## ... Procrustes: rmse 0.002901087  max resid 0.03901993 
+## Run 89 stress 0.1408394 
+## Run 90 stress 0.1416997 
+## Run 91 stress 0.1396296 
+## Run 92 stress 0.1391972 
+## ... Procrustes: rmse 0.003749865  max resid 0.04196664 
+## Run 93 stress 0.1402056 
+## Run 94 stress 0.1410118 
+## Run 95 stress 0.1411064 
+## Run 96 stress 0.1401174 
+## Run 97 stress 0.1412566 
+## Run 98 stress 0.1408048 
+## Run 99 stress 0.1402223 
+## Run 100 stress 0.1416624 
 ## *** No convergence -- monoMDS stopping criteria:
-##     53: no. of iterations &gt;= maxit
-##     43: stress ratio &gt; sratmax
-##      4: scale factor of the gradient &lt; sfgrmin</code></pre>
+##     45: no. of iterations &gt;= maxit
+##     45: stress ratio &gt; sratmax
+##     10: scale factor of the gradient &lt; sfgrmin</code></pre>
 </div>
 <pre class="r"><code>nmds</code></pre>
 <p><img src="sample_analysis_files/figure-html/2018_nmds_week_out-1.png" width="672" /></p>
@@ -727,135 +742,131 @@ Stress
 </button>
 <div id="BlockName3" class="collapse">
 <pre class="r"><code>nmds &lt;- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2018&quot;), &quot;Risk&quot;, circle = FALSE)</code></pre>
-<pre><code>## Run 0 stress 0.1519316 
-## Run 1 stress 0.1528006 
-## Run 2 stress 0.1526217 
-## Run 3 stress 0.1539764 
-## Run 4 stress 0.1532976 
-## Run 5 stress 0.1523931 
-## ... Procrustes: rmse 0.004939637  max resid 0.06902195 
-## Run 6 stress 0.1546283 
-## Run 7 stress 0.1524202 
-## ... Procrustes: rmse 0.005741331  max resid 0.07266251 
-## Run 8 stress 0.1532464 
-## Run 9 stress 0.1526061 
-## Run 10 stress 0.1523617 
-## ... Procrustes: rmse 0.02337157  max resid 0.1176492 
-## Run 11 stress 0.1522366 
-## ... Procrustes: rmse 0.004744497  max resid 0.06034407 
-## Run 12 stress 0.1526337 
-## Run 13 stress 0.1525385 
-## Run 14 stress 0.1534846 
-## Run 15 stress 0.1523022 
-## ... Procrustes: rmse 0.0231984  max resid 0.1172277 
-## Run 16 stress 0.1552297 
-## Run 17 stress 0.1550612 
-## Run 18 stress 0.1529612 
-## Run 19 stress 0.152772 
-## Run 20 stress 0.1541493 
-## Run 21 stress 0.1520703 
-## ... Procrustes: rmse 0.01059106  max resid 0.08952481 
-## Run 22 stress 0.1530079 
-## Run 23 stress 0.1537768 
-## Run 24 stress 0.1527364 
-## Run 25 stress 0.1534739 
-## Run 26 stress 0.1536777 
-## Run 27 stress 0.1538275 
-## Run 28 stress 0.1535014 
-## Run 29 stress 0.1535799 
-## Run 30 stress 0.1546221 
-## Run 31 stress 0.1525586 
-## Run 32 stress 0.153429 
-## Run 33 stress 0.152972 
-## Run 34 stress 0.1537825 
-## Run 35 stress 0.1535095 
-## Run 36 stress 0.1532774 
-## Run 37 stress 0.1532678 
-## Run 38 stress 0.1532203 
-## Run 39 stress 0.1524106 
-## ... Procrustes: rmse 0.0162147  max resid 0.1048346 
-## Run 40 stress 0.1521776 
-## ... Procrustes: rmse 0.01085253  max resid 0.09105526 
-## Run 41 stress 0.1545228 
-## Run 42 stress 0.154257 
-## Run 43 stress 0.1531734 
-## Run 44 stress 0.1531599 
-## Run 45 stress 0.1522002 
-## ... Procrustes: rmse 0.01108819  max resid 0.08909013 
-## Run 46 stress 0.1523902 
-## ... Procrustes: rmse 0.01370057  max resid 0.07253764 
-## Run 47 stress 0.1528204 
-## Run 48 stress 0.1536579 
-## Run 49 stress 0.1529455 
-## Run 50 stress 0.1550044 
-## Run 51 stress 0.152356 
-## ... Procrustes: rmse 0.01452933  max resid 0.1073722 
-## Run 52 stress 0.1527761 
-## Run 53 stress 0.1521303 
-## ... Procrustes: rmse 0.007245434  max resid 0.05325949 
-## Run 54 stress 0.1522932 
-## ... Procrustes: rmse 0.02368248  max resid 0.1190172 
-## Run 55 stress 0.1528697 
-## Run 56 stress 0.1529315 
-## Run 57 stress 0.1536563 
-## Run 58 stress 0.1526543 
-## Run 59 stress 0.153343 
-## Run 60 stress 0.1525336 
-## Run 61 stress 0.1556435 
-## Run 62 stress 0.1524383 
-## Run 63 stress 0.1541329 
-## Run 64 stress 0.1528087 
-## Run 65 stress 0.1531859 
-## Run 66 stress 0.1537224 
-## Run 67 stress 0.1525007 
-## Run 68 stress 0.1548481 
-## Run 69 stress 0.1524078 
-## ... Procrustes: rmse 0.01448356  max resid 0.07746578 
-## Run 70 stress 0.1532995 
-## Run 71 stress 0.1527 
-## Run 72 stress 0.1530206 
-## Run 73 stress 0.152562 
-## Run 74 stress 0.1525615 
-## Run 75 stress 0.1535546 
-## Run 76 stress 0.1533763 
-## Run 77 stress 0.1535277 
-## Run 78 stress 0.1530656 
-## Run 79 stress 0.1524076 
-## ... Procrustes: rmse 0.008297188  max resid 0.06695623 
-## Run 80 stress 0.1543201 
-## Run 81 stress 0.1526451 
-## Run 82 stress 0.1525615 
-## Run 83 stress 0.1531279 
-## Run 84 stress 0.153312 
-## Run 85 stress 0.1538124 
-## Run 86 stress 0.1535585 
-## Run 87 stress 0.1525856 
-## Run 88 stress 0.1524865 
-## Run 89 stress 0.1525229 
-## Run 90 stress 0.1538851 
-## Run 91 stress 0.1526536 
-## Run 92 stress 0.1525861 
-## Run 93 stress 0.1534393 
-## Run 94 stress 0.1527415 
-## Run 95 stress 0.1529086 
-## Run 96 stress 0.1522334 
-## ... Procrustes: rmse 0.01545203  max resid 0.1067431 
-## Run 97 stress 0.15292 
-## Run 98 stress 0.1524144 
-## ... Procrustes: rmse 0.01451743  max resid 0.1096033 
-## Run 99 stress 0.1528455 
-## Run 100 stress 0.1530753 
+<pre><code>## Run 0 stress 0.1393965 
+## Run 1 stress 0.1409579 
+## Run 2 stress 0.1418586 
+## Run 3 stress 0.1413652 
+## Run 4 stress 0.1411033 
+## Run 5 stress 0.1416194 
+## Run 6 stress 0.1396993 
+## ... Procrustes: rmse 0.02611647  max resid 0.1108218 
+## Run 7 stress 0.1395927 
+## ... Procrustes: rmse 0.02680178  max resid 0.1104663 
+## Run 8 stress 0.1422965 
+## Run 9 stress 0.1389635 
+## ... New best solution
+## ... Procrustes: rmse 0.02691546  max resid 0.110028 
+## Run 10 stress 0.1412937 
+## Run 11 stress 0.1433159 
+## Run 12 stress 0.1405404 
+## Run 13 stress 0.14197 
+## Run 14 stress 0.1418118 
+## Run 15 stress 0.1397066 
+## Run 16 stress 0.1401611 
+## Run 17 stress 0.1391573 
+## ... Procrustes: rmse 0.002702578  max resid 0.04120391 
+## Run 18 stress 0.1408895 
+## Run 19 stress 0.1415992 
+## Run 20 stress 0.1394116 
+## ... Procrustes: rmse 0.02730036  max resid 0.1140482 
+## Run 21 stress 0.1433461 
+## Run 22 stress 0.1395775 
+## Run 23 stress 0.1408217 
+## Run 24 stress 0.1404055 
+## Run 25 stress 0.1413254 
+## Run 26 stress 0.140823 
+## Run 27 stress 0.1415486 
+## Run 28 stress 0.1394641 
+## Run 29 stress 0.1413315 
+## Run 30 stress 0.1423192 
+## Run 31 stress 0.1414953 
+## Run 32 stress 0.1389783 
+## ... Procrustes: rmse 0.003168496  max resid 0.04707657 
+## Run 33 stress 0.1413568 
+## Run 34 stress 0.1411921 
+## Run 35 stress 0.1401879 
+## Run 36 stress 0.1413102 
+## Run 37 stress 0.1397076 
+## Run 38 stress 0.1405219 
+## Run 39 stress 0.1404414 
+## Run 40 stress 0.1406587 
+## Run 41 stress 0.1411308 
+## Run 42 stress 0.1403226 
+## Run 43 stress 0.1397734 
+## Run 44 stress 0.1429863 
+## Run 45 stress 0.1389511 
+## ... New best solution
+## ... Procrustes: rmse 0.001130155  max resid 0.02074161 
+## Run 46 stress 0.1429056 
+## Run 47 stress 0.1399205 
+## Run 48 stress 0.1415338 
+## Run 49 stress 0.1399506 
+## Run 50 stress 0.1395556 
+## Run 51 stress 0.1413409 
+## Run 52 stress 0.1426736 
+## Run 53 stress 0.1403954 
+## Run 54 stress 0.1408219 
+## Run 55 stress 0.1409778 
+## Run 56 stress 0.1407667 
+## Run 57 stress 0.14231 
+## Run 58 stress 0.1447889 
+## Run 59 stress 0.1420604 
+## Run 60 stress 0.1394418 
+## ... Procrustes: rmse 0.02693885  max resid 0.110719 
+## Run 61 stress 0.1401047 
+## Run 62 stress 0.1463106 
+## Run 63 stress 0.1402382 
+## Run 64 stress 0.1412588 
+## Run 65 stress 0.14135 
+## Run 66 stress 0.1410125 
+## Run 67 stress 0.1411918 
+## Run 68 stress 0.1426594 
+## Run 69 stress 0.1398943 
+## Run 70 stress 0.1427716 
+## Run 71 stress 0.1396502 
+## Run 72 stress 0.1411865 
+## Run 73 stress 0.141298 
+## Run 74 stress 0.1424 
+## Run 75 stress 0.1390385 
+## ... Procrustes: rmse 0.002421445  max resid 0.04169224 
+## Run 76 stress 0.1414961 
+## Run 77 stress 0.1399163 
+## Run 78 stress 0.1414823 
+## Run 79 stress 0.1409518 
+## Run 80 stress 0.1414446 
+## Run 81 stress 0.1414853 
+## Run 82 stress 0.1391749 
+## ... Procrustes: rmse 0.003230535  max resid 0.04639821 
+## Run 83 stress 0.1403547 
+## Run 84 stress 0.1397744 
+## Run 85 stress 0.1394233 
+## ... Procrustes: rmse 0.005765268  max resid 0.0804822 
+## Run 86 stress 0.1415197 
+## Run 87 stress 0.1416582 
+## Run 88 stress 0.1405326 
+## Run 89 stress 0.1403551 
+## Run 90 stress 0.1401688 
+## Run 91 stress 0.1428634 
+## Run 92 stress 0.1414205 
+## Run 93 stress 0.1411217 
+## Run 94 stress 0.1431789 
+## Run 95 stress 0.1404408 
+## Run 96 stress 0.1404017 
+## Run 97 stress 0.1421092 
+## Run 98 stress 0.1410539 
+## Run 99 stress 0.1407447 
+## Run 100 stress 0.1416995 
 ## *** No convergence -- monoMDS stopping criteria:
-##     48: no. of iterations &gt;= maxit
-##     49: stress ratio &gt; sratmax
-##      3: scale factor of the gradient &lt; sfgrmin</code></pre>
+##     45: no. of iterations &gt;= maxit
+##     39: stress ratio &gt; sratmax
+##     16: scale factor of the gradient &lt; sfgrmin</code></pre>
 </div>
 <pre class="r"><code>nmds</code></pre>
 <p><img src="sample_analysis_files/figure-html/2018_nmds_Risk_out-1.png" width="672" /></p>
 </div>
 </div>
 <div id="tsne" class="section level4 tabset tabset-pills">
-<h4>tSNE</h4>
+<h4 class="tabset tabset-pills">tSNE</h4>
 <div id="lake-2" class="section level5">
 <h5>Lake</h5>
 <pre class="r"><code>phylosmith::tsne_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2018&quot;), &quot;Location&quot;, circle = FALSE)</code></pre>
@@ -874,9 +885,9 @@ Stress
 </div>
 </div>
 <div id="section-1" class="section level3 tabset tabset-pills">
-<h3>2019</h3>
+<h3 class="tabset tabset-pills">2019</h3>
 <div id="pcoa-1" class="section level4 tabset tabset-pills">
-<h4>PCoA</h4>
+<h4 class="tabset tabset-pills">PCoA</h4>
 <div id="lake-3" class="section level5">
 <h5>Lake</h5>
 <pre class="r"><code>phylosmith::pcoa_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2019&quot;), &quot;Location&quot;, circle = FALSE)</code></pre>
@@ -894,7 +905,7 @@ Stress
 </div>
 </div>
 <div id="nmds-1" class="section level4 tabset tabset-pills">
-<h4>NMDS</h4>
+<h4 class="tabset tabset-pills">NMDS</h4>
 <div id="lake-4" class="section level5">
 <h5>Lake</h5>
 <button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName4">
@@ -902,38 +913,134 @@ Stress
 </button>
 <div id="BlockName4" class="collapse">
 <pre class="r"><code>nmds &lt;- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2019&quot;), &quot;Location&quot;, circle = FALSE)</code></pre>
-<pre><code>## Run 0 stress 0.1403686 
-## Run 1 stress 0.1430432 
-## Run 2 stress 0.1399702 
+<pre><code>## Run 0 stress 0.1457842 
+## Run 1 stress 0.1461617 
+## ... Procrustes: rmse 0.01565422  max resid 0.1250316 
+## Run 2 stress 0.1462037 
+## ... Procrustes: rmse 0.01170614  max resid 0.1263403 
+## Run 3 stress 0.1467018 
+## Run 4 stress 0.1455619 
 ## ... New best solution
-## ... Procrustes: rmse 0.005395195  max resid 0.07350557 
-## Run 3 stress 0.1423129 
-## Run 4 stress 0.1399702 
-## ... Procrustes: rmse 7.730429e-05  max resid 0.0008413161 
-## ... Similar to previous best
-## Run 5 stress 0.1400819 
-## ... Procrustes: rmse 0.002927355  max resid 0.03105817 
-## Run 6 stress 0.1406339 
-## Run 7 stress 0.140458 
-## ... Procrustes: rmse 0.007696237  max resid 0.0807167 
-## Run 8 stress 0.1407627 
-## Run 9 stress 0.1406082 
-## Run 10 stress 0.1436618 
-## Run 11 stress 0.1402368 
-## ... Procrustes: rmse 0.003763986  max resid 0.0552162 
-## Run 12 stress 0.142407 
-## Run 13 stress 0.1430628 
-## Run 14 stress 0.1432214 
-## Run 15 stress 0.1429463 
-## Run 16 stress 0.1406085 
-## Run 17 stress 0.142021 
-## Run 18 stress 0.1433743 
-## Run 19 stress 0.1399702 
+## ... Procrustes: rmse 0.009196458  max resid 0.061973 
+## Run 5 stress 0.14664 
+## Run 6 stress 0.1471566 
+## Run 7 stress 0.1481715 
+## Run 8 stress 0.1510684 
+## Run 9 stress 0.1518978 
+## Run 10 stress 0.1460181 
+## ... Procrustes: rmse 0.006143339  max resid 0.06623614 
+## Run 11 stress 0.1476825 
+## Run 12 stress 0.1457225 
+## ... Procrustes: rmse 0.005578557  max resid 0.06001821 
+## Run 13 stress 0.1502491 
+## Run 14 stress 0.1476673 
+## Run 15 stress 0.1457005 
+## ... Procrustes: rmse 0.006307197  max resid 0.06132864 
+## Run 16 stress 0.1481487 
+## Run 17 stress 0.1479196 
+## Run 18 stress 0.1470541 
+## Run 19 stress 0.1462988 
+## Run 20 stress 0.1462329 
+## Run 21 stress 0.146426 
+## Run 22 stress 0.1466154 
+## Run 23 stress 0.1482679 
+## Run 24 stress 0.1476944 
+## Run 25 stress 0.145796 
+## ... Procrustes: rmse 0.01037361  max resid 0.1365985 
+## Run 26 stress 0.1481672 
+## Run 27 stress 0.1459201 
+## ... Procrustes: rmse 0.008675066  max resid 0.1367565 
+## Run 28 stress 0.14777 
+## Run 29 stress 0.1458241 
+## ... Procrustes: rmse 0.006064063  max resid 0.07073455 
+## Run 30 stress 0.1465732 
+## Run 31 stress 0.1466149 
+## Run 32 stress 0.1490068 
+## Run 33 stress 0.1468339 
+## Run 34 stress 0.1471709 
+## Run 35 stress 0.1481523 
+## Run 36 stress 0.1480152 
+## Run 37 stress 0.149766 
+## Run 38 stress 0.1458428 
+## ... Procrustes: rmse 0.008357932  max resid 0.137114 
+## Run 39 stress 0.1475249 
+## Run 40 stress 0.1454712 
 ## ... New best solution
-## ... Procrustes: rmse 7.491885e-05  max resid 0.0006304748 
-## ... Similar to previous best
-## Run 20 stress 0.1451992 
-## *** Solution reached</code></pre>
+## ... Procrustes: rmse 0.006926771  max resid 0.05762885 
+## Run 41 stress 0.1460384 
+## Run 42 stress 0.1489276 
+## Run 43 stress 0.1460944 
+## Run 44 stress 0.1466659 
+## Run 45 stress 0.1515535 
+## Run 46 stress 0.1465335 
+## Run 47 stress 0.1462284 
+## Run 48 stress 0.1465754 
+## Run 49 stress 0.1468243 
+## Run 50 stress 0.1492766 
+## Run 51 stress 0.1484778 
+## Run 52 stress 0.1464365 
+## Run 53 stress 0.145751 
+## ... Procrustes: rmse 0.009965467  max resid 0.1364666 
+## Run 54 stress 0.1455946 
+## ... Procrustes: rmse 0.00737787  max resid 0.05640604 
+## Run 55 stress 0.1464498 
+## Run 56 stress 0.14637 
+## Run 57 stress 0.1478515 
+## Run 58 stress 0.149598 
+## Run 59 stress 0.1457309 
+## ... Procrustes: rmse 0.01137967  max resid 0.1356616 
+## Run 60 stress 0.1466199 
+## Run 61 stress 0.1473134 
+## Run 62 stress 0.1460738 
+## Run 63 stress 0.1472969 
+## Run 64 stress 0.1456336 
+## ... Procrustes: rmse 0.007940622  max resid 0.06738304 
+## Run 65 stress 0.1456557 
+## ... Procrustes: rmse 0.006106216  max resid 0.05700463 
+## Run 66 stress 0.146253 
+## Run 67 stress 0.1456739 
+## ... Procrustes: rmse 0.006733004  max resid 0.05774925 
+## Run 68 stress 0.1452891 
+## ... New best solution
+## ... Procrustes: rmse 0.007284138  max resid 0.05541177 
+## Run 69 stress 0.1495298 
+## Run 70 stress 0.1459433 
+## Run 71 stress 0.1502934 
+## Run 72 stress 0.1467741 
+## Run 73 stress 0.1468307 
+## Run 74 stress 0.1485147 
+## Run 75 stress 0.1461834 
+## Run 76 stress 0.1457116 
+## ... Procrustes: rmse 0.009083305  max resid 0.06203706 
+## Run 77 stress 0.1462174 
+## Run 78 stress 0.1475104 
+## Run 79 stress 0.147767 
+## Run 80 stress 0.1472912 
+## Run 81 stress 0.1461419 
+## Run 82 stress 0.1464884 
+## Run 83 stress 0.1506179 
+## Run 84 stress 0.1461845 
+## Run 85 stress 0.1467694 
+## Run 86 stress 0.1462038 
+## Run 87 stress 0.1516176 
+## Run 88 stress 0.1466338 
+## Run 89 stress 0.1474076 
+## Run 90 stress 0.1462083 
+## Run 91 stress 0.1518471 
+## Run 92 stress 0.1460934 
+## Run 93 stress 0.1464494 
+## Run 94 stress 0.1491472 
+## Run 95 stress 0.1486227 
+## Run 96 stress 0.1464165 
+## Run 97 stress 0.1456149 
+## ... Procrustes: rmse 0.00540964  max resid 0.0690409 
+## Run 98 stress 0.1482315 
+## Run 99 stress 0.1466014 
+## Run 100 stress 0.146594 
+## *** No convergence -- monoMDS stopping criteria:
+##     50: no. of iterations &gt;= maxit
+##     28: stress ratio &gt; sratmax
+##     22: scale factor of the gradient &lt; sfgrmin</code></pre>
 </div>
 <pre class="r"><code>nmds</code></pre>
 <p><img src="sample_analysis_files/figure-html/2019_nmds_out-1.png" width="1056" /></p>
@@ -945,46 +1052,131 @@ Stress
 </button>
 <div id="BlockName5" class="collapse">
 <pre class="r"><code>nmds &lt;- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2019&quot;), &quot;Week&quot;, circle = FALSE)</code></pre>
-<pre><code>## Run 0 stress 0.1403526 
-## Run 1 stress 0.1402236 
+<pre><code>## Run 0 stress 0.1457842 
+## Run 1 stress 0.1463009 
+## Run 2 stress 0.1463274 
+## Run 3 stress 0.1454532 
 ## ... New best solution
-## ... Procrustes: rmse 0.006559981  max resid 0.07292317 
-## Run 2 stress 0.1408567 
-## Run 3 stress 0.1403795 
-## ... Procrustes: rmse 0.003385705  max resid 0.03312084 
-## Run 4 stress 0.1407474 
-## Run 5 stress 0.1401225 
+## ... Procrustes: rmse 0.00906532  max resid 0.1236171 
+## Run 4 stress 0.1459861 
+## Run 5 stress 0.1465792 
+## Run 6 stress 0.1458724 
+## ... Procrustes: rmse 0.005460702  max resid 0.06536204 
+## Run 7 stress 0.1489637 
+## Run 8 stress 0.1465748 
+## Run 9 stress 0.1480978 
+## Run 10 stress 0.1465569 
+## Run 11 stress 0.1454429 
 ## ... New best solution
-## ... Procrustes: rmse 0.007690746  max resid 0.08250418 
-## Run 6 stress 0.1400662 
-## ... New best solution
-## ... Procrustes: rmse 0.006386008  max resid 0.08134527 
-## Run 7 stress 0.1438047 
-## Run 8 stress 0.1426228 
-## Run 9 stress 0.1407474 
-## Run 10 stress 0.1436838 
-## Run 11 stress 0.1433377 
-## Run 12 stress 0.1399555 
-## ... New best solution
-## ... Procrustes: rmse 0.002747193  max resid 0.02863733 
-## Run 13 stress 0.1426629 
-## Run 14 stress 0.1400704 
-## ... Procrustes: rmse 0.005964833  max resid 0.08091618 
-## Run 15 stress 0.1399555 
-## ... New best solution
-## ... Procrustes: rmse 5.035066e-05  max resid 0.0003931511 
-## ... Similar to previous best
-## Run 16 stress 0.140321 
-## ... Procrustes: rmse 0.004949012  max resid 0.07271012 
-## Run 17 stress 0.1399554 
-## ... New best solution
-## ... Procrustes: rmse 7.826542e-05  max resid 0.0009539653 
-## ... Similar to previous best
-## Run 18 stress 0.1424404 
-## Run 19 stress 0.1433048 
-## Run 20 stress 0.1402235 
-## ... Procrustes: rmse 0.00378148  max resid 0.05513892 
-## *** Solution reached</code></pre>
+## ... Procrustes: rmse 0.007816377  max resid 0.1181937 
+## Run 12 stress 0.1463431 
+## Run 13 stress 0.1479325 
+## Run 14 stress 0.1470144 
+## Run 15 stress 0.1464185 
+## Run 16 stress 0.149579 
+## Run 17 stress 0.1478147 
+## Run 18 stress 0.1488428 
+## Run 19 stress 0.1473281 
+## Run 20 stress 0.1465481 
+## Run 21 stress 0.1460412 
+## Run 22 stress 0.1461099 
+## Run 23 stress 0.1459126 
+## ... Procrustes: rmse 0.00931668  max resid 0.06290936 
+## Run 24 stress 0.1471427 
+## Run 25 stress 0.1503411 
+## Run 26 stress 0.1463308 
+## Run 27 stress 0.1498315 
+## Run 28 stress 0.1527134 
+## Run 29 stress 0.1477335 
+## Run 30 stress 0.1458623 
+## ... Procrustes: rmse 0.01348141  max resid 0.1212376 
+## Run 31 stress 0.145786 
+## ... Procrustes: rmse 0.008884608  max resid 0.1197189 
+## Run 32 stress 0.1463878 
+## Run 33 stress 0.1483779 
+## Run 34 stress 0.145902 
+## ... Procrustes: rmse 0.006651233  max resid 0.1147746 
+## Run 35 stress 0.1485966 
+## Run 36 stress 0.1481901 
+## Run 37 stress 0.1469377 
+## Run 38 stress 0.1475125 
+## Run 39 stress 0.1471677 
+## Run 40 stress 0.146242 
+## Run 41 stress 0.1462416 
+## Run 42 stress 0.1523897 
+## Run 43 stress 0.1468371 
+## Run 44 stress 0.1492879 
+## Run 45 stress 0.14962 
+## Run 46 stress 0.1514586 
+## Run 47 stress 0.1463183 
+## Run 48 stress 0.1471443 
+## Run 49 stress 0.1455866 
+## ... Procrustes: rmse 0.004466831  max resid 0.05795141 
+## Run 50 stress 0.1468258 
+## Run 51 stress 0.1466945 
+## Run 52 stress 0.1520604 
+## Run 53 stress 0.1503131 
+## Run 54 stress 0.1501183 
+## Run 55 stress 0.1477847 
+## Run 56 stress 0.1505402 
+## Run 57 stress 0.1461675 
+## Run 58 stress 0.1545044 
+## Run 59 stress 0.14732 
+## Run 60 stress 0.1459432 
+## Run 61 stress 0.1455793 
+## ... Procrustes: rmse 0.007071441  max resid 0.06244176 
+## Run 62 stress 0.1466584 
+## Run 63 stress 0.1469733 
+## Run 64 stress 0.1472834 
+## Run 65 stress 0.1456781 
+## ... Procrustes: rmse 0.005769766  max resid 0.05913376 
+## Run 66 stress 0.1460553 
+## Run 67 stress 0.1464223 
+## Run 68 stress 0.1477841 
+## Run 69 stress 0.1472291 
+## Run 70 stress 0.1461322 
+## Run 71 stress 0.1497628 
+## Run 72 stress 0.146638 
+## Run 73 stress 0.1489103 
+## Run 74 stress 0.1458234 
+## ... Procrustes: rmse 0.006928343  max resid 0.06109516 
+## Run 75 stress 0.1468687 
+## Run 76 stress 0.1500604 
+## Run 77 stress 0.1458676 
+## ... Procrustes: rmse 0.01370557  max resid 0.1210633 
+## Run 78 stress 0.1475077 
+## Run 79 stress 0.1459603 
+## Run 80 stress 0.1455695 
+## ... Procrustes: rmse 0.004084899  max resid 0.05806143 
+## Run 81 stress 0.1483233 
+## Run 82 stress 0.1457259 
+## ... Procrustes: rmse 0.006361035  max resid 0.05889502 
+## Run 83 stress 0.147871 
+## Run 84 stress 0.1469778 
+## Run 85 stress 0.1496524 
+## Run 86 stress 0.1477034 
+## Run 87 stress 0.1455003 
+## ... Procrustes: rmse 0.005603527  max resid 0.05853369 
+## Run 88 stress 0.1463538 
+## Run 89 stress 0.1462029 
+## Run 90 stress 0.147447 
+## Run 91 stress 0.1462819 
+## Run 92 stress 0.148836 
+## Run 93 stress 0.1492734 
+## Run 94 stress 0.1456073 
+## ... Procrustes: rmse 0.00463276  max resid 0.05731454 
+## Run 95 stress 0.1498788 
+## Run 96 stress 0.146187 
+## Run 97 stress 0.1458016 
+## ... Procrustes: rmse 0.005225793  max resid 0.06397714 
+## Run 98 stress 0.1463013 
+## Run 99 stress 0.1459118 
+## ... Procrustes: rmse 0.006178984  max resid 0.08843215 
+## Run 100 stress 0.1461103 
+## *** No convergence -- monoMDS stopping criteria:
+##     65: no. of iterations &gt;= maxit
+##     31: stress ratio &gt; sratmax
+##      4: scale factor of the gradient &lt; sfgrmin</code></pre>
 </div>
 <pre class="r"><code>nmds</code></pre>
 <p><img src="sample_analysis_files/figure-html/2019_nmds_week_out-1.png" width="672" /></p>
@@ -996,44 +1188,127 @@ Stress
 </button>
 <div id="BlockName6" class="collapse">
 <pre class="r"><code>nmds &lt;- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_po, treatment = &quot;Year&quot;, subset = &quot;2019&quot;), &quot;Risk&quot;, circle = FALSE)</code></pre>
-<pre><code>## Run 0 stress 0.1403678 
-## Run 1 stress 0.1423139 
-## Run 2 stress 0.1402398 
+<pre><code>## Run 0 stress 0.1457842 
+## Run 1 stress 0.1556407 
+## Run 2 stress 0.1465798 
+## Run 3 stress 0.145555 
 ## ... New best solution
-## ... Procrustes: rmse 0.006484563  max resid 0.07281619 
-## Run 3 stress 0.140869 
-## Run 4 stress 0.1428735 
-## Run 5 stress 0.143331 
-## Run 6 stress 0.1426361 
-## Run 7 stress 0.1423131 
-## Run 8 stress 0.1404584 
-## ... Procrustes: rmse 0.008781981  max resid 0.08159715 
-## Run 9 stress 0.1399705 
+## ... Procrustes: rmse 0.005083624  max resid 0.0636229 
+## Run 4 stress 0.1486666 
+## Run 5 stress 0.1462423 
+## Run 6 stress 0.1472226 
+## Run 7 stress 0.1525679 
+## Run 8 stress 0.1499671 
+## Run 9 stress 0.148226 
+## Run 10 stress 0.1490897 
+## Run 11 stress 0.1497553 
+## Run 12 stress 0.1480912 
+## Run 13 stress 0.1477832 
+## Run 14 stress 0.1527338 
+## Run 15 stress 0.1456505 
+## ... Procrustes: rmse 0.003662627  max resid 0.05051715 
+## Run 16 stress 0.1476873 
+## Run 17 stress 0.1477799 
+## Run 18 stress 0.1466374 
+## Run 19 stress 0.146194 
+## Run 20 stress 0.1469794 
+## Run 21 stress 0.1476652 
+## Run 22 stress 0.1469257 
+## Run 23 stress 0.1462711 
+## Run 24 stress 0.1487516 
+## Run 25 stress 0.146277 
+## Run 26 stress 0.1462966 
+## Run 27 stress 0.1513383 
+## Run 28 stress 0.1454849 
 ## ... New best solution
-## ... Procrustes: rmse 0.003769272  max resid 0.05518991 
-## Run 10 stress 0.1401389 
-## ... Procrustes: rmse 0.006343897  max resid 0.0817226 
-## Run 11 stress 0.1401388 
-## ... Procrustes: rmse 0.006318963  max resid 0.08160664 
-## Run 12 stress 0.1423131 
-## Run 13 stress 0.1407542 
-## Run 14 stress 0.140237 
-## ... Procrustes: rmse 0.003793975  max resid 0.05553684 
-## Run 15 stress 0.1432185 
-## Run 16 stress 0.1401389 
-## ... Procrustes: rmse 0.006338375  max resid 0.08169351 
-## Run 17 stress 0.1403351 
-## ... Procrustes: rmse 0.004846455  max resid 0.07143375 
-## Run 18 stress 0.1401387 
-## ... Procrustes: rmse 0.006328681  max resid 0.08164046 
-## Run 19 stress 0.1429758 
-## Run 20 stress 0.1404583 
-## ... Procrustes: rmse 0.007699286  max resid 0.08071742 
-## Run 21 stress 0.1399702 
+## ... Procrustes: rmse 0.006520005  max resid 0.0611533 
+## Run 29 stress 0.1495742 
+## Run 30 stress 0.1471831 
+## Run 31 stress 0.1474028 
+## Run 32 stress 0.1483918 
+## Run 33 stress 0.1462517 
+## Run 34 stress 0.1490619 
+## Run 35 stress 0.1457366 
+## ... Procrustes: rmse 0.007801955  max resid 0.1070936 
+## Run 36 stress 0.1464077 
+## Run 37 stress 0.1471831 
+## Run 38 stress 0.1457563 
+## ... Procrustes: rmse 0.00556192  max resid 0.06869599 
+## Run 39 stress 0.1468055 
+## Run 40 stress 0.148126 
+## Run 41 stress 0.1477858 
+## Run 42 stress 0.1466109 
+## Run 43 stress 0.1472079 
+## Run 44 stress 0.1497806 
+## Run 45 stress 0.1466713 
+## Run 46 stress 0.1457217 
+## ... Procrustes: rmse 0.008320114  max resid 0.06348916 
+## Run 47 stress 0.1476494 
+## Run 48 stress 0.1460164 
+## Run 49 stress 0.1466907 
+## Run 50 stress 0.1455612 
+## ... Procrustes: rmse 0.007005257  max resid 0.06130199 
+## Run 51 stress 0.1464339 
+## Run 52 stress 0.1463856 
+## Run 53 stress 0.1465636 
+## Run 54 stress 0.1462257 
+## Run 55 stress 0.1493253 
+## Run 56 stress 0.1467673 
+## Run 57 stress 0.1466928 
+## Run 58 stress 0.1466216 
+## Run 59 stress 0.1486133 
+## Run 60 stress 0.1477697 
+## Run 61 stress 0.1496958 
+## Run 62 stress 0.1487504 
+## Run 63 stress 0.1465145 
+## Run 64 stress 0.1519155 
+## Run 65 stress 0.1475529 
+## Run 66 stress 0.147456 
+## Run 67 stress 0.1455247 
+## ... Procrustes: rmse 0.003760189  max resid 0.03947446 
+## Run 68 stress 0.1509281 
+## Run 69 stress 0.1482108 
+## Run 70 stress 0.1469645 
+## Run 71 stress 0.1488724 
+## Run 72 stress 0.1467856 
+## Run 73 stress 0.1459882 
+## Run 74 stress 0.1506897 
+## Run 75 stress 0.146605 
+## Run 76 stress 0.1464087 
+## Run 77 stress 0.1463852 
+## Run 78 stress 0.1471315 
+## Run 79 stress 0.1483322 
+## Run 80 stress 0.1472302 
+## Run 81 stress 0.1459149 
+## ... Procrustes: rmse 0.007253827  max resid 0.1133324 
+## Run 82 stress 0.1475685 
+## Run 83 stress 0.1461693 
+## Run 84 stress 0.1461543 
+## Run 85 stress 0.1495142 
+## Run 86 stress 0.1466717 
+## Run 87 stress 0.1460526 
+## Run 88 stress 0.1458808 
+## ... Procrustes: rmse 0.0114799  max resid 0.1177935 
+## Run 89 stress 0.1456481 
+## ... Procrustes: rmse 0.005511638  max resid 0.06074222 
+## Run 90 stress 0.1462659 
+## Run 91 stress 0.1468442 
+## Run 92 stress 0.1464536 
+## Run 93 stress 0.146126 
+## Run 94 stress 0.1504231 
+## Run 95 stress 0.1459509 
+## ... Procrustes: rmse 0.007596407  max resid 0.1168635 
+## Run 96 stress 0.1462216 
+## Run 97 stress 0.1462365 
+## Run 98 stress 0.1453982 
 ## ... New best solution
-## ... Procrustes: rmse 0.000134395  max resid 0.001201319 
-## ... Similar to previous best
-## *** Solution reached</code></pre>
+## ... Procrustes: rmse 0.004435842  max resid 0.06870149 
+## Run 99 stress 0.1470644 
+## Run 100 stress 0.1523444 
+## *** No convergence -- monoMDS stopping criteria:
+##     48: no. of iterations &gt;= maxit
+##     41: stress ratio &gt; sratmax
+##     11: scale factor of the gradient &lt; sfgrmin</code></pre>
 </div>
 <pre class="r"><code>nmds</code></pre>
 <p><img src="sample_analysis_files/figure-html/2019_nmds_Risk_out-1.png" width="672" /></p>
@@ -1059,9 +1334,9 @@ Stress
 </div>
 </div>
 <div id="overall" class="section level3 tabset tabset-pills">
-<h3>Overall</h3>
+<h3 class="tabset tabset-pills">Overall</h3>
 <div id="tsne-2" class="section level4 tabset tabset-pills">
-<h4>tSNE</h4>
+<h4 class="tabset tabset-pills">tSNE</h4>
 <div id="lake-6" class="section level5">
 <h5>Lake</h5>
 <pre class="r"><code>phylosmith::tsne_phyloseq(lake_po, &quot;Location&quot;, circle = FALSE) + 
@@ -1136,6 +1411,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

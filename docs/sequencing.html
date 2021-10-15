@@ -11,11 +11,12 @@
 
 <meta name="author" content="Schuyler D. Smith" />
 
-<meta name="date" content="2021-05-18" />
+<meta name="date" content="2021-10-14" />
 
 <title>Sequencing Results</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -35,7 +36,6 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -60,19 +60,19 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -92,7 +92,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -404,12 +404,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -428,55 +428,62 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="sequencing.html">
-    <span class="fas fa-dna"></span>
+    <span class="fa fa-dna"></span>
      
     Sequencing
   </a>
 </li>
 <li>
   <a href="sample_analysis.html">
-    <span class="fas fa-database"></span>
+    <span class="fa fa-database"></span>
      
     Samples
   </a>
 </li>
 <li>
   <a href="weather.html">
-    <span class="fas fa-cloud"></span>
+    <span class="fa fa-cloud"></span>
      
     Weather
   </a>
 </li>
 <li>
   <a href="molecular.html">
-    <span class="fas fa-atom"></span>
+    <span class="fa fa-atom"></span>
      
     Molecular
   </a>
 </li>
 <li>
+  <a href="microbiome.html">
+    <span class="fa fa-bacteria"></span>
+     
+    Microbiome
+  </a>
+</li>
+<li>
   <a href="data.html">
-    <span class="fas fa-database"></span>
+    <span class="fa fa-database"></span>
      
     Data
   </a>
 </li>
 <li>
   <a href="packages_and_functions.html">
-    <span class="fas fa-box-open"></span>
+    <span class="fa fa-box-open"></span>
      
     Packages
   </a>
 </li>
 <li>
   <a href="https://github.com/schuyler-smith/DARTE-QM/">
-    <span class="fas fa-code"></span>
+    <span class="fa fa-code"></span>
      
     Source Code
   </a>
@@ -491,19 +498,19 @@ div.tocify {
 </li>
 <li>
   <a href="http://germslab.org/">
-    <span class="fas fa-flask"></span>
+    <span class="fa fa-flask"></span>
      
   </a>
 </li>
 <li>
   <a href="https://www.bcb.iastate.edu/people/schuyler-smith">
-    <span class="fas fa-university"></span>
+    <span class="fa fa-university"></span>
      
   </a>
 </li>
 <li>
   <a href="mailto:sdsmith@iastate.edu">
-    <span class="fas fa-envelope fa-lg"></span>
+    <span class="fa fa-envelope fa-lg"></span>
      
   </a>
 </li>
@@ -526,7 +533,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Sequencing Results</h1>
 <h4 class="author"><a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a></h4>
-<h4 class="date">2021-05-18</h4>
+<h4 class="date">2021-10-14</h4>
 
 </div>
 
@@ -535,11 +542,11 @@ div.tocify {
 <div id="sequencing-results" class="section level1">
 <h1>Sequencing Results</h1>
 <div id="section" class="section level2 tabset tabset-pills">
-<h2>2018</h2>
+<h2 class="tabset tabset-pills">2018</h2>
 <div id="week-1" class="section level3">
 <h3>Week 1 <br></h3>
 <div id="miseq-quality-scores" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-1" class="section level5">
 <h5>1 <br></h5>
@@ -707,7 +714,7 @@ div.tocify {
 <div id="week-2" class="section level3">
 <h3>Week 2 <br></h3>
 <div id="miseq-quality-scores-1" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-41" class="section level5">
 <h5>1 <br></h5>
@@ -863,7 +870,7 @@ div.tocify {
 <div id="week-3" class="section level3">
 <h3>Week 3 <br></h3>
 <div id="miseq-quality-scores-2" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-78" class="section level5">
 <h5>1 <br></h5>
@@ -1015,7 +1022,7 @@ div.tocify {
 <div id="week-4" class="section level3">
 <h3>Week 4 <br></h3>
 <div id="miseq-quality-scores-3" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-114" class="section level5">
 <h5>1 <br></h5>
@@ -1163,7 +1170,7 @@ div.tocify {
 <div id="week-5" class="section level3">
 <h3>Week 5 <br></h3>
 <div id="miseq-quality-scores-4" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-149" class="section level5">
 <h5>1 <br></h5>
@@ -1315,7 +1322,7 @@ div.tocify {
 <div id="week-6" class="section level3">
 <h3>Week 6 <br></h3>
 <div id="miseq-quality-scores-5" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-185" class="section level5">
 <h5>1 <br></h5>
@@ -1459,7 +1466,7 @@ div.tocify {
 <div id="week-7" class="section level3">
 <h3>Week 7 <br></h3>
 <div id="miseq-quality-scores-6" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-219" class="section level5">
 <h5>1 <br></h5>
@@ -1611,7 +1618,7 @@ div.tocify {
 <div id="week-8" class="section level3">
 <h3>Week 8 <br></h3>
 <div id="miseq-quality-scores-7" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-255" class="section level5">
 <h5>1 <br></h5>
@@ -1763,7 +1770,7 @@ div.tocify {
 <div id="week-9" class="section level3">
 <h3>Week 9 <br></h3>
 <div id="miseq-quality-scores-8" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-291" class="section level5">
 <h5>1 <br></h5>
@@ -1911,7 +1918,7 @@ div.tocify {
 <div id="week-10" class="section level3">
 <h3>Week 10 <br></h3>
 <div id="miseq-quality-scores-9" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-326" class="section level5">
 <h5>1 <br></h5>
@@ -2063,7 +2070,7 @@ div.tocify {
 <div id="week-11" class="section level3">
 <h3>Week 11 <br></h3>
 <div id="miseq-quality-scores-10" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-362" class="section level5">
 <h5>1 <br></h5>
@@ -2215,7 +2222,7 @@ div.tocify {
 <div id="week-12" class="section level3">
 <h3>Week 12 <br></h3>
 <div id="miseq-quality-scores-11" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-398" class="section level5">
 <h5>1 <br></h5>
@@ -2367,7 +2374,7 @@ div.tocify {
 <div id="week-13" class="section level3">
 <h3>Week 13 <br></h3>
 <div id="miseq-quality-scores-12" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-434" class="section level5">
 <h5>1 <br></h5>
@@ -2519,7 +2526,7 @@ div.tocify {
 <div id="week-14" class="section level3">
 <h3>Week 14 <br></h3>
 <div id="miseq-quality-scores-13" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-470" class="section level5">
 <h5>1 <br></h5>
@@ -2671,7 +2678,7 @@ div.tocify {
 <div id="week-15" class="section level3">
 <h3>Week 15 <br></h3>
 <div id="miseq-quality-scores-14" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-506" class="section level5">
 <h5>1 <br></h5>
@@ -2822,11 +2829,11 @@ div.tocify {
 </div>
 </div>
 <div id="section-542" class="section level2 tabset tabset-pills">
-<h2>2019</h2>
+<h2 class="tabset tabset-pills">2019</h2>
 <div id="week-1-1" class="section level3">
 <h3>Week 1 <br></h3>
 <div id="miseq-quality-scores-15" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-543" class="section level5">
 <h5>1 <br></h5>
@@ -2986,7 +2993,7 @@ div.tocify {
 <div id="week-2-1" class="section level3">
 <h3>Week 2 <br></h3>
 <div id="miseq-quality-scores-16" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-581" class="section level5">
 <h5>1 <br></h5>
@@ -3138,7 +3145,7 @@ div.tocify {
 <div id="week-3-1" class="section level3">
 <h3>Week 3 <br></h3>
 <div id="miseq-quality-scores-17" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-617" class="section level5">
 <h5>1 <br></h5>
@@ -3294,7 +3301,7 @@ div.tocify {
 <div id="week-4-1" class="section level3">
 <h3>Week 4 <br></h3>
 <div id="miseq-quality-scores-18" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-654" class="section level5">
 <h5>1 <br></h5>
@@ -3454,7 +3461,7 @@ div.tocify {
 <div id="week-5-1" class="section level3">
 <h3>Week 5 <br></h3>
 <div id="miseq-quality-scores-19" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-692" class="section level5">
 <h5>1 <br></h5>
@@ -3610,7 +3617,7 @@ div.tocify {
 <div id="week-6-1" class="section level3">
 <h3>Week 6 <br></h3>
 <div id="miseq-quality-scores-20" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-729" class="section level5">
 <h5>1 <br></h5>
@@ -3766,7 +3773,7 @@ div.tocify {
 <div id="week-7-1" class="section level3">
 <h3>Week 7 <br></h3>
 <div id="miseq-quality-scores-21" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-766" class="section level5">
 <h5>1 <br></h5>
@@ -3922,7 +3929,7 @@ div.tocify {
 <div id="week-8-1" class="section level3">
 <h3>Week 8 <br></h3>
 <div id="miseq-quality-scores-22" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-803" class="section level5">
 <h5>1 <br></h5>
@@ -4078,7 +4085,7 @@ div.tocify {
 <div id="week-9-1" class="section level3">
 <h3>Week 9 <br></h3>
 <div id="miseq-quality-scores-23" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-840" class="section level5">
 <h5>1 <br></h5>
@@ -4234,7 +4241,7 @@ div.tocify {
 <div id="week-10-1" class="section level3">
 <h3>Week 10 <br></h3>
 <div id="miseq-quality-scores-24" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-877" class="section level5">
 <h5>1 <br></h5>
@@ -4386,7 +4393,7 @@ div.tocify {
 <div id="week-11-1" class="section level3">
 <h3>Week 11 <br></h3>
 <div id="miseq-quality-scores-25" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-913" class="section level5">
 <h5>1 <br></h5>
@@ -4538,7 +4545,7 @@ div.tocify {
 <div id="week-12-1" class="section level3">
 <h3>Week 12 <br></h3>
 <div id="miseq-quality-scores-26" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-949" class="section level5">
 <h5>1 <br></h5>
@@ -4694,7 +4701,7 @@ div.tocify {
 <div id="week-13-1" class="section level3">
 <h3>Week 13 <br></h3>
 <div id="miseq-quality-scores-27" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-986" class="section level5">
 <h5>1 <br></h5>
@@ -4846,7 +4853,7 @@ div.tocify {
 <div id="week-14-1" class="section level3">
 <h3>Week 14 <br></h3>
 <div id="miseq-quality-scores-28" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-1022" class="section level5">
 <h5>1 <br></h5>
@@ -4998,7 +5005,7 @@ div.tocify {
 <div id="week-15-1" class="section level3">
 <h3>Week 15 <br></h3>
 <div id="miseq-quality-scores-29" class="section level4 tabset tabset-pills">
-<h4>MiSeq Quality scores</h4>
+<h4 class="tabset tabset-pills">MiSeq Quality scores</h4>
 <p><br></p>
 <div id="section-1058" class="section level5">
 <h5>1 <br></h5>
@@ -5151,67 +5158,67 @@ div.tocify {
 </div>
 <div id="read-processing-pipeline" class="section level1">
 <h1>Read Processing Pipeline</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">for</span> <span class="fu">file</span> in <span class="va">$(</span><span class="fu">ls</span> ../data/raw_reads/2018/1-*_L001_R1_001.fastq<span class="va">)</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">do</span> <span class="kw">\</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="va">directory=$(</span><span class="fu">dirname</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span><span class="va">)</span> </span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="va">sample=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">basename</span> -- <span class="va">$file)</span><span class="st">&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -f 1 -d <span class="st">&#39;.&#39;</span><span class="va">)</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> s/<span class="st">&#39;_L001_R1_001&#39;</span>//g<span class="va">)</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -f 1 -d <span class="st">&#39;_&#39;</span><span class="va">)</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="ex">mikdir</span> -p <span class="va">${directory}</span>/../assembled/../error_files/../clustered/../finalized_reads/../classified</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="va">$(</span><span class="fu">ls</span> ../data/raw_reads/2018/1-<span class="pp">*</span>_L001_R1_001.fastq<span class="va">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span> <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">directory=$(</span><span class="fu">dirname</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span><span class="va">)</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">sample=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">basename</span> <span class="at">--</span> <span class="va">$file)</span><span class="st">&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 1 <span class="at">-d</span> <span class="st">&#39;.&#39;</span><span class="va">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">sed</span> s/<span class="st">&#39;_L001_R1_001&#39;</span>//g<span class="va">)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="va">sample=$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$sample</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 1 <span class="at">-d</span> <span class="st">&#39;_&#39;</span><span class="va">)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">mikdir</span> <span class="at">-p</span> <span class="va">${directory}</span>/../assembled/../error_files/../clustered/../finalized_reads/../classified</span></code></pre></div>
 <div id="merge-paired-end-reads" class="section level2">
 <h2>Merge Paired-End Reads</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">pear</span> \</span>
-<span id="cb2-2"><a href="#cb2-2"></a>-j 8 \</span>
-<span id="cb2-3"><a href="#cb2-3"></a>-p 0.05 \</span>
-<span id="cb2-4"><a href="#cb2-4"></a>-v 10 \</span>
-<span id="cb2-5"><a href="#cb2-5"></a>-n 225 \</span>
-<span id="cb2-6"><a href="#cb2-6"></a>-m 290 \</span>
-<span id="cb2-7"><a href="#cb2-7"></a>-f <span class="va">${file}</span> \</span>
-<span id="cb2-8"><a href="#cb2-8"></a>-r <span class="va">${directory}</span>/<span class="va">${sample}</span>*_R2_* \</span>
-<span id="cb2-9"><a href="#cb2-9"></a>-o <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pear</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>-j 8 <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>-p 0.05 <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>-v 10 <span class="dt">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>-n 225 <span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>-m 290 <span class="dt">\</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>-f <span class="va">${file}</span> <span class="dt">\</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>-r <span class="va">${directory}</span>/<span class="va">${sample}</span><span class="pp">*</span>_R2_<span class="pp">*</span> <span class="dt">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>-o <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span></span></code></pre></div>
 </div>
 <div id="trimming" class="section level2">
 <h2>Trimming</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">cutadapt</span> \</span>
-<span id="cb3-2"><a href="#cb3-2"></a>-l 225 \</span>
-<span id="cb3-3"><a href="#cb3-3"></a>-m 225 \</span>
-<span id="cb3-4"><a href="#cb3-4"></a>-o <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.fastq</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cutadapt</span> <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>-l 225 <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>-m 225 <span class="dt">\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>-o <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq <span class="dt">\</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.fastq</span></code></pre></div>
 </div>
 <div id="asv-calling" class="section level2">
 <h2>ASV Calling</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">amplici</span> \</span>
-<span id="cb4-2"><a href="#cb4-2"></a>--fastq <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</span>
-<span id="cb4-3"><a href="#cb4-3"></a>--outfile <span class="va">${directory}</span>/../error_files/<span class="va">${sample}</span>.error \</span>
-<span id="cb4-4"><a href="#cb4-4"></a>-error</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="ex">amplici</span> \</span>
-<span id="cb4-7"><a href="#cb4-7"></a>--fastq <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq \</span>
-<span id="cb4-8"><a href="#cb4-8"></a>--profile <span class="va">${directory}</span>/../error_files/<span class="va">${sample}</span>.error \</span>
-<span id="cb4-9"><a href="#cb4-9"></a>--outfile <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.fasta</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">amplici</span> <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>--fastq <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>--outfile <span class="va">${directory}</span>/../error_files/<span class="va">${sample}</span>.error <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>-error</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">amplici</span> <span class="dt">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>--fastq <span class="va">${directory}</span>/../assembled/<span class="va">${sample}</span>.assembled.trimmed.fastq <span class="dt">\</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>--profile <span class="va">${directory}</span>/../error_files/<span class="va">${sample}</span>.error <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>--outfile <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.fasta</span></code></pre></div>
 </div>
 <div id="chimera-removal" class="section level2">
 <h2>Chimera Removal</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">vsearch-2.15.1/bin/vsearch</span> \</span>
-<span id="cb5-2"><a href="#cb5-2"></a>--sortbysize <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.fasta \</span>
-<span id="cb5-3"><a href="#cb5-3"></a>--output <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.sorted.fasta</span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="ex">vsearch-2.15.1/bin/vsearch</span> \</span>
-<span id="cb5-6"><a href="#cb5-6"></a>--uchime_denovo <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.sorted.fasta \</span>
-<span id="cb5-7"><a href="#cb5-7"></a>--nonchimeras <span class="va">${directory}</span>/../finalized_reads/<span class="va">${sample}</span>.nonchimeras.fasta</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vsearch-2.15.1/bin/vsearch</span> <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>--sortbysize <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.fasta <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>--output <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.sorted.fasta</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vsearch-2.15.1/bin/vsearch</span> <span class="dt">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>--uchime_denovo <span class="va">${directory}</span>/../clustered/<span class="va">${sample}</span>.sorted.fasta <span class="dt">\</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>--nonchimeras <span class="va">${directory}</span>/../finalized_reads/<span class="va">${sample}</span>.nonchimeras.fasta</span></code></pre></div>
 </div>
 <div id="classifier" class="section level2">
 <h2>Classifier</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">java</span> -Xmx24g -jar /mnt/home/smithsch/software/RDPTools/classifier.jar \</span>
-<span id="cb6-2"><a href="#cb6-2"></a>classify \</span>
-<span id="cb6-3"><a href="#cb6-3"></a>-c 0.5 \</span>
-<span id="cb6-4"><a href="#cb6-4"></a>-f filterbyconf \</span>
-<span id="cb6-5"><a href="#cb6-5"></a>-o <span class="va">${directory}</span>/../classified/<span class="va">${sample}</span>_classifications.txt \</span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="va">${directory}</span>/../finalized_reads/<span class="va">${sample}</span>.nonchimeras.fasta</span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-Xmx24g</span> <span class="at">-jar</span> /mnt/home/smithsch/software/RDPTools/classifier.jar <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>classify <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>-c 0.5 <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>-f filterbyconf <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>-o <span class="va">${directory}</span>/../classified/<span class="va">${sample}</span>_classifications.txt <span class="dt">\</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="va">${directory}</span>/../finalized_reads/<span class="va">${sample}</span>.nonchimeras.fasta</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
 </div>
 </div>
 
@@ -5264,6 +5271,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

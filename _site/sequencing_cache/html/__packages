@@ -11,5 +11,15 @@ ggh4x
 phyloseq
 schuylR
 ssBLAST
-phylosmith
 DT
+BiocGenerics
+S4Vectors
+IRanges
+XVector
+Biostrings
+RSQLite
+DECIPHER
+igraph
+ggraph
+phylosmith
+GenomeInfoDb

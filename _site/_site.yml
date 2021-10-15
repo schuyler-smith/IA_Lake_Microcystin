@@ -36,6 +36,10 @@ navbar:
       icon: fa-atom
       href: molecular.html
 
+    - text: Microbiome
+      icon: fa-bacteria 
+      href: microbiome.html
+
     - text: Data
       icon: fa-database
       href: data.html

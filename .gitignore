@@ -7,6 +7,7 @@
 /data/16S_processing/clustered
 /data/16S_processing/error_files
 /data/16S_processing/databases/SILVA*
+/data/16S_processing/*
 /data/raw_reads
 /paper
 /scripts

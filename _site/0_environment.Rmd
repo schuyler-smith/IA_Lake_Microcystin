@@ -6,7 +6,7 @@ output:
   html_document
 ---
 
-```{r load_libraries, message=FALSE, warning=FALSE}
+```{r load_libraries, message=FALSE, warning=FALSE, echo=FALSE}
 library(ggplot2)
 library(plotly)
 library(ggpubr)
@@ -20,6 +20,8 @@ library(ssBLAST)
 library(phylosmith)
 library(DT)
 library(DECIPHER)
+library(igraph)
+library(ggraph)
 ```
 
 ## R-Functions {.tabset .tabset-pills}
@@ -57,48 +59,19 @@ construct_ASVtable <- function(files, p.threshold = 1){
                      fill = 0)
   return(ASV_table)
 }
-
-rarefy <- function(data, n){
-  col_names <- colnames(data)
-  rarefied_table <- data.table(categories=data[[1]])
-  for(sample in seq(ncol(data)-1)+1){
-    rarvec <- vector()
-    for(i in seq(length(data[[sample]]))){
-      rarvec <- c(rarvec, rep(i, data[[sample]][i]))
+gm_mean = function(x, na.rm=TRUE, zero.propagate = FALSE){
+  if(any(x < 0, na.rm = TRUE)){
+    return(NaN)
+  }
+  if(zero.propagate){
+    if(any(x == 0, na.rm = TRUE)){
+      return(0)
     }
-    subsample <- sample(rarvec, n, replace=FALSE)
-    subsample <- table(subsample)
-    subsample <- merge(data.frame(index = seq(length(data[[sample]]))), 
-                       data.table(subsample), by = 1, all = TRUE)[,2]
-    subsample[is.na(subsample)] <- 0
-    rarefied_table <- cbind(rarefied_table, subsample)
+    exp(mean(log(x), na.rm = na.rm))
+  } else {
+    exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
   }
-  colnames(rarefied_table) <- c(col_names)
-  return(rarefied_table)
 }
-
-rarefaction <- function(data, max_n=NA, intervals=10){
-  if(is.na(max_n)){max_n <- min(colSums(data[,-1]))}
-  n_categories <- vector()
-  n <- vector()
-  for(i in seq(intervals, max_n, intervals)){
-    n <- c(n, i)
-    n_categories <- c(n_categories, sum(rowSums(rarefy(data, i)[,-1]) > 0))
-  }
-  return(data.frame(n=n, counts=n_categories))
-}
-
-rarefaction_curve <- function(data, max_n=NA, intervals=10, iter = 100){
-  rarefied_counts <- data.frame()
-  for(i in seq(iter)){
-    rarefied_counts <- rbind(rarefied_counts, 
-                             rarefaction(data, max_n, intervals))}
-  g <- ggplot(rarefied_counts, aes_string(x="n", y="counts")) + 
-    geom_smooth(formula=y ~ x, method="loess", se=TRUE, fullrange=TRUE, level=0.95, color='black') + 
-    theme_bw()
-  return(g)
-}
-
 replace_DT_NA=function(DT) {
   for (j in seq_len(ncol(DT)))
     set(DT,which(is.na(DT[[j]])),j,0)
