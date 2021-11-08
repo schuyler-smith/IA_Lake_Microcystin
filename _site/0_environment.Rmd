@@ -8,6 +8,7 @@ output:
 
 ```{r load_libraries, message=FALSE, warning=FALSE, echo=FALSE}
 library(ggplot2)
+library(ggnewscale)
 library(plotly)
 library(ggpubr)
 library(Rcpp)

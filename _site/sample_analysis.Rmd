@@ -15,6 +15,8 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 <br>
 <br>
 
+# All Samples
+
 ## Ordination {.tabset .tabset-pills}
 
 ### 2018  {.tabset .tabset-pills}
@@ -154,6 +156,56 @@ phylosmith::tsne_phyloseq(phylosmith::taxa_filter(lake_po, treatment = "Year", s
 
 
 ### Overall {.tabset .tabset-pills}
+#### PCoA  {.tabset .tabset-pills}
+##### Lake
+```{r overall_pcoa, fig.width=11, fig.height=6, cache=TRUE}
+phylosmith::pcoa_phyloseq(lake_po, "Location", circle = FALSE)
+```
+
+##### Week
+```{r overall_pcoa_week, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::pcoa_phyloseq(lake_po, "Week", circle = FALSE)
+```
+
+##### Risk Level
+```{r overall_pcoa_Risk, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::pcoa_phyloseq(lake_po, "Risk", circle = FALSE)
+```
+
+#### NMDS {.tabset .tabset-pills}
+##### Lake
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName4"> Stress </button>  
+<div id="BlockName4" class="collapse"> 
+```{r overall_nmds, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(lake_po, "Location", circle = FALSE)
+```
+</div>
+```{r overall_nmds_out, fig.width=11, fig.height=6, cache=TRUE}
+nmds
+```
+
+##### Week
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName5"> Stress </button>  
+<div id="BlockName5" class="collapse"> 
+```{r overall_nmds_week, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(lake_po, "Week", circle = FALSE)
+```
+</div>
+```{r overall_nmds_week_out, fig.width=7, fig.height=5, cache=TRUE}
+nmds
+```
+
+##### Risk Level
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName6"> Stress </button>  
+<div id="BlockName6" class="collapse"> 
+```{r overall_nmds_Risk, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(lake_po, "Risk", circle = FALSE)
+```
+</div>
+```{r overall_nmds_Risk_out, cache=TRUE, fig.width=7, fig.height=5, cache=TRUE}
+nmds
+```
+
 #### tSNE {.tabset .tabset-pills}
 ##### Lake
 ```{r overall_location, fig.width=11, fig.height=6, cache=TRUE}
@@ -179,3 +231,250 @@ phylosmith::tsne_phyloseq(lake_po, "Risk", circle = FALSE)
 
 
 
+
+
+
+
+
+# High- & Low-Risk Lakes
+
+```{r map, fig.width=7, fig.height=5, cache=TRUE}
+iowa <- readRDS('../data/maps/iowa_terrain_map.RDS')
+
+ggmap::ggmap(iowa) + 
+  geom_point(data = lakes, aes(x = Longitude, y = Latitude), 
+             color = lakes$Risk,
+             size = 8,
+             alpha = 0.8) +
+  ggrepel::geom_text_repel(data = lakes, aes(x = Longitude, y = Latitude, label = Lake), 
+                           point.padding = unit(0.5,"lines"), 
+                           box.padding = unit(0.35, "lines"), 
+                           label.r = 0,
+                           label.padding = unit(0.2,"lines"),
+                           max.overlaps = 10,
+                           size = 2.8,
+                           max.time = 10)
+```
+
+Subset 8 High- and Low-Risk
+```{r hl_lakes}
+sam <- dcast(data.table(as(lake_po@sam_data, 'data.frame')), Location ~ Risk, fun.aggregate = length)
+setkey(sam, High)
+high_risk_lakes <- tail(sam$Location, 8)
+low_risk_lakes <- head(sam$Location, 8)
+lake_hl <- taxa_filter(lake_po,
+                       treatment = "Location",
+                       subset = c(high_risk_lakes, low_risk_lakes))
+sam <- cbind(lake_hl@sam_data, Lake_Risk = "Low")
+sam[sam$Location %in% high_risk_lakes,]$Lake_Risk <- "High"
+lake_hl@sam_data <- sample_data(sam)
+```
+
+### 2018  {.tabset .tabset-pills}
+#### PCoA  {.tabset .tabset-pills}
+##### Lake
+```{r 2018_hl_pcoa, fig.width=11, fig.height=6, cache=TRUE}
+phylosmith::pcoa_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Location", circle = FALSE)
+```
+
+##### Week
+```{r 2018_hl_pcoa_week, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::pcoa_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Week", circle = FALSE)
+```
+
+##### Risk Level
+```{r 2018_hl_pcoa_Risk, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::pcoa_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Risk", circle = FALSE)
+```
+
+#### NMDS  {.tabset .tabset-pills}
+##### Lake
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName1"> Stress </button>  
+<div id="BlockName1" class="collapse"> 
+```{r 2018_hl_nmds, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Location", circle = FALSE)
+```
+</div>
+```{r 2018_hl_nmds_out, fig.width=11, fig.height=6, cache=TRUE}
+nmds
+```
+
+##### Week
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName2"> Stress </button>  
+<div id="BlockName2" class="collapse"> 
+```{r 2018_hl_nmds_week, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Week", circle = FALSE)
+```
+</div>
+```{r 2018_hl_nmds_week_out, fig.width=7, fig.height=5, cache=TRUE}
+nmds
+```
+
+##### Risk Level
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName3"> Stress </button>  
+<div id="BlockName3" class="collapse"> 
+```{r 2018_hl_nmds_Risk, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Risk", circle = FALSE)
+```
+</div>
+```{r 2018_hl_nmds_Risk_out, fig.width=7, fig.height=5, cache=TRUE}
+nmds
+```
+
+#### tSNE  {.tabset .tabset-pills}
+##### Lake
+```{r 2018_hl_tsne, cache=TRUE, fig.width=11, fig.height=6, cache=TRUE}
+phylosmith::tsne_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Location", circle = FALSE)
+```
+
+##### Week
+```{r 2018_hl_tsne_week, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::tsne_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Week", circle = FALSE)
+```
+
+##### Risk Level
+```{r 2018_hl_tsne_Risk, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::tsne_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2018"), "Risk", circle = FALSE)
+```
+
+
+### 2019  {.tabset .tabset-pills}
+#### PCoA  {.tabset .tabset-pills}
+##### Lake
+```{r 2019_hl_pcoa, fig.width=11, fig.height=6, cache=TRUE}
+phylosmith::pcoa_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Location", circle = FALSE)
+```
+
+##### Week
+```{r 2019_hl_pcoa_week, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::pcoa_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Week", circle = FALSE)
+```
+
+##### Risk Level
+```{r 2019_hl_pcoa_Risk, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::pcoa_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Risk", circle = FALSE)
+```
+
+#### NMDS {.tabset .tabset-pills}
+##### Lake
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName4"> Stress </button>  
+<div id="BlockName4" class="collapse"> 
+```{r 2019_hl_nmds, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Location", circle = FALSE)
+```
+</div>
+```{r 2019_hl_nmds_out, fig.width=11, fig.height=6, cache=TRUE}
+nmds
+```
+
+##### Week
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName5"> Stress </button>  
+<div id="BlockName5" class="collapse"> 
+```{r 2019_hl_nmds_week, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Week", circle = FALSE)
+```
+</div>
+```{r 2019_hl_nmds_week_out, fig.width=7, fig.height=5, cache=TRUE}
+nmds
+```
+
+##### Risk Level
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName6"> Stress </button>  
+<div id="BlockName6" class="collapse"> 
+```{r 2019_hl_nmds_Risk, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Risk", circle = FALSE)
+```
+</div>
+```{r 2019_hl_nmds_Risk_out, cache=TRUE, fig.width=7, fig.height=5, cache=TRUE}
+nmds
+```
+
+#### tSNE
+##### Lake
+```{r 2019_hl_tsne, fig.width=11, fig.height=6, cache=TRUE}
+phylosmith::tsne_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Location", circle = FALSE)
+```
+
+##### Week
+```{r 2019_hl_tsne_week, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::tsne_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Week", circle = FALSE)
+```
+
+##### Risk Level
+```{r 2019_hl_tsne_Risk, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::tsne_phyloseq(phylosmith::taxa_filter(lake_hl, treatment = "Year", subset = "2019"), "Risk", circle = FALSE)
+```
+
+
+### Overall {.tabset .tabset-pills}
+#### PCoA  {.tabset .tabset-pills}
+##### Lake
+```{r overall_hl_pcoa, fig.width=11, fig.height=6, cache=TRUE}
+phylosmith::pcoa_phyloseq(lake_hl, "Location", circle = FALSE)
+```
+
+##### Week
+```{r overall_hl_pcoa_week, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::pcoa_phyloseq(lake_hl, "Week", circle = FALSE)
+```
+
+##### Risk Level
+```{r overall_hl_pcoa_Risk, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::pcoa_phyloseq(lake_hl, "Risk", circle = FALSE)
+```
+
+#### NMDS {.tabset .tabset-pills}
+##### Lake
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName4"> Stress </button>  
+<div id="BlockName4" class="collapse"> 
+```{r overall_hl_nmds, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(lake_hl, "Location", circle = FALSE)
+```
+</div>
+```{r overall_hl_nmds_out, fig.width=11, fig.height=6, cache=TRUE}
+nmds
+```
+
+##### Week
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName5"> Stress </button>  
+<div id="BlockName5" class="collapse"> 
+```{r overall_hl_nmds_week, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(lake_hl, "Week", circle = FALSE)
+```
+</div>
+```{r overall_hl_nmds_week_out, fig.width=7, fig.height=5, cache=TRUE}
+nmds
+```
+
+##### Risk Level
+<button class="btn btn-primary" data-toggle="collapse" data-target="#BlockName6"> Stress </button>  
+<div id="BlockName6" class="collapse"> 
+```{r overall_hl_nmds_Risk, cache=TRUE}
+nmds <- phylosmith::nmds_phyloseq(lake_hl, "Risk", circle = FALSE)
+```
+</div>
+```{r overall_hl_nmds_Risk_out, cache=TRUE, fig.width=7, fig.height=5, cache=TRUE}
+nmds
+```
+
+#### tSNE {.tabset .tabset-pills}
+##### Lake
+```{r overall_hl_location, fig.width=11, fig.height=6, cache=TRUE}
+phylosmith::tsne_phyloseq(lake_hl, "Location", circle = FALSE) + 
+  guides(fill = guide_legend(ncol = 2), override.aes = list(size = 4))
+```
+
+##### Week
+```{r overall_hl_week, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::tsne_phyloseq(lake_hl, "Week", circle = FALSE)
+```
+
+##### Year
+```{r overall_hl_year, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::tsne_phyloseq(lake_hl, "Year", circle = FALSE)
+```
+
+##### Risk Level
+```{r overall_hl_risk, fig.width=7, fig.height=5, cache=TRUE}
+phylosmith::tsne_phyloseq(lake_hl, "Risk", circle = FALSE)
+```

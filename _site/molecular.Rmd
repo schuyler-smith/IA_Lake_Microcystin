@@ -19,17 +19,28 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ## NO2 {.tabset .tabset-pills}
 ### Year Average {.tabset .tabset-pills}
 ```{r nitrogen}
-nitrogen <- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c("Location", "Year"), .SDcols=c("NO2")][order(Location)]
+nitrogen <- metadata[, lapply(.SD, mean, na.rm=TRUE), 
+                     by=c("Location", "Year"), 
+                     .SDcols=c("NO2")][order(Location)]
 set(nitrogen, j = "NO2", value = round(nitrogen$NO2, 3))
 ```
 
 #### Graph
 ```{r nitro_graph, echo=FALSE}
-ggplot(nitrogen, aes(Location, NO2, fill = Year)) + 
-  geom_bar(stat = "identity", position = position_dodge2(padding = 3.5), 
+ggplot() + 
+  geom_bar(data = nitrogen, aes(Location, NO2, fill = Year), stat = "identity", 
+           position = position_dodge2(padding = 3.5),
     size = 0.2, color = "black", alpha = 0.75, width = 0.32) +
   coord_flip() + 
-  theme(axis.text.y = element_text(color = lake_risk, face = "bold"))
+  theme_bw() +
+  theme(axis.text.y = element_text(color = lake_risk, face = "bold")) + 
+  scale_fill_manual(values = schuylR::create_palette(1 + length(levels(nitrogen$Year)))[-1]) + 
+  new_scale_color() +
+  geom_text(data = data.frame(lake_risk), aes(0,0,label='', color = lake_risk)) + 
+  scale_color_manual(values = create_palette(4, 'viridis'), drop = FALSE, 
+                     limits = c("None", "Low", "Moderate"," High")) + 
+  guides(color = guide_legend(title = "Risk Level",
+    override.aes = aes(label = "A"))) 
 ```
 
 #### Table
@@ -47,17 +58,27 @@ ggplot(metadata, aes(NO2, Microcystin)) +
 ## NH3 {.tabset .tabset-pills}
 ### Year Average {.tabset .tabset-pills}
 ```{r NH3}
-NH3 <- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c("Location", "Year"), .SDcols=c("NH3")][order(Location)]
+NH3 <- metadata[, lapply(.SD, mean, na.rm=TRUE), 
+                by=c("Location", "Year"), 
+                .SDcols=c("NH3")][order(Location)]
 set(NH3, j = "NH3", value = round(NH3$NH3, 3))
 ```
 
 #### Graph
 ```{r NH3_graNH3, echo=FALSE}
-ggplot(NH3, aes(Location, NH3, fill = Year)) + 
-  geom_bar(stat = "identity", position = position_dodge2(padding = 3.5), 
-    size = 0.25, color = "black", alNH3a = 0.5, width = 0.30) +
+ggplot() + 
+  geom_bar(data = NH3, aes(Location, NH3, fill = Year), stat = "identity", color = "black", 
+           position = position_dodge2(padding = 3.5), size = 0.2, alpha = 0.75, width = 0.32) +
   coord_flip() + 
-  theme(axis.text.y = element_text(color = lake_risk, face = "bold"))
+  theme_bw() +
+  theme(axis.text.y = element_text(color = lake_risk, face = "bold")) + 
+  scale_fill_manual(values = schuylR::create_palette(1 + length(levels(NH3$Year)))[-1]) + 
+  new_scale_color() +
+  geom_text(data = data.frame(lake_risk), aes(0,0,label='', color = lake_risk)) + 
+  scale_color_manual(values = create_palette(4, 'viridis'), drop = FALSE, 
+                     limits = c("None", "Low", "Moderate"," High")) + 
+  guides(color = guide_legend(title = "Risk Level",
+    override.aes = aes(label = "A"))) 
 ```
 
 #### Table
@@ -75,17 +96,27 @@ ggplot(metadata, aes(NH3, Microcystin)) +
 ## pH {.tabset .tabset-pills}
 ### Year Average {.tabset .tabset-pills}
 ```{r pH}
-pH <- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c("Location", "Year"), .SDcols=c("pH")][order(Location)]
+pH <- metadata[, lapply(.SD, mean, na.rm=TRUE), 
+               by=c("Location", "Year"), 
+               .SDcols=c("pH")][order(Location)]
 set(pH, j = "pH", value = round(pH$pH, 2))
 ```
 
 #### Graph
 ```{r pH_graph, echo=FALSE}
-ggplot(pH, aes(Location, pH, fill = Year)) + 
-  geom_bar(stat = "identity", position = position_dodge2(padding = 3.5), 
-    size = 0.2, color = "black", alpha = 0.75, width = 0.32) +
+ggplot() + 
+  geom_bar(data = pH, aes(Location, pH, fill = Year), stat = "identity", color = "black",
+           position = position_dodge2(padding = 3.5), size = 0.2, alpha = 0.75, width = 0.32) +
   coord_flip() + 
-  theme(axis.text.y = element_text(color = lake_risk, face = "bold"))
+  theme_bw() +
+  theme(axis.text.y = element_text(color = lake_risk, face = "bold")) + 
+  scale_fill_manual(values = schuylR::create_palette(1 + length(levels(pH$Year)))[-1]) + 
+  new_scale_color() +
+  geom_text(data = data.frame(lake_risk), aes(0,0,label='', color = lake_risk)) + 
+  scale_color_manual(values = create_palette(4, 'viridis'), drop = FALSE, 
+                     limits = c("None", "Low", "Moderate"," High")) + 
+  guides(color = guide_legend(title = "Risk Level",
+    override.aes = aes(label = "A"))) 
 ```
 
 #### Table
@@ -104,17 +135,27 @@ ggplot(metadata, aes(pH, Microcystin)) +
 ## Cl {.tabset .tabset-pills}
 ### Year Average {.tabset .tabset-pills}
 ```{r Cl}
-Cl <- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c("Location", "Year"), .SDcols=c("Cl")][order(Location)]
+Cl <- metadata[, lapply(.SD, mean, na.rm=TRUE), 
+               by=c("Location", "Year"), 
+               .SDcols=c("Cl")][order(Location)]
 set(Cl, j = "Cl", value = round(Cl$Cl, 2))
 ```
 
 #### Graph
 ```{r Cl_graCl, echo=FALSE}
-ggplot(Cl, aes(Location, Cl, fill = Year)) + 
-  geom_bar(stat = "identity", position = position_dodge2(padding = 3.5), 
-    size = 0.2, color = "black", alCla = 0.75, width = 0.32) +
+ggplot() + 
+  geom_bar(data = Cl, aes(Location, Cl, fill = Year), stat = "identity", color = "black",
+           position = position_dodge2(padding = 3.5), size = 0.2, alpha = 0.75, width = 0.32) +
   coord_flip() + 
-  theme(axis.text.y = element_text(color = lake_risk, face = "bold"))
+  theme_bw() +
+  theme(axis.text.y = element_text(color = lake_risk, face = "bold")) + 
+  scale_fill_manual(values = schuylR::create_palette(1 + length(levels(Cl$Year)))[-1]) + 
+  new_scale_color() +
+  geom_text(data = data.frame(lake_risk), aes(0,0,label='', color = lake_risk)) + 
+  scale_color_manual(values = create_palette(4, 'viridis'), drop = FALSE, 
+                     limits = c("None", "Low", "Moderate"," High")) + 
+  guides(color = guide_legend(title = "Risk Level",
+    override.aes = aes(label = "A"))) 
 ```
 
 #### Table
@@ -129,7 +170,150 @@ ggplot(metadata, aes(Cl, Microcystin)) +
   viridis::scale_color_viridis()
 ```
 
-# Microcystin Strains
-## 
+# High- & Low-Risk Lakes 
 
+## Weeks of Significantly Different Variables
 
+```{r t_tests, echo=FALSE}
+lake_diffs <- data.table()
+for(i in colnames(sam)[c(7:19,21:37)]){
+  for(w in unique(sam$Week)){
+    for(y in unique(sam$Year)){
+      test_results <- t.test(sam[Week == w][Year == y][Lake_Risk == "Low"][[i]], 
+                           sam[Week == w][Year == y][Lake_Risk == "High"][[i]])
+      lake_diffs <- rbind(lake_diffs, data.table(
+        week = w,
+        year = y,
+        param = i,
+        low_grp = round(test_results$estimate[1],2),
+        high_grp = round(test_results$estimate[2],2),
+        t = round(test_results$statistic,2),
+        p = round(test_results$p.value,3)
+      ))
+    }
+  }
+}
+setorder(lake_diffs, year, week)
+lake_diffs <- lake_diffs[p < 0.05]
+```
+
+```{r t_tests_table, echo=FALSE}
+lake_diffs <- data.table(table(lake_diffs[year == 2018]$param))
+setnames(lake_diffs, c("V1", "N"), c("Variable", "Number of Days with Significant Difference"))
+setorderv(lake_diffs, "Number of Days with Significant Difference", -1)
+lake_diffs
+```
+
+## Microcystin Levels
+### 2018
+
+```{r microcystin_18, fig.width=10, fig.height=8, cache=TRUE}
+ggplot(sam[Year == 2018], aes(x = Week, y = Microcystin)) + 
+  geom_bar(stat = "identity", position = "stack", 
+                        size = 0.12, width = 0.95, color = "black") + 
+  facet_nested_wrap(.~ Lake_Risk + Location , scales = "free") + 
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 10), 
+        axis.title.x = element_text(size = 12, face = "bold"), 
+        axis.title.y = element_text(size = 12, face = "bold"), 
+        axis.ticks.x = element_blank(), 
+        legend.title = element_text(size = 10, face = "bold"), 
+        legend.text = element_text(size = 10), 
+        legend.spacing.x = unit(0.005, "npc"), 
+        legend.key.size = unit(3, "mm"),
+        legend.position="top",  
+        panel.background = element_rect(color = "black", size = 1.5), 
+        panel.spacing = unit(0.01, "npc"), 
+        strip.text.x = element_text(size = 14, face = "bold"), 
+        strip.background = element_rect(colour = "black", size = 1.4, fill = "white"), 
+        panel.grid.major.x = element_blank()) + 
+  scale_y_continuous(expand = expansion(mult = c(0.0037, 0.003), add = c(0, 0)), limits = c(0,70)) + 
+  scale_x_discrete(expand = expansion(mult = 0, 
+                                      add = 0.51))
+```
+
+```{r microcystin_18_micro, fig.width=10, fig.height=8, cache=TRUE}
+a <- data.table::copy(sam)
+a[, Microcystis_x := Microcystis/max(Microcystis), by = c("Location", "Year")]
+a[, Microcystin_x := Microcystin/max(Microcystin), by = c("Location", "Year")]
+a <- melt.data.table(a, id.vars = c("Location", "Week", "Year", "Lake_Risk"), 
+                     measure.vars = c("Microcystin_x", "Microcystis_x"))
+
+ggplot(a[Year == 2018], aes(x = Week, y = value, 
+    fill = variable))+ geom_bar(stat = "identity", position = position_dodge2(padding = 3.5), 
+    size = 0.2, color = "black", alpha = 0.85, width = 0.62) + 
+    facet_nested_wrap(.~ Lake_Risk + Location , scales = "free") + theme_bw() +
+  scale_fill_manual(values = schuylR::create_palette(1 + length(unique(a$Year)))[-1], 
+                    labels = c("Microcystin", "Microcystis")) +
+  labs(y = "Relative Value", fill = "Variable") +
+  theme(axis.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 10), 
+        axis.title.x = element_text(size = 12, face = "bold"), 
+        axis.title.y = element_text(size = 12, face = "bold"), 
+        axis.ticks.x = element_blank(), 
+        legend.title = element_text(size = 10, face = "bold"), 
+        legend.text = element_text(size = 10), 
+        legend.spacing.x = unit(0.005, "npc"), 
+        legend.key.size = unit(3, "mm"),
+        legend.position="top", 
+        panel.background = element_rect(color = "black", size = 1.5), 
+        panel.spacing = unit(0.01, "npc"), 
+        strip.text.x = element_text(size = 14, face = "bold"), 
+        strip.background = element_rect(colour = "black", size = 1.4, fill = "white"), 
+        panel.grid.major.x = element_blank()) 
+```
+
+### 2019
+
+```{r microcystin_19, fig.width=10, fig.height=8, cache=TRUE}
+ggplot(sam[Year == 2019], aes(x = Week, y = Microcystin)) + 
+  geom_bar(stat = "identity", position = "stack", 
+                        size = 0.12, width = 0.95, color = "black") + 
+  facet_nested_wrap(.~ Lake_Risk + Location , scales = "free") + 
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 10), 
+        axis.title.x = element_text(size = 12, face = "bold"), 
+        axis.title.y = element_text(size = 12, face = "bold"), 
+        axis.ticks.x = element_blank(), 
+        legend.title = element_text(size = 10, face = "bold"), 
+        legend.text = element_text(size = 10), 
+        legend.spacing.x = unit(0.005, "npc"), 
+        legend.key.size = unit(3, "mm"),
+        legend.position="top",  
+        panel.background = element_rect(color = "black", size = 1.5), 
+        panel.spacing = unit(0.01, "npc"), 
+        strip.text.x = element_text(size = 14, face = "bold"), 
+        strip.background = element_rect(colour = "black", size = 1.4, fill = "white"), 
+        panel.grid.major.x = element_blank()) + 
+  scale_y_continuous(expand = expansion(mult = c(0.0037, 0.003), add = c(0, 0)), limits = c(0,70)) + 
+  scale_x_discrete(expand = expansion(mult = 0, 
+                                      add = 0.51))
+```
+
+```{r microcystin_19_micro, fig.width=10, fig.height=8, cache=TRUE}
+ggplot(a[Year == 2019], aes(x = Week, y = value, 
+    fill = variable))+ geom_bar(stat = "identity", position = position_dodge2(padding = 3.5), 
+    size = 0.2, color = "black", alpha = 0.85, width = 0.62) + 
+    facet_nested_wrap(.~ Lake_Risk + Location , scales = "free") + theme_bw() +
+  scale_fill_manual(values = schuylR::create_palette(1 + length(unique(a$Year)))[-1], 
+                    labels = c("Microcystin", "Microcystis")) +
+  labs(y = "Relative Value", fill = "Variable") +
+  theme(axis.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 10), 
+        axis.title.x = element_text(size = 12, face = "bold"), 
+        axis.title.y = element_text(size = 12, face = "bold"), 
+        axis.ticks.x = element_blank(), 
+        legend.title = element_text(size = 10, face = "bold"), 
+        legend.text = element_text(size = 10), 
+        legend.spacing.x = unit(0.005, "npc"), 
+        legend.key.size = unit(3, "mm"),
+        legend.position="top", 
+        panel.background = element_rect(color = "black", size = 1.5), 
+        panel.spacing = unit(0.01, "npc"), 
+        strip.text.x = element_text(size = 14, face = "bold"), 
+        strip.background = element_rect(colour = "black", size = 1.4, fill = "white"), 
+        panel.grid.major.x = element_blank()) 
+rm(a)
+```

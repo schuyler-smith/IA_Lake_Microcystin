@@ -11,7 +11,7 @@
 
 <meta name="author" content="Schuyler D. Smith" />
 
-<meta name="date" content="2021-10-14" />
+<meta name="date" content="2021-11-08" />
 
 <title>Microbiome Analysis</title>
 
@@ -441,7 +441,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Microbiome Analysis</h1>
 <h4 class="author"><a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a></h4>
-<h4 class="date">2021-10-14</h4>
+<h4 class="date">2021-11-08</h4>
 
 </div>
 
@@ -449,16 +449,6 @@ div.tocify {
 <p><br> <br></p>
 <div id="communities" class="section level1">
 <h1>Communities</h1>
-<pre class="r"><code>sam &lt;- dcast(data.table(as(lake_po@sam_data, &#39;data.frame&#39;)), Location ~ Risk, fun.aggregate = length)
-setkey(sam, High)
-high_risk_lakes &lt;- tail(sam$Location, 8)
-low_risk_lakes &lt;- head(sam$Location, 8)
-lake_hl &lt;- taxa_filter(lake_po,
-                       treatment = &quot;Location&quot;,
-                       subset = c(high_risk_lakes, low_risk_lakes))
-sam &lt;- cbind(lake_hl@sam_data, Lake_Risk = &quot;Low&quot;)
-sam[sam$Location %in% high_risk_lakes,]$Lake_Risk &lt;- &quot;High&quot;
-lake_hl@sam_data &lt;- sample_data(sam)</code></pre>
 <div id="profiles" class="section level2 tabset tabset-pills">
 <h2 class="tabset tabset-pills">Profiles</h2>
 <pre class="r"><code>for (risk in c(&#39;Low&#39;, &#39;High&#39;)){
@@ -487,19 +477,18 @@ lake_hl@sam_data &lt;- sample_data(sam)</code></pre>
   use_taxonomic_names = FALSE), c(&quot;Location&quot;, &quot;Year&quot;), frequency = 0.25)
 lake_hl_co &lt;- co_occurrence(lake_hl_co, treatment = c(&quot;Location&quot;, &quot;Year&quot;))
 lake_co_table &lt;- lake_hl_co[p &lt; 0.05]
-setorder(lake_co_table, -rho)
-lake_hl@sam_data &lt;- sample_data(sam)</code></pre>
+setorder(lake_co_table, -rho)</code></pre>
 </div>
 <div id="seperate-high-low" class="section level2">
 <h2>Seperate High-Low</h2>
 <pre class="r"><code>lake_co_table &lt;- lake_co_table[rho &lt; 0]
 lake_co_table[,p:=NULL]
 lake_co_table[, Risk := &quot;Low&quot;]
-set(lake_co_table, unlist(sapply(high_risk_lakes, FUN=function(x)grep(x,a$Treatment))), &quot;Risk&quot;, &quot;High&quot;)
+set(lake_co_table, unlist(sapply(high_risk_lakes, FUN=function(x)grep(x,lake_co_table$Treatment))), &quot;Risk&quot;, &quot;High&quot;)
 lake_co_table &lt;- lake_co_table[, c(&quot;X&quot;, &quot;Y&quot;, &quot;Treatment&quot;, &quot;Risk&quot;, &quot;rho&quot;)]
 lake_co_table[,Edge := paste(X,Y,sep=&quot;-&quot;)]
-high &lt;- lake_co_table[unlist(sapply(high_risk_lakes, FUN=function(x)grep(x,a$Treatment))),]
-low &lt;- lake_co_table[unlist(sapply(low_risk_lakes, FUN=function(x)grep(x,a$Treatment))),]</code></pre>
+high &lt;- lake_co_table[unlist(sapply(high_risk_lakes, FUN=function(x)grep(x,lake_co_table$Treatment))),]
+low &lt;- lake_co_table[unlist(sapply(low_risk_lakes, FUN=function(x)grep(x,lake_co_table$Treatment))),]</code></pre>
 </div>
 <div id="lake-networks" class="section level2 tabset tabset-pills">
 <h2 class="tabset tabset-pills">Lake Networks</h2>
@@ -736,7 +725,8 @@ node_colors &lt;- phylosmith:::create_palette(length(unique(Phyla)))
 layout$Phylum &lt;- factor(layout$Phylum, levels = c(Phyla, unique(layout$Phylum)[!unique(layout$Phylum) %in% Phyla]))
 # node_colors &lt;- node_colors[factor(layout_tax$Phylum, levels = Phyla)]
 # layout &lt;- layout[!is.na(layout$Phylum),]</code></pre>
-<pre class="r"><code>g &lt;- ggraph(layout) + theme_graph() + coord_fixed()
+<pre class="r"><code>classification &lt;- &quot;Phylum&quot;
+g &lt;- ggraph(layout) + theme_graph() + coord_fixed()
 g &lt;- g + geom_polygon(data = hulls, aes_string(x = &quot;x&quot;, y = &quot;y&quot;, group = &quot;Community&quot;),
                       color = &quot;#414a4c&quot;,
                       alpha = 0.2,

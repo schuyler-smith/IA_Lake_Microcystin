@@ -160,10 +160,11 @@ data.table::set(metadata, which(metadata$Microcystin >= 8), "Risk", "High")
 ```
 
 ```{r risk_samples}
-lake_risk <- rep("#33A02C", length(unique(metadata$Location)))
-lake_risk[metadata[, any(Risk %in% "Low"), by = Location]$V1] <- "#FFD92F"
-lake_risk[metadata[, any(Risk %in% "Moderate"), by = Location]$V1] <- "#FC8D62"
-lake_risk[metadata[, any(Risk %in% "High"), by = Location]$V1] <- "red"
+lake_risk_colors <- schuylR::create_palette(4, 'viridis')
+lake_risk <- rep(lake_risk_colors[1], length(unique(metadata$Location)))
+lake_risk[metadata[, sum(Risk %in% "Low")>5, by = Location]$V1] <- lake_risk_colors[2]
+lake_risk[metadata[, sum(Risk %in% "Moderate")>4, by = Location]$V1] <- lake_risk_colors[3]
+lake_risk[metadata[, sum(Risk %in% "High")>2, by = Location]$V1] <- lake_risk_colors[4]
 ```
 
 
@@ -365,6 +366,28 @@ iowa_bw <- readRDS('../data/maps/iowa_terrain_map_bw.RDS')
 ```
 
 
+## High and Low Risk Lakes
+
+```{r hl_lakes}
+sam <- dcast(data.table(as(lake_po@sam_data, 'data.frame')), Location ~ Risk, fun.aggregate = length)
+setkey(sam, High)
+high_risk_lakes <- tail(sam$Location, 8)
+low_risk_lakes <-head(sam$Location, 8)
+
+lakes[, Risk := "grey"]
+set(lakes, sapply(gsub(" Beach","",high_risk_lakes), grep, lakes$Lake), "Risk", "red")
+set(lakes, sapply(gsub(" Beach","",low_risk_lakes), grep, lakes$Lake), "Risk", "blue")
+
+lake_hl <- taxa_filter(lake_po,
+                       treatment = "Location", 
+                       subset = c(high_risk_lakes, low_risk_lakes))
+lake_hl <- merge_treatments(lake_hl, c("Week", "Year"))
+sam <- cbind(lake_hl@sam_data, Lake_Risk = "Low")
+sam[sam$Location %in% high_risk_lakes,]$Lake_Risk <- "High"
+lake_hl@sam_data <- sample_data(sam)
+sam <- data.table(sam)
+replace_DT_NA(sam)
+```
 
 
 

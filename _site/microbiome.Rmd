@@ -17,19 +17,6 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.width=12, fig.height
 
 # Communities
 
-```{r hl_lakes}
-sam <- dcast(data.table(as(lake_po@sam_data, 'data.frame')), Location ~ Risk, fun.aggregate = length)
-setkey(sam, High)
-high_risk_lakes <- tail(sam$Location, 8)
-low_risk_lakes <- head(sam$Location, 8)
-lake_hl <- taxa_filter(lake_po,
-                       treatment = "Location",
-                       subset = c(high_risk_lakes, low_risk_lakes))
-sam <- cbind(lake_hl@sam_data, Lake_Risk = "Low")
-sam[sam$Location %in% high_risk_lakes,]$Lake_Risk <- "High"
-lake_hl@sam_data <- sample_data(sam)
-```
-
 ## Profiles {.tabset .tabset-pills}
 ```{r profile, results='asis'}
 for (risk in c('Low', 'High')){
@@ -51,7 +38,6 @@ lake_hl_co <- taxa_filter(conglomerate_taxa(lake_hl, "Genus", TRUE,
 lake_hl_co <- co_occurrence(lake_hl_co, treatment = c("Location", "Year"))
 lake_co_table <- lake_hl_co[p < 0.05]
 setorder(lake_co_table, -rho)
-lake_hl@sam_data <- sample_data(sam)
 ```
 
 ## Seperate High-Low
@@ -59,11 +45,11 @@ lake_hl@sam_data <- sample_data(sam)
 lake_co_table <- lake_co_table[rho < 0]
 lake_co_table[,p:=NULL]
 lake_co_table[, Risk := "Low"]
-set(lake_co_table, unlist(sapply(high_risk_lakes, FUN=function(x)grep(x,a$Treatment))), "Risk", "High")
+set(lake_co_table, unlist(sapply(high_risk_lakes, FUN=function(x)grep(x,lake_co_table$Treatment))), "Risk", "High")
 lake_co_table <- lake_co_table[, c("X", "Y", "Treatment", "Risk", "rho")]
 lake_co_table[,Edge := paste(X,Y,sep="-")]
-high <- lake_co_table[unlist(sapply(high_risk_lakes, FUN=function(x)grep(x,a$Treatment))),]
-low <- lake_co_table[unlist(sapply(low_risk_lakes, FUN=function(x)grep(x,a$Treatment))),]
+high <- lake_co_table[unlist(sapply(high_risk_lakes, FUN=function(x)grep(x,lake_co_table$Treatment))),]
+low <- lake_co_table[unlist(sapply(low_risk_lakes, FUN=function(x)grep(x,lake_co_table$Treatment))),]
 ```
 
 ## Lake Networks {.tabset .tabset-pills}
@@ -105,6 +91,8 @@ low
 ```{r summary_high}
 high
 ```
+
+## Summary Networks
 
 ```{r network}
 co_occurrence_table <- high
@@ -155,7 +143,13 @@ layout$Phylum <- factor(layout$Phylum, levels = c(Phyla, unique(layout$Phylum)[!
 # layout <- layout[!is.na(layout$Phylum),]
 ```
 
+### Low-Risk Positive Network
+### Low-Risk Negative Network
+### High-Risk Positive Network
+### High-Risk Negative Network
+
 ```{r network_graph}
+classification <- "Phylum"
 g <- ggraph(layout) + theme_graph() + coord_fixed()
 g <- g + geom_polygon(data = hulls, aes_string(x = "x", y = "y", group = "Community"),
                       color = "#414a4c",

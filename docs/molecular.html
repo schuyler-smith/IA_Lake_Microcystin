@@ -11,7 +11,7 @@
 
 <meta name="author" content="Schuyler D. Smith" />
 
-<meta name="date" content="2021-10-14" />
+<meta name="date" content="2021-11-08" />
 
 <title>Molecular Analysis</title>
 
@@ -441,7 +441,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Molecular Analysis</h1>
 <h4 class="author"><a href="https://schuyler-smith.github.io/" target="_blank" >Schuyler D. Smith</a></h4>
-<h4 class="date">2021-10-14</h4>
+<h4 class="date">2021-11-08</h4>
 
 </div>
 
@@ -453,7 +453,9 @@ div.tocify {
 <h2 class="tabset tabset-pills">NO2</h2>
 <div id="year-average" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Year Average</h3>
-<pre class="r"><code>nitrogen &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;NO2&quot;)][order(Location)]
+<pre class="r"><code>nitrogen &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), 
+                     by=c(&quot;Location&quot;, &quot;Year&quot;), 
+                     .SDcols=c(&quot;NO2&quot;)][order(Location)]
 set(nitrogen, j = &quot;NO2&quot;, value = round(nitrogen$NO2, 3))</code></pre>
 <div id="graph" class="section level4">
 <h4>Graph</h4>
@@ -477,7 +479,9 @@ set(nitrogen, j = &quot;NO2&quot;, value = round(nitrogen$NO2, 3))</code></pre>
 <h2 class="tabset tabset-pills">NH3</h2>
 <div id="year-average-1" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Year Average</h3>
-<pre class="r"><code>NH3 &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;NH3&quot;)][order(Location)]
+<pre class="r"><code>NH3 &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), 
+                by=c(&quot;Location&quot;, &quot;Year&quot;), 
+                .SDcols=c(&quot;NH3&quot;)][order(Location)]
 set(NH3, j = &quot;NH3&quot;, value = round(NH3$NH3, 3))</code></pre>
 <div id="graph-1" class="section level4">
 <h4>Graph</h4>
@@ -501,7 +505,9 @@ set(NH3, j = &quot;NH3&quot;, value = round(NH3$NH3, 3))</code></pre>
 <h2 class="tabset tabset-pills">pH</h2>
 <div id="year-average-2" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Year Average</h3>
-<pre class="r"><code>pH &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;pH&quot;)][order(Location)]
+<pre class="r"><code>pH &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), 
+               by=c(&quot;Location&quot;, &quot;Year&quot;), 
+               .SDcols=c(&quot;pH&quot;)][order(Location)]
 set(pH, j = &quot;pH&quot;, value = round(pH$pH, 2))</code></pre>
 <div id="graph-2" class="section level4">
 <h4>Graph</h4>
@@ -525,7 +531,9 @@ set(pH, j = &quot;pH&quot;, value = round(pH$pH, 2))</code></pre>
 <h2 class="tabset tabset-pills">Cl</h2>
 <div id="year-average-3" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Year Average</h3>
-<pre class="r"><code>Cl &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), by=c(&quot;Location&quot;, &quot;Year&quot;), .SDcols=c(&quot;Cl&quot;)][order(Location)]
+<pre class="r"><code>Cl &lt;- metadata[, lapply(.SD, mean, na.rm=TRUE), 
+               by=c(&quot;Location&quot;, &quot;Year&quot;), 
+               .SDcols=c(&quot;Cl&quot;)][order(Location)]
 set(Cl, j = &quot;Cl&quot;, value = round(Cl$Cl, 2))</code></pre>
 <div id="graph-3" class="section level4">
 <h4>Graph</h4>
@@ -546,10 +554,125 @@ set(Cl, j = &quot;Cl&quot;, value = round(Cl$Cl, 2))</code></pre>
 </div>
 </div>
 </div>
-<div id="microcystin-strains" class="section level1">
-<h1>Microcystin Strains</h1>
-<div id="section" class="section level2">
-<h2></h2>
+<div id="high--low-risk-lakes" class="section level1">
+<h1>High- &amp; Low-Risk Lakes</h1>
+<div id="weeks-of-significantly-different-variables" class="section level2">
+<h2>Weeks of Significantly Different Variables</h2>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Number of Days with Significant Difference"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"DOC","2":"9"},{"1":"avg_wind","2":"8"},{"1":"high_gust","2":"7"},{"1":"high_wind","2":"6"},{"1":"pH","2":"5"},{"1":"avg_gust","2":"4"},{"1":"Microcystin","2":"3"},{"1":"precip","2":"3"},{"1":"rRNA_16S","2":"2"},{"1":"TKN","2":"2"},{"1":"avg_humid","2":"1"},{"1":"Microcystis","2":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="microcystin-levels" class="section level2">
+<h2>Microcystin Levels</h2>
+<div id="section" class="section level3">
+<h3>2018</h3>
+<pre class="r"><code>ggplot(sam[Year == 2018], aes(x = Week, y = Microcystin)) + 
+  geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;, 
+                        size = 0.12, width = 0.95, color = &quot;black&quot;) + 
+  facet_nested_wrap(.~ Lake_Risk + Location , scales = &quot;free&quot;) + 
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 10), 
+        axis.title.x = element_text(size = 12, face = &quot;bold&quot;), 
+        axis.title.y = element_text(size = 12, face = &quot;bold&quot;), 
+        axis.ticks.x = element_blank(), 
+        legend.title = element_text(size = 10, face = &quot;bold&quot;), 
+        legend.text = element_text(size = 10), 
+        legend.spacing.x = unit(0.005, &quot;npc&quot;), 
+        legend.key.size = unit(3, &quot;mm&quot;),
+        legend.position=&quot;top&quot;,  
+        panel.background = element_rect(color = &quot;black&quot;, size = 1.5), 
+        panel.spacing = unit(0.01, &quot;npc&quot;), 
+        strip.text.x = element_text(size = 14, face = &quot;bold&quot;), 
+        strip.background = element_rect(colour = &quot;black&quot;, size = 1.4, fill = &quot;white&quot;), 
+        panel.grid.major.x = element_blank()) + 
+  scale_y_continuous(expand = expansion(mult = c(0.0037, 0.003), add = c(0, 0)), limits = c(0,70)) + 
+  scale_x_discrete(expand = expansion(mult = 0, 
+                                      add = 0.51))</code></pre>
+<p><img src="molecular_files/figure-html/microcystin_18-1.png" width="960" /></p>
+<pre class="r"><code>a &lt;- data.table::copy(sam)
+a[, Microcystis_x := Microcystis/max(Microcystis), by = c(&quot;Location&quot;, &quot;Year&quot;)]
+a[, Microcystin_x := Microcystin/max(Microcystin), by = c(&quot;Location&quot;, &quot;Year&quot;)]
+a &lt;- melt.data.table(a, id.vars = c(&quot;Location&quot;, &quot;Week&quot;, &quot;Year&quot;, &quot;Lake_Risk&quot;), 
+                     measure.vars = c(&quot;Microcystin_x&quot;, &quot;Microcystis_x&quot;))
+
+ggplot(a[Year == 2018], aes(x = Week, y = value, 
+    fill = variable))+ geom_bar(stat = &quot;identity&quot;, position = position_dodge2(padding = 3.5), 
+    size = 0.2, color = &quot;black&quot;, alpha = 0.85, width = 0.62) + 
+    facet_nested_wrap(.~ Lake_Risk + Location , scales = &quot;free&quot;) + theme_bw() +
+  scale_fill_manual(values = schuylR::create_palette(1 + length(unique(a$Year)))[-1], 
+                    labels = c(&quot;Microcystin&quot;, &quot;Microcystis&quot;)) +
+  labs(y = &quot;Relative Value&quot;, fill = &quot;Variable&quot;) +
+  theme(axis.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 10), 
+        axis.title.x = element_text(size = 12, face = &quot;bold&quot;), 
+        axis.title.y = element_text(size = 12, face = &quot;bold&quot;), 
+        axis.ticks.x = element_blank(), 
+        legend.title = element_text(size = 10, face = &quot;bold&quot;), 
+        legend.text = element_text(size = 10), 
+        legend.spacing.x = unit(0.005, &quot;npc&quot;), 
+        legend.key.size = unit(3, &quot;mm&quot;),
+        legend.position=&quot;top&quot;, 
+        panel.background = element_rect(color = &quot;black&quot;, size = 1.5), 
+        panel.spacing = unit(0.01, &quot;npc&quot;), 
+        strip.text.x = element_text(size = 14, face = &quot;bold&quot;), 
+        strip.background = element_rect(colour = &quot;black&quot;, size = 1.4, fill = &quot;white&quot;), 
+        panel.grid.major.x = element_blank()) </code></pre>
+<p><img src="molecular_files/figure-html/microcystin_18_micro-1.png" width="960" /></p>
+</div>
+<div id="section-1" class="section level3">
+<h3>2019</h3>
+<pre class="r"><code>ggplot(sam[Year == 2019], aes(x = Week, y = Microcystin)) + 
+  geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;, 
+                        size = 0.12, width = 0.95, color = &quot;black&quot;) + 
+  facet_nested_wrap(.~ Lake_Risk + Location , scales = &quot;free&quot;) + 
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 10), 
+        axis.title.x = element_text(size = 12, face = &quot;bold&quot;), 
+        axis.title.y = element_text(size = 12, face = &quot;bold&quot;), 
+        axis.ticks.x = element_blank(), 
+        legend.title = element_text(size = 10, face = &quot;bold&quot;), 
+        legend.text = element_text(size = 10), 
+        legend.spacing.x = unit(0.005, &quot;npc&quot;), 
+        legend.key.size = unit(3, &quot;mm&quot;),
+        legend.position=&quot;top&quot;,  
+        panel.background = element_rect(color = &quot;black&quot;, size = 1.5), 
+        panel.spacing = unit(0.01, &quot;npc&quot;), 
+        strip.text.x = element_text(size = 14, face = &quot;bold&quot;), 
+        strip.background = element_rect(colour = &quot;black&quot;, size = 1.4, fill = &quot;white&quot;), 
+        panel.grid.major.x = element_blank()) + 
+  scale_y_continuous(expand = expansion(mult = c(0.0037, 0.003), add = c(0, 0)), limits = c(0,70)) + 
+  scale_x_discrete(expand = expansion(mult = 0, 
+                                      add = 0.51))</code></pre>
+<p><img src="molecular_files/figure-html/microcystin_19-1.png" width="960" /></p>
+<pre class="r"><code>ggplot(a[Year == 2019], aes(x = Week, y = value, 
+    fill = variable))+ geom_bar(stat = &quot;identity&quot;, position = position_dodge2(padding = 3.5), 
+    size = 0.2, color = &quot;black&quot;, alpha = 0.85, width = 0.62) + 
+    facet_nested_wrap(.~ Lake_Risk + Location , scales = &quot;free&quot;) + theme_bw() +
+  scale_fill_manual(values = schuylR::create_palette(1 + length(unique(a$Year)))[-1], 
+                    labels = c(&quot;Microcystin&quot;, &quot;Microcystis&quot;)) +
+  labs(y = &quot;Relative Value&quot;, fill = &quot;Variable&quot;) +
+  theme(axis.text.x = element_text(size = 8), 
+        axis.text.y = element_text(size = 10), 
+        axis.title.x = element_text(size = 12, face = &quot;bold&quot;), 
+        axis.title.y = element_text(size = 12, face = &quot;bold&quot;), 
+        axis.ticks.x = element_blank(), 
+        legend.title = element_text(size = 10, face = &quot;bold&quot;), 
+        legend.text = element_text(size = 10), 
+        legend.spacing.x = unit(0.005, &quot;npc&quot;), 
+        legend.key.size = unit(3, &quot;mm&quot;),
+        legend.position=&quot;top&quot;, 
+        panel.background = element_rect(color = &quot;black&quot;, size = 1.5), 
+        panel.spacing = unit(0.01, &quot;npc&quot;), 
+        strip.text.x = element_text(size = 14, face = &quot;bold&quot;), 
+        strip.background = element_rect(colour = &quot;black&quot;, size = 1.4, fill = &quot;white&quot;), 
+        panel.grid.major.x = element_blank()) </code></pre>
+<p><img src="molecular_files/figure-html/microcystin_19_micro-1.png" width="960" /></p>
+<pre class="r"><code>rm(a)</code></pre>
+</div>
 </div>
 </div>
 
